@@ -1,9 +1,11 @@
 <div class="container-fluid">
+
   <h2>Registration Form</h2>
-<span>{{ title }} app is running!</span>
-  <form>
+
+
+  <form [formGroup]='registrationForm'>
     <div class="form-group">
-      <label>Username</label>
+      <label>Student Name</label>
       <input type="text"  formControlName="studentName" class="form-control">
     </div>
     <div class="form-group">
@@ -19,11 +21,16 @@
 
     <div class="form-group">
       <label>Email</label>
-      <button type="button" class="btn btn-secondary btn-sm m-2" >Add e-mail</button>
+
       <input type="text"  formControlName="email" class="form-control">
       <small class="text-danger" >Email is required</small>
     </div>
 
+    <button mat-raised-button color="warn">Confirm</button>
+
     </form>
+
+
+    {{registrationForm.value | json}}
 </div>
 

@@ -1,0 +1,22 @@
+@import '~@angular/material/theming';
+@include mat-core();
+$my-theme-primary: mat-palette($mat-green,300);
+$my-theme-accent:  mat-palette($mat-cyan, 600,200,50);
+
+// The warn palette is optional (defaults to red).
+$my-theme-warn:    mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$my-app-theme: mat-light-theme((
+  color: (
+    primary: $my-theme-primary,
+    accent: $my-theme-accent,
+    warn: $my-theme-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($my-app-theme);
