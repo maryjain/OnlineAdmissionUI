@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-end sub-menu">
+  <div class="p-2"><a mat-button class="btn-style" routerLink="/register">Register</a></div>
+  <div class="p-2"><a mat-button  class="btn-style" routerLink="/login">Login</a></div>
+</div>
+
+  <mat-grid-list cols="2" rowHeight="1:1" [cols]="breakpoint" (window:resize)="onResize($event)">
+    <mat-grid-tile class="left align_custom" >
+      <div >
+      <p class="h4 course-heading">
+      Courses Offered & Eligibility :
+      </p>
+      <br>
+      <div>
+      <p class="h6 course-eligibility">Certificate Course in Ayurveda Pharmacy ( 1 year )</p>
+      <dl class="row">
+        <dt class="col-sm-3">Qualification</dt>
+        <dd class="col-sm-9">SSLC Examination or equivalent examination with C+ Grade</dd>
+        <dt class="col-sm-3">Age</dt>
+        <dd class="col-sm-9">
+          <p>Candidates between the age of 16 and 28 as on 01-05-2018 are eligible to apply</p>
+        </dd>
+      </dl>
+      </div>
+     <hr>
+     <div>
+      <p class="h6 course-eligibility">Certificate Course in Ayurveda Therapist ( 1 year )</p>
+      <dl class="row">
+        <dt class="col-sm-3">Qualification</dt>
+        <dd class="col-sm-9">SSLC Examination or equivalent examination with (D+ Grade)</dd>
+        <dt class="col-sm-3">Age</dt>
+        <dd class="col-sm-9">
+          <p>Candidates between the age of 16 and 28 as on 01-05-2018 are eligible to apply</p>
+        </dd>
+      </dl>
+      </div>
+     <hr>
+     <div>
+      <p class="h6 course-eligibility">Certificate Course in Ayurveda Nurse ( 1 year )</p>
+      <dl class="row">
+        <dt class="col-sm-3">Qualification</dt>
+        <dd class="col-sm-9">SSLC Examination or equivalent examination with C+ Grade</dd>
+        <dt class="col-sm-3">Age</dt>
+        <dd class="col-sm-9">
+          <p>Candidates between the age of 17 and 25 as on 01-05-2018 are eligible to apply</p>
+        </dd>
+      </dl>
+      </div>
+     <hr>
+      </div>
+      </mat-grid-tile>
+    <mat-grid-tile class="right align_custom" >
+
+          <app-register></app-register>
+
+    </mat-grid-tile>
+  </mat-grid-list>
+

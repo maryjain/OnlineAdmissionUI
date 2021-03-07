@@ -1,0 +1,77 @@
+
+.right{
+  background-color: #FFFDE7;
+}
+
+.align_custom  >::ng-deep .mat-figure{
+  justify-content: flex-start;
+  align-items: flex-start ;
+  padding-top: 20px !important;
+  padding-left: 20px !important;
+}
+
+mat-grid-tile{
+  flex-grow: 1;
+  overflow: auto;
+}
+.sub-menu
+{
+  background-color:#81C784;
+}
+.course-heading
+{
+  color:#C2185B;
+  font-weight: bold;
+}
+.course-eligibility
+{
+
+  color:#558B2F;
+  font-weight: bold;
+}
+
+
+$color:#00838F;
+.btn-style {
+  border-radius: 0;
+  text-decoration: none;
+  color :#ffffff;
+  background-color:#00ACC1;
+  border-radius: 10px 10px 10px 10px;
+  font-size: 16px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color;
+    border-radius: 10px;
+    z-index: -2;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: darken($color, 5%);
+    transition: all .3s;
+    border-radius: 10px;
+    z-index: -1;
+  }
+  &:hover {
+    color: #fff;
+    &:before {
+      width: 100%;
+    }
+  }
+}
+
+
+

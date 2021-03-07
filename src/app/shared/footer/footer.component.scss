@@ -3,13 +3,31 @@
   bottom: 0;
   left: 0;
   right: 0;
-  text-align: center;
   background-color:rgba(14, 77, 146);
   color: white;
+
 }
 .footertext {
 	color:#faa21f;
 }
 .footertext:hover {
 	color:white;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+mat-toolbar-row{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+p{
+  text-align: center;
+}
+.text{
+margin-top:0;
+margin-bottom:0;
+color:#FFF;
+font-size:13px;
 }

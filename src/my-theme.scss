@@ -1,7 +1,7 @@
 @import '~@angular/material/theming';
 @include mat-core();
 $my-theme-primary: mat-palette($mat-green,300);
-$my-theme-accent:  mat-palette($mat-cyan, 600,200,50);
+$my-theme-accent:  mat-palette($mat-cyan, 600,400,200);
 
 // The warn palette is optional (defaults to red).
 $my-theme-warn:    mat-palette($mat-red);
