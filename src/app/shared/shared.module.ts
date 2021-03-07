@@ -13,8 +13,6 @@ import { HeaderModule } from './header/header.module';
 
     FooterModule,
     HeaderModule,
-
-
   ],
   exports:
   [
