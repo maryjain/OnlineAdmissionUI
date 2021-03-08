@@ -3,8 +3,8 @@
   <div class="p-2"><a mat-button  class="btn-style" routerLink="/login">Login</a></div>
 </div>
 
-  <mat-grid-list cols="2" rowHeight="1:1" [cols]="breakpoint" (window:resize)="onResize($event)">
-    <mat-grid-tile class="left align_custom" >
+  <mat-grid-list  rowHeight="1:3" [cols]="breakpoint" (window:resize)="onResize($event)">
+    <mat-grid-tile colspan='5' class="left align_custom" >
       <div >
       <p class="h4 course-heading">
       Courses Offered & Eligibility :
@@ -48,7 +48,7 @@
      <hr>
       </div>
       </mat-grid-tile>
-    <mat-grid-tile class="right align_custom" >
+    <mat-grid-tile colspan='2' class="right align_custom" >
 
           <app-register></app-register>
 

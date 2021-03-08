@@ -3,11 +3,13 @@
   background-color: #FFFDE7;
 }
 
+
 .align_custom  >::ng-deep .mat-figure{
   justify-content: flex-start;
   align-items: flex-start ;
   padding-top: 20px !important;
   padding-left: 20px !important;
+  width: 70%;
 }
 
 mat-grid-tile{
