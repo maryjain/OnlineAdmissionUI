@@ -12,6 +12,13 @@
   width: 70%;
 }
 
+.align_custom_form  >::ng-deep .mat-figure{
+  justify-content: center;
+  align-items: stretch ;
+  padding-top: 50px !important;
+  width: 100%;
+}
+
 mat-grid-tile{
   flex-grow: 1;
   overflow: auto;

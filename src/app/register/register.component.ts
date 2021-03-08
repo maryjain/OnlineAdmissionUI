@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -7,16 +7,36 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  public title = 'Hello';
+  public title = 'Registration';
+  minDate: Date;
+  maxDate: Date;
+  isgenerate:boolean;
   registrationForm =new FormGroup({
-    studentName: new FormControl('Test'),
+    name: new FormControl('Test'),
+    dob : new FormControl(new Date()),
+    age : new FormControl(''),
+    email : new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]),
+    confirmemail : new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]),
+    mobile : new FormControl(''),
     password: new FormControl(''),
     confirmPassword: new FormControl(''),
-    email: new FormControl('')
+    otp : new FormControl(''),
   });
-  constructor() { }
+  constructor() {
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 50, 0, 1);
+    this.maxDate = new Date(currentYear - 14, 11, 31);
 
-  ngOnInit(): void {
   }
 
+  ngOnInit(): void {
+    this.isgenerate=true;
+  }
+  get f() { return this.registrationForm.controls; }
 }

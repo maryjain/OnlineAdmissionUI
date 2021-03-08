@@ -7,7 +7,8 @@ import {MatCardModule} from '@angular/material/card'
 import {MatDividerModule} from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 @NgModule({
   declarations: [],
   imports: [
@@ -18,6 +19,9 @@ import {MatIconModule} from '@angular/material/icon';
     MatDividerModule,
     MatGridListModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule,
   ],
   exports: [
     MatButtonModule,
@@ -26,7 +30,10 @@ import {MatIconModule} from '@angular/material/icon';
     MatCardModule,
     MatDividerModule,
     MatGridListModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule,
   ]
 })
 export class AppMaterialModule { }

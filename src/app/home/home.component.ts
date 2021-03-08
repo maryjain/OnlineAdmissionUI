@@ -7,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   breakpoint: number;
+  rHeight: string;
   constructor() { }
 
   ngOnInit() {
     this.breakpoint = (window.innerWidth <= 600) ? 1 : 7;
+    this.rHeight= (window.innerWidth <= 600) ? "1:12" : "1:7";
   }
 
   onResize(event) {

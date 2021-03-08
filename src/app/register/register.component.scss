@@ -5,6 +5,7 @@ mat-card {
 }
 
 
+
 mat-card-content {
   display: flex;
   flex-direction: column;
@@ -23,4 +24,23 @@ margin-left: 50px;
 .form{
   background-color: #c2f2fa;
 
+}
+.formfield
+{
+  display: inline-block;
+position: relative;
+}
+
+.example-full-width
+{
+  width: 100%;
+}
+.row1
+{
+  display: inline-block;
+}
+
+.card-width
+{
+  width: 30rem;
 }
