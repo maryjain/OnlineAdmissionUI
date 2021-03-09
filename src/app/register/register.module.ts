@@ -4,8 +4,9 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import{AppMaterialModule} from '../app-material/app-material.module';
 import { RegisterComponent } from './register.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { ContentComponent } from './content.component';
 @NgModule({
-  declarations: [RegisterComponent],
+  declarations: [RegisterComponent, ContentComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -14,7 +15,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     FlexLayoutModule,
   ],
   exports:[
-   RegisterComponent
+   RegisterComponent,
+   ContentComponent
   ]
 
 

@@ -6,13 +6,15 @@
 <br>
 
 <div fxLayout="row" class="main-div">
-<mat-card fxFlex.sm="0 1 calc(35%-10px)" fxFlex.md="0 1 calc(50%-10px)" fxFlex.gt-md="0 1 calc(80%-10px)" class="scrollable-content" >
+<mat-card fxFlex.sm="0 1 calc(35%-50px)" fxFlex.md="0 1 calc(50%-50px)" fxFlex.lt-sm="0 1 calc(60%-50px)" fxFlex.lt-md="0 1 calc(70%-50px)" fxFlex.gt-md="0 1 calc(80%-50px)"  >
 
   <mat-card-content  >
     <div fxLayout="row" class="parent">
-      <div fxFlex="60%" class="left">Left</div>
+      <div fxFlex="60%" class="left">
+        <app-content></app-content>
+      </div>
       <div fxFlex="40%" class="right">
-        <app-register></app-register>ggg
+        <app-register></app-register>
       </div>
     </div>
   </mat-card-content>
