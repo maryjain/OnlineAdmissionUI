@@ -11,6 +11,7 @@ export class RegisterComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
   isgenerate:boolean;
+  hide = true;
   registrationForm =new FormGroup({
     name: new FormControl('Test'),
     dob : new FormControl(new Date()),
@@ -36,7 +37,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isgenerate=true;
+    this.isgenerate=false;
   }
   get f() { return this.registrationForm.controls; }
 }

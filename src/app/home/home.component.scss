@@ -1,28 +1,25 @@
 
+div#container {
+  position: relative; /* needed for footer positioning*/
+  height: auto !important; /* real browsers */
+  min-height: 100%; /* real browsers */
+}
 .right{
   background-color: #FFFDE7;
 }
 
+.left   {background-color:#e9f3f8}
 
-.align_custom  >::ng-deep .mat-figure{
-  justify-content: flex-start;
-  align-items: flex-start ;
-  padding-top: 20px !important;
-  padding-left: 20px !important;
-  width: 70%;
-}
 
-.align_custom_form  >::ng-deep .mat-figure{
+
+.main-div{
+  display: flex;
   justify-content: center;
-  align-items: stretch ;
-  padding-top: 50px !important;
-  width: 100%;
+  align-items: flex-start ;
 }
 
-mat-grid-tile{
-  flex-grow: 1;
-  overflow: auto;
-}
+
+
 .sub-menu
 {
   background-color:#81C784;

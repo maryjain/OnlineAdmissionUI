@@ -17,6 +17,7 @@ import{AppMaterialModule} from '../app-material/app-material.module';
     LoginModule,
     FlexLayoutModule,
 
+
   ],
   exports:  [
     HomeComponent,

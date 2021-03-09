@@ -1,13 +1,19 @@
 
-  <div class="card card-width">
-      <h3 class="card-header">Register</h3>
-      <div class="card-body">
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center">
+  <mat-card fxFlex="calc(33%-20px)" fxFlex.sm="calc(50%-20px)" >
+    <mat-card-header>
+      <mat-card-title>Registration</mat-card-title>
+    </mat-card-header>
 
+  <mat-card-content>
   <form [formGroup]='registrationForm'>
 
     <div class="form-group">
       <label >Name</label>
-      <input type="text"  formControlName="name" class="form-control">
+      <mat-form-field class="example-full-width">
+      <span matPrefix><mat-icon>person</mat-icon>&nbsp;</span>
+      <input matInput type="text"  formControlName="name" >
+    </mat-form-field>
     </div>
     <div class="form-group">
     <label >Date of Birth</label>
@@ -24,6 +30,7 @@
      <div class="form-group">
       <label>Email</label>
      <mat-form-field class="example-full-width">
+      <span matPrefix><mat-icon>phone</mat-icon>&nbsp;</span>
       <input type="email" matInput formControlName="email" placeholder="Ex. aaa@example.com">
       <mat-error *ngIf="f.email.hasError('email') && !f.email.hasError('required')">
         Please enter a valid email address
@@ -36,6 +43,7 @@
     <div class="form-group">
       <label>Confirm Email</label>
       <mat-form-field class="example-full-width">
+        <span matPrefix><mat-icon>email</mat-icon>&nbsp;</span>
        <input type="email" matInput formControlName="confirmemail" placeholder="Ex. aaa@example.com">
        <mat-error *ngIf="f.confirmemail.hasError('email') && !f.confirmemail.hasError('required')">
          Please enter a valid email address
@@ -47,25 +55,41 @@
      </div>
      <div class="form-group">
       <label>Mobile</label>
-      <input type="text"  formControlName="mobile" class="form-control">
+      <mat-form-field appearance="fill" class="example-full-width">
+        <span matPrefix><mat-icon>phone</mat-icon>&nbsp;</span>
+       <input matInput type="tel" formControlName="mobile"  placeholder="10 digit" >
+
+    </mat-form-field>
      </div>
    <div class="form-group">
-      <label>Password</label>
-      <input type="password" formControlName="password" class="form-control">
+      <label>Password</label><br>
+      <mat-form-field appearance="fill" class="example-full-width">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
     </div>
     <div class="form-group">
       <label>Confirm Password</label>
-      <input type="password"  formControlName="confirmPassword" class="form-control">
+      <mat-form-field appearance="fill" class="example-full-width">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
     </div>
     <mat-card fxLayout="column" >
       <div fxLayout="row inline" fxLayoutGap="10px">
-        <div class="form-group w-25">
         <div *ngIf="isgenerate">
+        <div class="form-group w-25">
           <input type="text"  formControlName="otp" class="form-control">
-        </div>
         </div>
         <div class="errorMessage">seconds remaining</div>
         </div>
+      </div>
       <div fxLayout="row inline" fxLayoutGap="20px">
 
         <button mat-raised-button color="accent">Generate OTP</button>
@@ -77,8 +101,11 @@
      <br>
     <button mat-raised-button color="warn">Confirm</button>
     </form>
-  </div>
-  </div>
+  </mat-card-content>
+</mat-card>
+</div>
+
+
 
 
 
