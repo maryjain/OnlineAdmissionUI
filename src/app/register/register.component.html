@@ -35,7 +35,7 @@
       <label>Email</label>
      <mat-form-field class="example-full-width">
       <span matPrefix><mat-icon>phone</mat-icon>&nbsp;</span>
-      <input type="email" matInput formControlName="email" placeholder="Ex. aaa@example.com">
+      <input type="email" matInput formControlName="email" placeholder="aaa@example.com">
       <mat-error *ngIf="f.email.hasError('email') && !f.email.hasError('required')">
         Please enter a valid email address
       </mat-error>
@@ -48,7 +48,7 @@
       <label>Confirm Email</label>
       <mat-form-field class="example-full-width">
         <span matPrefix><mat-icon>email</mat-icon>&nbsp;</span>
-       <input type="email" matInput formControlName="confirmemail" placeholder="Ex. aaa@example.com">
+       <input type="email" matInput formControlName="confirmemail" placeholder="aaa@example.com">
        <mat-error *ngIf="f.confirmemail.hasError('email') && !f.confirmemail.hasError('required')">
          Please enter a valid email address
        </mat-error>
@@ -78,7 +78,7 @@
     <div class="form-group">
       <label>Confirm Password</label>
       <mat-form-field appearance="fill" class="example-full-width">
-        <mat-label>Enter your password</mat-label>
+        <mat-label>Confirm your password</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -88,15 +88,16 @@
     <mat-card fxLayout="column" >
       <div fxLayout="row inline" fxLayoutGap="10px">
         <div *ngIf="isgenerate">
-        <div class="form-group w-25">
+        <div class="form-group w-40">
           <input type="text"  formControlName="otp" class="form-control">
         </div>
         <div class="errorMessage">seconds remaining</div>
         </div>
       </div>
       <div fxLayout="row inline" fxLayoutGap="20px">
-
+        <div *ngIf!="isgenerate">
         <button mat-raised-button color="accent">Generate OTP</button>
+        </div>
         <div *ngIf="isgenerate">
         <button mat-raised-button color="accent">Confirm OTP</button>
         </div>

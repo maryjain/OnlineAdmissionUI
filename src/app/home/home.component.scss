@@ -1,31 +1,7 @@
-
-div#container {
-  position: relative; /* needed for footer positioning*/
-  height: auto !important; /* real browsers */
-  min-height: 100%; /* real browsers */
-}
-.right{
-  background-color: #FFFDE7;
-}
-
-.left   {background-color:#e9f3f8}
-
-
-
-.main-div{
-  display: flex;
-  justify-content: center;
-  align-items: flex-start ;
-}
-
-
-
 .sub-menu
 {
   background-color:#81C784;
 }
-
-
 
 $color:#00838F;
 .btn-style {

@@ -1,0 +1,24 @@
+
+div#container {
+  position: relative; /* needed for footer positioning*/
+  height: auto !important; /* real browsers */
+  min-height: 100%; /* real browsers */
+}
+.right{
+  background-color: #FFFDE7;
+}
+
+.left   {background-color:#e9f3f8}
+
+
+
+.main-div{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start ;
+}
+
+mat-cards{
+  flex-grow: 1;
+  overflow: auto;
+}

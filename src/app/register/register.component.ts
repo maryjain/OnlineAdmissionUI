@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isgenerate=false;
+    this.isgenerate=true;
   }
   get f() { return this.registrationForm.controls; }
 }
