@@ -5,7 +5,7 @@ import { RegisterModule } from '../register/register.module';
 import { LoginModule } from '../login/login.module';
 import { FlexLayoutModule } from '@angular/flex-layout'
 import{AppMaterialModule} from '../app-material/app-material.module';
-
+import { AppRoutingModule } from '../app-routing.module';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -16,7 +16,7 @@ import{AppMaterialModule} from '../app-material/app-material.module';
     RegisterModule,
     LoginModule,
     FlexLayoutModule,
-
+    AppRoutingModule,
 
   ],
   exports:  [

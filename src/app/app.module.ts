@@ -25,6 +25,7 @@ import { HomeModule } from './home/home.module';
     AppMaterialModule,
     SharedModule,
     HomeModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
