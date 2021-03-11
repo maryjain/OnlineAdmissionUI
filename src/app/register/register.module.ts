@@ -6,19 +6,23 @@ import { RegisterComponent } from './register.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ContentComponent } from './content.component';
 import { RegisterhomeComponent } from './registerhome.component';
+import {HintdirDirective} from '../commondirective/hintdir.directive';
+
 @NgModule({
-  declarations: [RegisterComponent, ContentComponent, RegisterhomeComponent],
+  declarations: [RegisterComponent, ContentComponent, RegisterhomeComponent, HintdirDirective],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,
     FlexLayoutModule,
+
   ],
   exports:[
    RegisterComponent,
    ContentComponent,
    RegisterhomeComponent,
+   HintdirDirective,
   ]
 
 

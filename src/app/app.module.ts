@@ -10,11 +10,15 @@ import{AppMaterialModule} from './app-material/app-material.module';
 import { SharedModule } from './shared/shared.module';
 
 import { HomeModule } from './home/home.module';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    PagenotfoundComponent,
+
 
   ],
   imports: [

@@ -9,6 +9,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 @NgModule({
   declarations: [],
@@ -23,6 +25,7 @@ import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
+    MatTooltipModule,
   ],
   exports: [
     MatButtonModule,
@@ -35,6 +38,7 @@ import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
+    MatTooltipModule,
   ]
 })
 export class AppMaterialModule { }

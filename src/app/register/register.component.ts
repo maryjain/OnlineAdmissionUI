@@ -13,20 +13,23 @@ export class RegisterComponent implements OnInit {
   isgenerate:boolean;
   hide = true;
   registrationForm =new FormGroup({
-    name: new FormControl('Test'),
+    name: new FormControl('',
+    [
+      Validators.required
+    ]),
     dob : new FormControl(new Date()),
-    age : new FormControl(''),
     email : new FormControl('', [
       Validators.required,
       Validators.email,
     ]),
-    confirmemail : new FormControl('', [
-      Validators.required,
-      Validators.email,
+    mobile : new FormControl('',
+    [
+      Validators.required
     ]),
-    mobile : new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
+    password: new FormControl('',
+    [
+      Validators.required
+    ]),
     otp : new FormControl(''),
   });
   constructor() {
