@@ -11,36 +11,41 @@
     <div class="form-group">
       <br>
       <br>
-      <label >Name</label>
+      <label >Full Name</label>
       <mat-form-field class="example-full-width">
       <span matPrefix><mat-icon>person</mat-icon>&nbsp;</span>
       <input matInput type="text"  formControlName="name" >
-      <mat-error *ngIf="f.name.hasError('email') && !f.name.hasError('required')">
-        Please enter a valid name
+      <mat-error *ngIf ="name.hasError('name') && !name.hasError('required')">
+        {{errors.fullName}}
       </mat-error>
-      <mat-error *ngIf="f.name.hasError('required')">
-        Name is <strong>required</strong>
+      <mat-error *ngIf ="name.hasError('required')">
+        {{errors.fullNameRequired}}
       </mat-error>
     </mat-form-field>
     </div>
     <div class="form-group">
     <label >Date of Birth</label>
       <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>dd/mm/yyyy</mat-label>
       <input matInput [matDatepicker]="picker1" [min]="minDate" [max]="maxDate" formControlName="dob">
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker #picker1></mat-datepicker>
+      <mat-error *ngIf ="dob.hasError('required')">
+        {{errors.dobRequired}}
+      </mat-error>
     </mat-form-field>
+
      </div>
      <div class="form-group">
       <label>Email</label>
      <mat-form-field class="example-full-width">
       <span matPrefix><mat-icon>email</mat-icon>&nbsp;</span>
       <input type="email" matInput formControlName="email" placeholder="aaa@example.com">
-      <mat-error *ngIf="f.email.hasError('email') && !f.email.hasError('required')">
-        Please enter a valid email address
+      <mat-error *ngIf ="email.hasError('email') && !email.hasError('required')">
+        {{errors.email}}
       </mat-error>
-      <mat-error *ngIf="f.email.hasError('required')">
-        Email is <strong>required</strong>
+      <mat-error *ngIf ="email.hasError('required')">
+        {{errors.emailRequired}}
       </mat-error>
     </mat-form-field>
     </div>
@@ -50,48 +55,51 @@
         <mat-label>10 digit</mat-label>
         <span matPrefix><mat-icon>phone</mat-icon>&nbsp;</span>
        <input matInput type="tel" formControlName="mobile"  placeholder="10 digit" >
-       <mat-error *ngIf="f.mobile.hasError('mobile') && !f.mobile.hasError('required')">
-        Please enter a valid mobile no
+       <mat-error *ngIf ="mobile.hasError('pattern') && !mobile.hasError('required')">
+        {{errors.mobile}}
       </mat-error>
-      <mat-error *ngIf="f.mobile.hasError('required')">
-        Mobile no is <strong>required</strong>
+      <mat-error *ngIf ="mobile.hasError('required')">
+        {{errors.mobileRequired}}
       </mat-error>
 
       </mat-form-field>
      </div>
    <div class="form-group">
-      <label>Password</label><br>
+      <label>Password</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-hint [matTooltip]=hintmessage>Hint</mat-hint><br>
       <mat-form-field appearance="fill" class="example-full-width">
         <mat-label>Password</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" >
-        <mat-hint appHintdir>Hint</mat-hint>
+        <br>
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-error *ngIf="f.password.hasError('password') && !f.password.hasError('required')">
-          Please enter a valid password
+        <mat-error *ngIf ="password.hasError('required')">
+          {{errors.passwordRequired}}
         </mat-error>
-        <mat-error *ngIf="f.password.hasError('required')">
-          Password is <strong>required</strong>
+        <mat-error *ngIf ="password.hasError('pattern') && !password.hasError('required')">
+          {{errors.password}}
         </mat-error>
       </mat-form-field>
+
     </div>
 
     <mat-card fxLayout="column" >
       <div fxLayout="row inline" fxLayoutGap="10px">
-        <div *ngIf="isgenerate">
+        <div *ngIf = "isgenerate">
         <div class="form-group w-40">
           <input type="text"  formControlName="otp" class="form-control">
+
         </div>
         <div class="errorMessage">seconds remaining</div>
         </div>
       </div>
       <div fxLayout="row inline" fxLayoutGap="20px">
-        <div *ngIf!="isgenerate">
+        <div *ngIf != "isgenerate">
         <button mat-raised-button color="accent">Generate OTP</button>
         </div>
-        <div *ngIf="isgenerate">
+        <div *ngIf ="isgenerate">
         <button mat-raised-button color="accent">Confirm OTP</button>
+
         </div>
       </div>
     </mat-card>
@@ -100,7 +108,9 @@
     </form>
   </mat-card-content>
 </mat-card>
+<p>{{registrationForm.value|json}}</p>
 </div>
+
 
 
 

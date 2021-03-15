@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { HomeModule } from './home/home.module';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { CustomvalidatordirectiveDirective } from './commondirective/customvalidatordirective.directive';
 
 
 
@@ -18,6 +19,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
   declarations: [
     AppComponent,
     PagenotfoundComponent,
+    CustomvalidatordirectiveDirective,
 
 
   ],
