@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import{MatToolbarModule} from '@angular/material/toolbar'
+import {MatToolbarModule} from '@angular/material/toolbar'
 import {MatButtonModule} from '@angular/material/button'
 import {MatInputModule} from '@angular/material/input'
 import {MatCardModule} from '@angular/material/card'
@@ -10,7 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
@@ -26,6 +26,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatNativeDateModule,
     MatRippleModule,
     MatTooltipModule,
+    MatProgressBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -39,6 +40,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatNativeDateModule,
     MatRippleModule,
     MatTooltipModule,
+    MatProgressBarModule,
   ]
 })
 export class AppMaterialModule { }

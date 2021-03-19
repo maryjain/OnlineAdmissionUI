@@ -1,29 +1,37 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MAT_DATE_LOCALE } from '@angular/material/core'
 
+import {AppMaterialModule} from '../app-material/app-material.module';
 import { FooterModule } from './footer/footer.module';
 import { HeaderModule } from './header/header.module';
+import { MarkAsteriskDirective } from './directive/MarkAsterik/mark-asterisk.directive';
+import { AppBlockCopyPasteDirective } from './directive/BlockCopyPaste/app-block-copy-paste.directive';
+import { AlphabetOnlyDirective } from './directive/AlphabetOnly/alphabet-only.directive';
 
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [MarkAsteriskDirective, AppBlockCopyPasteDirective, AlphabetOnlyDirective, ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+
+
   ],
   imports: [
-
+    AppMaterialModule,
     FooterModule,
     HeaderModule,
+
   ],
   exports:
   [
     CommonModule,
     FooterModule,
     HeaderModule,
-
+    AppMaterialModule,
+    MarkAsteriskDirective,
+    AppBlockCopyPasteDirective,
+    AlphabetOnlyDirective,
   ]
 
 })
