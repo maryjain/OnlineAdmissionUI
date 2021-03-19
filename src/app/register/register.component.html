@@ -13,7 +13,10 @@
     <div class="form-group">
       <br>
       <br>
-      <label ast-required>Full Name</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-hint  matTooltipClass="test" matTooltip="{{hintFullNamedDisplay}}">Hint</mat-hint><br>
+      <div fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="75"><label ast-required>Full Name</label></div>
+      <div fxFlex="25"><small><mat-hint  matTooltipClass="test" matTooltip="{{hintFullNamedDisplay}}">Hint</mat-hint></small></div>
+      </div>
       <mat-form-field class="example-full-width">
       <span matPrefix><mat-icon>person</mat-icon>&nbsp;</span>
       <input matInput type="text"  formControlName="name"  required appAlphabetOnly>
@@ -26,7 +29,7 @@
     </mat-form-field>
     </div>
     <div class="form-group">
-    <label  ast-required>Date of Birth</label>
+      <label  ast-required>Date of Birth</label>
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>dd / mm / yyyy</mat-label>
       <input  matInput readonly [matDatepicker]="picker1" [min]="minDate" [max]="maxDate" formControlName="dob" (dateInput)="onDateChange($event)">
@@ -36,10 +39,12 @@
         {{errors.dobRequired}}
       </mat-error>
     </mat-form-field>
-
      </div>
      <div class="form-group">
-      <label ast-required>Email</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-hint  matTooltipClass="test" matTooltip="{{hintEmailDisplay}}">Hint</mat-hint><br>
+      <div fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="75"><label ast-required>Email</label></div>
+        <div fxFlex="25"><small><mat-hint  matTooltipClass="test" matTooltip="{{hintEmailDisplay}}">Hint</mat-hint></small></div>
+      </div>
      <mat-form-field class="example-full-width">
       <span matPrefix><mat-icon>email</mat-icon>&nbsp;</span>
       <input type="email" matInput formControlName="email" placeholder="aaa@example.com" >
@@ -52,7 +57,10 @@
     </mat-form-field>
     </div>
       <div class="form-group">
-      <label ast-required>Mobile</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-hint  matTooltipClass="test" matTooltip="{{hintMobileDisplay}}">Hint</mat-hint><br>
+      <div fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="75"><label ast-required>Mobile</label></div>
+        <div fxFlex="25"><small><mat-hint  matTooltipClass="test" matTooltip="{{hintMobileDisplay}}">Hint</mat-hint></small></div>
+      </div>
       <mat-form-field class="example-full-width">
         <span matPrefix>+91&nbsp;</span>
        <input matInput type="text" (keypress)="utilitysrv.numberOnly($event)" formControlName="mobile"  placeholder="10 digit" >
@@ -66,8 +74,10 @@
       </mat-form-field>
      </div>
    <div class="form-group">
-
-  <label  ast-required>Password</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-hint  matTooltipClass="test" matTooltip="{{hintPasswordDisplay}}">Hint</mat-hint><br>
+    <div fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="75"><label  ast-required>Password</label></div>
+      <div fxFlex="25"><small><mat-hint  matTooltipClass="test" matTooltip="{{hintPasswordDisplay}}">Hint</mat-hint></small></div>
+    </div>
       <mat-form-field appearance="fill" class="example-full-width">
         <mat-label>Password</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" appBlockCopyPaste >
