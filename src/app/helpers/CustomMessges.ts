@@ -53,3 +53,6 @@ export const hintPhoneMessages: { [key: string]: string } = {
   password2: 'Start with number 6 - 9',
  };
 
+export const registrationFormMessage: { [key: string]: string } = {
+  saveWarnMessage: 'Registration form data is saved only when Submit button is clicked'
+ };

@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import {errorMessages, customregExps, hintPasswordMessages,hintFullNameMessages,hintEmailMessages,hintPhoneMessages} from '../helpers/CustomMessges'
+import {errorMessages,
+   customregExps,
+    hintPasswordMessages,
+    hintFullNameMessages,
+    hintEmailMessages,
+    hintPhoneMessages,
+    registrationFormMessage} from '../helpers/CustomMessges'
 import {ValidationService} from '../shared/validate/validation.service';
 import {UtilityService} from '../shared/utility/utility.service';
 
@@ -17,6 +23,7 @@ export class RegisterComponent implements OnInit {
    errors = errorMessages;
 
   public title = 'Registration';
+  public warnmessage = registrationFormMessage.saveWarnMessage;
   public hintPasswordArr = [ hintPasswordMessages.password1,
     hintPasswordMessages.password2,
     hintPasswordMessages.password3,
