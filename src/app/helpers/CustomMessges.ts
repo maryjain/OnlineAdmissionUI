@@ -3,7 +3,6 @@
  */
 export const customregExps: { [key: string]: RegExp } = {
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@!*&])[A-Za-z\d$@!*&]{8,15}$/,
- // email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,4}$/,
   email: /^(?!.*\.\.)(?!.*\_\_)(?!.*\-\-)(?!.*\.\-)(?!.*\-\.)(?!.*\_\-)(?!.*\-\_)(?!.*\.\_)(?!.*\_\.)[a-zA-Z0-9][a-zA-Z0-9._-]+@(?!.*\.\.)(?!.*\-\-)(?!.*\.\-)(?!.*\-\.)[a-zA-Z0-9]{1,}[a-zA-Z0-9.-]+[.][a-zA-Z]{2,4}$/,
   fullName: /^[a-zA-Z][a-zA-Z ]{3,200}$/,
   mobile: /^[6-9]\d{9}$/
@@ -34,25 +33,25 @@ export const hintPasswordMessages: { [key: string]: string } = {
   password6: 'Atleast One uppercase character A - Z'
 };
 export const hintFullNameMessages: { [key: string]: string } = {
-  password1: 'Mininum 3 characters',
-  password2: 'Maximum 100 characters',
-  password3: 'Allowed characters are a - z A - Z space',
-  password4: 'Start with alphabet a - z A - Z'
+  fullname1: 'Mininum 3 characters',
+  fullname2: 'Maximum 100 characters',
+  fullname3: 'Allowed characters are a - z A - Z space',
+  fullname4: 'Start with alphabet a - z A - Z'
 };
 export const hintEmailMessages: { [key: string]: string } = {
-  password1: 'Mininum 8 characters',
-  password2: 'Maximum 100 characters',
-  password3: 'Start with alphabet a - z  A - Z',
-  password4: 'Allowed special characters . - _ in email name',
-  password5: 'Allowed special characters . - in domain name',
+  email1: 'Mininum 8 characters',
+  email2: 'Maximum 100 characters',
+  email3: 'Start with alphabet a - z  A - Z',
+  email4: 'Allowed special characters . - _ in email name',
+  email5: 'Allowed special characters . - in domain name',
 
 };
 
 export const hintPhoneMessages: { [key: string]: string } = {
-  password1: 'Mobile number (India) 10 digit',
-  password2: 'Start with number 6 - 9',
+  phone1: 'Mobile number (India) 10 digit',
+  phone2: 'Start with number 6 - 9',
  };
 
 export const registrationFormMessage: { [key: string]: string } = {
-  saveWarnMessage: 'Registration form data is saved only when Submit button is clicked'
+  saveWarnMessage: 'Data is saved only when Submit button is clicked'
  };

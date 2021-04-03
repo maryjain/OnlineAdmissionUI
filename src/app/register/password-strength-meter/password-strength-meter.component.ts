@@ -44,6 +44,7 @@ export class PasswordStrengthMeterComponent implements OnInit, OnChanges {
     this.getStrengthText();
   }
   isLengthMet() {
+    if(this.password != null){
     if(this.password.length >= this.minLength) {
 
       return true;
@@ -52,6 +53,7 @@ export class PasswordStrengthMeterComponent implements OnInit, OnChanges {
       return false;
     }
   }
+}
   isSpecialCharMet() {
     if( (/[$@!*&]/).test(this.password) ){
 

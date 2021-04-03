@@ -15,8 +15,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import {ValidationService} from './shared/validate/validation.service';
 import {UtilityService} from './shared/utility/utility.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-
-
+import { RegisterService } from './register/service/register.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     HomeModule,
     HttpClientModule,
   ],
-  providers: [ValidationService, UtilityService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  providers: [ValidationService, UtilityService, RegisterService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],
   bootstrap: [AppComponent]
 })
