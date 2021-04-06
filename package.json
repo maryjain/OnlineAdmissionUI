@@ -24,7 +24,9 @@
     "@angular/router": "~10.2.4",
     "bootstrap": "^4.6.0",
     "moment": "^2.29.1",
+    "ng-otp-input": "^1.7.1",
     "rxjs": "~6.6.0",
+    "rxjs-compat": "^6.6.7",
     "tslib": "^2.0.0",
     "typescript-tslint-plugin": "^1.0.1",
     "zone.js": "~0.10.2"

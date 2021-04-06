@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import {errorMessages,
@@ -12,8 +12,7 @@ import {ValidationService} from '../shared/validate/validation.service';
 import {UtilityService} from '../shared/utility/utility.service';
 import {RegisterService} from './service/register.service';
 import {Person} from '../model/Person';
-import { Observable, Subscription, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { interval, Observable, Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -21,19 +20,30 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./register.component.scss'],
   providers:[ValidationService, UtilityService],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit , OnDestroy{
+
   sample: any;
   errors = errorMessages;
-  errorlist: string;
+  errorlist: string[];
+  fieldMapping = new Map();
   person: Person;
   result: Observable<Person>;
   public title = 'Registration';
   dobDate: Date;
   minDate: Date;
   maxDate: Date;
-  isgenerate: boolean;
-  ishide: boolean;
+  genearatedOTP: number;
+  // OTP
+  isGenerateOTP: boolean;
+  isConfirmOTP: boolean;
+  ishow: boolean;
   hide = true;
+  otpStatus: string;
+  // Timer
+  sub: Subscription;
+  countDown;
+  count;
+
   public warnmessage = registrationFormMessage.saveWarnMessage;
   public hintPasswordArr = [ hintPasswordMessages.password1,
     hintPasswordMessages.password2,
@@ -67,8 +77,8 @@ export class RegisterComponent implements OnInit {
   public registrationForm =this.fb.group({
     fullname: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
     dob : ['', Validators.required],
-    emailid : ['', [Validators.required, Validators.pattern(customregExps.email)]],
-    mobileno: ['', [Validators.required, Validators.pattern(customregExps.mobile)]],
+    emailid : ['', [Validators.required, Validators.pattern(customregExps.email)], this.validatesrv.duplicateEmailidValidator()],
+    mobileno: ['', [Validators.required, Validators.pattern(customregExps.mobile)], this.validatesrv.duplicateMobileNoValidator()],
     passwordplain: ['', Validators.compose([Validators.required, Validators.pattern(customregExps.password)])],
     otp : ['', Validators.required]
      },
@@ -85,12 +95,16 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isgenerate = true;
-    this.ishide = true;
+    this.isGenerateOTP = true;
+    this.isConfirmOTP = false;
+    this.ishow = true;
     this.validatesrv.showTasks();
-
+    this.otpStatus = "";
     this.registrationForm.controls['otp'].setValue(0);
   }
+
+  ngOnDestroy() { this.sub.unsubscribe(); }
+
   onDateChange( $event ) {
     const formatted = $event.value;
     this.sample = moment(this.registrationForm.get('dob').value).format('DD-MM-yyyy');
@@ -115,12 +129,70 @@ export class RegisterComponent implements OnInit {
       (err) => {
         if(err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){
         this.errorlist =  err.error['message'];
-        console.log("err.error['message'][0] =" + this.errorlist[0]);
-        console.log("err.error['message'] length =" + this.errorlist.length);
-        console.log("err.error['status'] =" + err.error['status']);
+        for (let index in this.errorlist) {
+          let key:string = this.errorlist[index].split(':')[0].split('.')[2];
+          let value:string = this.errorlist[index].split(':')[1];
+          this.fieldMapping.set(key,value);
+          }
+        console.log("err.error['message'][0] = " + this.errorlist[0].split(':')[0].split('.')[2]);
+        console.log("fieldMapping.get('emailid') = " + this.fieldMapping.get('emailid'));
+        console.log("fieldMapping.get('mobileno') = " + this.fieldMapping.get('mobileno'));
+        console.log("err.error['status'] = " + err.error['status']);
         }
      });
   }
+
+
+  otpTimer(): void {
+
+    this.count = 11;
+    this.countDown = timer(0, 1000)
+      .subscribe(x => {
+        this.count = this.count - 1;
+      });
+
+    this.sub = interval(300)
+      .subscribe(x => {
+        console.log(this.count);
+        if (this.count === 1) {
+          this.isConfirmOTP = true;
+          this.countDown.unsubscribe();
+          console.log("isConfirmOTP = "+this.isConfirmOTP);
+          this.sub.unsubscribe();
+        }
+      });
+
+    }
+
+
+  clickGenerateOTP(): void
+  {
+    this.isGenerateOTP = false;
+    this.otpTimer();
+    this.genearatedOTP= this.registersrv.generateEmailOTP(this.registrationForm.get('emailid').value);
+    console.log("OTP generated = "+this.genearatedOTP);
+
+    }
+
+
+    checkEmailOTP(): void{
+      if(this.registrationForm.get('otp').value === this.genearatedOTP && this.count !== 1)
+      {
+      this.otpStatus = errorMessages.otpSuccess;
+      }
+      else{
+        this.otpStatus = errorMessages.otpFailure;
+      }
+  }
+
+  clickResendOTP(): void
+  {
+
+    this.otpTimer();
+    this.genearatedOTP= this.registersrv.generateEmailOTP(this.registrationForm.get('emailid').value);
+    console.log("OTP resend = "+this.genearatedOTP);
+
+    }
 
   get fullname() { return this.registrationForm.get('fullname'); }
   get dob() { return this.registrationForm.get('dob'); }
@@ -128,6 +200,10 @@ export class RegisterComponent implements OnInit {
   get mobileno() { return this.registrationForm.get('mobileno'); }
   get passwordplain() { return this.registrationForm.get('passwordplain'); }
   get otp() { return this.registrationForm.get('otp'); }
+
+
+
+
 
   }
 

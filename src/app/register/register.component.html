@@ -63,6 +63,9 @@
       <mat-error *ngIf ="registrationForm.touched && emailid.hasError('pattern') && !emailid.hasError('required')">
         {{errors.email}}
       </mat-error>
+      <mat-error *ngIf ="registrationForm.touched && emailid.hasError('EmailidExists') && !emailid.hasError('required')">
+        {{errors.emailDuplicate}}
+      </mat-error>
       <mat-error *ngIf ="emailid.hasError('required')">
         {{errors.emailRequired}}
       </mat-error>
@@ -78,6 +81,9 @@
        <input matInput type="text" (keypress)="utilitysrv.numberOnly($event)" formControlName="mobileno"  placeholder="10 digit" >
        <mat-error *ngIf ="registrationForm.touched && mobileno.hasError('pattern') && !mobileno.hasError('required')">
         {{errors.mobile}}
+      </mat-error>
+      <mat-error *ngIf ="registrationForm.touched && mobileno.hasError('MobileNoExists') && !mobileno.hasError('required')">
+        {{errors.mobileNoDuplicate}}
       </mat-error>
       <mat-error *ngIf ="mobileno.hasError('required')">
         {{errors.mobileRequired}}
@@ -110,25 +116,34 @@
 
     </div>
 
-    <mat-card fxLayout="column" *ngIf !="ishide">
-      <div fxLayout="row inline" fxLayoutGap="10px">
-        <div *ngIf = "isgenerate">
-        <div class="form-group w-40">
+    <mat-card fxLayout="column" *ngIf ="ishow">
+      <label ast-required> Email verification OTP</label>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start"  *ngIf = "!isGenerateOTP && !isConfirmOTP">
+        <div  fxFlex="30" >
           <input type="text"  formControlName="otp" class="form-control">
-
         </div>
-        <div class="errorMessage">seconds remaining</div>
-        </div>
-      </div>
-      <div fxLayout="row inline" fxLayoutGap="20px">
-        <div *ngIf != "isgenerate">
-        <button mat-raised-button color="accent">Generate OTP</button>
-        </div>
-        <div *ngIf ="isgenerate">
-        <button mat-raised-button color="accent">Confirm OTP</button>
-
+        <div fxFlex="70" class="errorMessage" >{{count}} seconds remaining
+        <br><small>Check the email to know OTP</small>
         </div>
       </div>
+      <br>
+      <div  fxLayout="row inline" fxLayoutGap="10px">
+        <div  fxFlex="30" *ngIf = "isGenerateOTP">
+        <button mat-raised-button color="accent" (click)="clickGenerateOTP()">Generate OTP</button>
+        </div>
+        <div  fxFlex="60" *ngIf = "isConfirmOTP">
+          <label>{{otpStatus}}</label>
+          </div>
+      </div>
+      <br>
+      <div fxLayout="row inline" fxLayoutGap="5px" *ngIf ="!isGenerateOTP">
+        <div fxFlex="40" *ngIf = "!isConfirmOTP">
+        <button mat-raised-button color="primary" (click)="checkEmailOTP()">Confirm OTP</button>
+       </div>
+      <div fxFlex="40">
+        <button mat-raised-button color="accent" (click)="clickResendOTP()">Resend OTP</button>
+      </div>
+    </div>
     </mat-card>
      <br>
      <div fxLayout="row inline" fxLayoutGap="20px">

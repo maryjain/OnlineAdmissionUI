@@ -11,6 +11,7 @@ import {Person} from '../../model/Person';
 export class RegisterService {
   result : Observable<Person>;
   apiUrl = `${environment.profileapiUrl}`;
+  otp: number;
   public headers = new HttpHeaders().set('Accept', 'application/json')
   .set('content-type', 'application/json');
 
@@ -24,4 +25,18 @@ export class RegisterService {
 
   }
 
+  generateEmailOTP(emailid: string): any{
+  this.http.get(this.apiUrl + "/send-mail/"+emailid).subscribe((response: number) => {
+    this.otp = response;
+    console.log('otp : ' + this.otp);
+    return this.otp;
+  },
+  (err: HttpErrorResponse) => {
+   if(err.error instanceof Error){
+     console.log("Error occured GET Emai OTP");
+   }
+   return 0;
+  }
+  );
+  }
 }

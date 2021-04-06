@@ -15,13 +15,18 @@ export const errorMessages: { [key: string]: string } = {
   fullName: 'Please enter valid Full name',
   email: 'Please enter valid email address',
   password: 'Please enter valid password',
-  mobile:'Please enter valid mobile number',
+  mobile: 'Please enter valid mobile number',
   fullNameRequired: 'Full name is required',
   emailRequired: 'Email address is  required',
   passwordRequired: 'Password is  required ',
   mobileRequired:'Mobile number is  required',
   dobRequired:'Date of Birth is  required',
-  otpRequired:'OTP is required'
+  otpRequired:'OTP is required',
+  emailDuplicate: 'Email id already exists',
+  mobileNoDuplicate: 'Mobile Number already exists',
+  otpTimerExpires: 'Time out , Resend OTP again',
+  otpSuccess: 'Success',
+  otpFailure: 'Failure',
 };
 
 export const hintPasswordMessages: { [key: string]: string } = {

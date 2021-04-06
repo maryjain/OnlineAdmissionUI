@@ -9,6 +9,7 @@ import { RegisterhomeComponent } from './registerhome.component';
 import { SharedModule } from '../shared/shared.module';
 import { PasswordStrengthMeterComponent} from './password-strength-meter/password-strength-meter.component';
 
+
 @NgModule({
   declarations: [RegisterComponent, ContentComponent, RegisterhomeComponent, PasswordStrengthMeterComponent],
   imports: [
@@ -19,12 +20,13 @@ import { PasswordStrengthMeterComponent} from './password-strength-meter/passwor
     FlexLayoutModule,
     SharedModule,
   ],
-  exports:[
+  exports: [
    RegisterComponent,
    ContentComponent,
    RegisterhomeComponent,
    SharedModule,
    PasswordStrengthMeterComponent,
+
   ]
 
 

@@ -16,6 +16,7 @@ import {ValidationService} from './shared/validate/validation.service';
 import {UtilityService} from './shared/utility/utility.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { RegisterService } from './register/service/register.service';
+import { NgOtpInputModule } from '../../node_modules/ng-otp-input';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { RegisterService } from './register/service/register.service';
     SharedModule,
     HomeModule,
     HttpClientModule,
+    NgOtpInputModule
   ],
   providers: [ValidationService, UtilityService, RegisterService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],
