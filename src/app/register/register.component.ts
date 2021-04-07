@@ -32,17 +32,21 @@ export class RegisterComponent implements OnInit , OnDestroy{
   dobDate: Date;
   minDate: Date;
   maxDate: Date;
-  genearatedOTP: number;
+  genearatedOTP: any;
   // OTP
   isGenerateOTP: boolean;
   isConfirmOTP: boolean;
-  ishow: boolean;
+  isResendOTP: boolean;
+  isshowEmailOTP: boolean;  // not used
+  errorEmailOTP: string;
+  isshowErrorEmailOTP: boolean;
+  isvalidOTPEntered: boolean;
   hide = true;
   otpStatus: string;
   // Timer
   sub: Subscription;
   countDown;
-  count;
+  count: number;
 
   public warnmessage = registrationFormMessage.saveWarnMessage;
   public hintPasswordArr = [ hintPasswordMessages.password1,
@@ -95,12 +99,17 @@ export class RegisterComponent implements OnInit , OnDestroy{
   }
 
   ngOnInit(): void {
+    this.isvalidOTPEntered = false;
     this.isGenerateOTP = true;
     this.isConfirmOTP = false;
-    this.ishow = true;
+    this.isResendOTP = false;
+    this.isshowEmailOTP = true; // not used
+    this.isshowErrorEmailOTP = false;
+    this.errorEmailOTP = "";
     this.validatesrv.showTasks();
     this.otpStatus = "";
     this.registrationForm.controls['otp'].setValue(0);
+    this.registrationForm.reset();
   }
 
   ngOnDestroy() { this.sub.unsubscribe(); }
@@ -112,6 +121,15 @@ export class RegisterComponent implements OnInit , OnDestroy{
   onStrengthChange(strength) {
     console.log(strength);
   }
+
+  onBlurEmail()
+  {
+    if (this.registrationForm.get('emailid').valid){
+      this.errorEmailOTP= "";
+      this.isshowErrorEmailOTP = false;
+    }
+  }
+
 
   addPerson() {
     this.person = new Person(
@@ -145,7 +163,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
   otpTimer(): void {
 
-    this.count = 11;
+    this.count = 30;
     this.countDown = timer(0, 1000)
       .subscribe(x => {
         this.count = this.count - 1;
@@ -156,43 +174,76 @@ export class RegisterComponent implements OnInit , OnDestroy{
         console.log(this.count);
         if (this.count === 1) {
           this.isConfirmOTP = true;
+          this.isResendOTP = true;
           this.countDown.unsubscribe();
-          console.log("isConfirmOTP = "+this.isConfirmOTP);
+          console.log('isConfirmOTP = '+ this.isConfirmOTP);
           this.sub.unsubscribe();
         }
       });
 
     }
 
-
-  clickGenerateOTP(): void
+  clickGenerateOTP( $event)
   {
+    this.otpStatus = "";
+    $event.preventDefault();
+    if(this.registrationForm.get('emailid').valid){
+    this.isshowErrorEmailOTP = false;
+    this.errorEmailOTP = "";
     this.isGenerateOTP = false;
+    this.isConfirmOTP = true;
     this.otpTimer();
-    this.genearatedOTP= this.registersrv.generateEmailOTP(this.registrationForm.get('emailid').value);
-    console.log("OTP generated = "+this.genearatedOTP);
-
+    this.registersrv.generateEmailOTP(this.registrationForm.get('emailid').value).subscribe((data => {
+      this.genearatedOTP = data;
+      console.log('this.genearatedOTP = ' + this.genearatedOTP);
+     }));
+    }
+    else{
+      this.isConfirmOTP = false;
+      if(this.registrationForm.get('emailid').hasError('required'))
+      {
+       this.errorEmailOTP = this.errors.emailRequired;
+      }
+      if(this.registrationForm.get('emailid').hasError('pattern'))
+      {
+       this.errorEmailOTP = this.errors.email;
+      }
+      if(this.registrationForm.get('emailid').hasError('emailDuplicate'))
+      {
+       this.errorEmailOTP = this.errors.emailDuplicate;
+      }
+      this.isshowErrorEmailOTP = true;
+    }
     }
 
 
-    checkEmailOTP(): void{
-      if(this.registrationForm.get('otp').value === this.genearatedOTP && this.count !== 1)
+    checkEmailOTP($event): void{
+      this.isvalidOTPEntered = false;
+      this.otpStatus = "";
+      $event.preventDefault();
+      console.log("parseInt(this.registrationForm.get('otp').value, 10) =" +parseInt(this.registrationForm.get('otp').value, 10));
+      console.log("this.count =" +this.count);
+      console.log("OTP generated = "+this.genearatedOTP);
+      if (parseInt(this.registrationForm.get('otp').value, 10) === parseInt(this.genearatedOTP, 10) && this.count !== 1)
       {
+        this.isvalidOTPEntered = true;
+        console.log("check otp , this.genearatedOTP = "+this.genearatedOTP);
+        console.log("check otp , input value = "+this.registrationForm.get('otp').value);
+        this.countDown.unsubscribe();
+        this.sub.unsubscribe();
       this.otpStatus = errorMessages.otpSuccess;
+      this.isConfirmOTP =false;
+      this.isResendOTP = false;
       }
       else{
+        this.countDown.unsubscribe();
+        this.sub.unsubscribe();
+        this.isResendOTP = true;
+        this.isConfirmOTP = false;
         this.otpStatus = errorMessages.otpFailure;
       }
   }
 
-  clickResendOTP(): void
-  {
-
-    this.otpTimer();
-    this.genearatedOTP= this.registersrv.generateEmailOTP(this.registrationForm.get('emailid').value);
-    console.log("OTP resend = "+this.genearatedOTP);
-
-    }
 
   get fullname() { return this.registrationForm.get('fullname'); }
   get dob() { return this.registrationForm.get('dob'); }
@@ -200,10 +251,6 @@ export class RegisterComponent implements OnInit , OnDestroy{
   get mobileno() { return this.registrationForm.get('mobileno'); }
   get passwordplain() { return this.registrationForm.get('passwordplain'); }
   get otp() { return this.registrationForm.get('otp'); }
-
-
-
-
 
   }
 
