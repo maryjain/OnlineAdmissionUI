@@ -6,6 +6,8 @@ export class Person {
   mobileno: bigint;
   passwordplain: string;
   otp: number;
+  enteredCaptcha: string;
+  generatedCaptcha: string;
 
 
   constructor(fullname: string, dob: Date, emailid: string, mobileno: bigint, passwordplain: string) {

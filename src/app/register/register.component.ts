@@ -13,6 +13,7 @@ import {UtilityService} from '../shared/utility/utility.service';
 import {RegisterService} from './service/register.service';
 import {Person} from '../model/Person';
 import { interval, Observable, Subscription, timer } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -43,6 +44,11 @@ export class RegisterComponent implements OnInit , OnDestroy{
   isvalidOTPEntered: boolean;
   hide = true;
   otpStatus: string;
+  //captcha
+  captchaStatus: string;
+  captcha:string;
+  inputCaptcha: number;
+  isvalidCaptchaEntered: boolean;
   // Timer
   sub: Subscription;
   countDown;
@@ -84,7 +90,8 @@ export class RegisterComponent implements OnInit , OnDestroy{
     emailid : ['', [Validators.required, Validators.pattern(customregExps.email)], this.validatesrv.duplicateEmailidValidator()],
     mobileno: ['', [Validators.required, Validators.pattern(customregExps.mobile)], this.validatesrv.duplicateMobileNoValidator()],
     passwordplain: ['', Validators.compose([Validators.required, Validators.pattern(customregExps.password)])],
-    otp : ['', Validators.required]
+    otp : ['', Validators.required],
+    enteredCaptcha: ['', Validators.required]
      },
     );
 
@@ -100,6 +107,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
   ngOnInit(): void {
     this.isvalidOTPEntered = false;
+    this.isvalidCaptchaEntered= false;
     this.isGenerateOTP = true;
     this.isConfirmOTP = false;
     this.isResendOTP = false;
@@ -110,6 +118,8 @@ export class RegisterComponent implements OnInit , OnDestroy{
     this.otpStatus = "";
     this.registrationForm.controls['otp'].setValue(0);
     this.registrationForm.reset();
+    this.captchaStatus = "";
+
   }
 
   ngOnDestroy() { this.sub.unsubscribe(); }
@@ -132,6 +142,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
 
   addPerson() {
+    this.captcha_validation();
     this.person = new Person(
     this.registrationForm.get('fullname').value,
     this.registrationForm.get('dob').value,
@@ -148,10 +159,10 @@ export class RegisterComponent implements OnInit , OnDestroy{
         if(err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){
         this.errorlist =  err.error['message'];
         for (let index in this.errorlist) {
-          let key:string = this.errorlist[index].split(':')[0].split('.')[2];
-          let value:string = this.errorlist[index].split(':')[1];
-          this.fieldMapping.set(key,value);
-          }
+        let key:string = this.errorlist[index].split(':')[0].split('.')[2];
+        let value:string = this.errorlist[index].split(':')[1];
+        this.fieldMapping.set(key,value);
+        }
         console.log("err.error['message'][0] = " + this.errorlist[0].split(':')[0].split('.')[2]);
         console.log("fieldMapping.get('emailid') = " + this.fieldMapping.get('emailid'));
         console.log("fieldMapping.get('mobileno') = " + this.fieldMapping.get('mobileno'));
@@ -163,7 +174,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
   otpTimer(): void {
 
-    this.count = 30;
+    this.count = 121;
     this.countDown = timer(0, 1000)
       .subscribe(x => {
         this.count = this.count - 1;
@@ -185,6 +196,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
   clickGenerateOTP( $event)
   {
+
     this.otpStatus = "";
     $event.preventDefault();
     if(this.registrationForm.get('emailid').valid){
@@ -231,7 +243,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
         console.log("check otp , input value = "+this.registrationForm.get('otp').value);
         this.countDown.unsubscribe();
         this.sub.unsubscribe();
-      this.otpStatus = errorMessages.otpSuccess;
+      this.otpStatus = errorMessages.success;
       this.isConfirmOTP =false;
       this.isResendOTP = false;
       }
@@ -240,10 +252,54 @@ export class RegisterComponent implements OnInit , OnDestroy{
         this.sub.unsubscribe();
         this.isResendOTP = true;
         this.isConfirmOTP = false;
-        this.otpStatus = errorMessages.otpFailure;
+        this.otpStatus = errorMessages.failure;
       }
   }
 
+  generateCaptcha(): void
+  {
+    this.isvalidCaptchaEntered= false;
+    this.captchaStatus= "";
+    this.captcha="";
+    this.registersrv.generateCaptcha().subscribe((res ) => {
+      this.captcha = res.data;
+      console.log('this.captcha = ' + this.captcha);
+     },
+    (err: HttpErrorResponse) => {
+      console.log("Error status = "+ err.statusText);
+     console.log("Error occured Captcha = "+ err.message);
+
+    });
+    this.registrationForm.get('enteredCaptcha').setValue('');
+  }
+
+  captcha_validation():void
+  {
+    this.isvalidCaptchaEntered= false;
+    this.captchaStatus= "";
+    if(this.captcha !==""){
+    let arr = this.captcha.split(' ');
+    this.inputCaptcha = parseInt(this.registrationForm.get('enteredCaptcha').value, 10);
+    let ans = 0;
+    switch(arr[1]){
+      case '+' :  ans=parseInt(arr[0])+parseInt(arr[2]);break;
+      case '-' :  ans=parseInt(arr[0])-parseInt(arr[2]);break;
+      case '*' :  ans=parseInt(arr[0])*parseInt(arr[2]);break;
+    }
+    console.log(arr);
+    console.log(" answer = "+ans);
+
+    if(this.inputCaptcha === ans){
+      this.isvalidCaptchaEntered= true;
+      console.log("true");
+      this.captchaStatus= errorMessages.success;
+
+  }else{
+      console.log("false");
+      this.captchaStatus= errorMessages.failure;
+  }
+ }
+  }
 
   get fullname() { return this.registrationForm.get('fullname'); }
   get dob() { return this.registrationForm.get('dob'); }
@@ -251,6 +307,6 @@ export class RegisterComponent implements OnInit , OnDestroy{
   get mobileno() { return this.registrationForm.get('mobileno'); }
   get passwordplain() { return this.registrationForm.get('passwordplain'); }
   get otp() { return this.registrationForm.get('otp'); }
-
+  get enteredCaptcha() { return this.registrationForm.get('enteredCaptcha'); }
   }
 

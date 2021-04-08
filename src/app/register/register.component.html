@@ -6,7 +6,7 @@
     </mat-card-header>
 
   <mat-card-content>
-  <form [formGroup]='registrationForm' #ngForm="ngForm" (ngSubmit)="registrationForm.valid && isvalidOTPEntered && addPerson()">
+  <form [formGroup]='registrationForm' #ngForm="ngForm" (ngSubmit)="registrationForm.valid && isvalidOTPEntered && isvalidCaptchaEntered && addPerson()">
     <div *ngIf="registrationForm.dirty " class="errorMessage">
       <span class="material-icons">
         notification_important
@@ -143,11 +143,30 @@
       <div fxLayout="row inline" fxLayoutGap="5px" *ngIf ="!isGenerateOTP">
         <div fxFlex="40" *ngIf = "isConfirmOTP">
         <button mat-raised-button color="primary" (click)="checkEmailOTP($event)">Confirm OTP</button>
-       </div>
+      </div>
       <div fxFlex="40" *ngIf = "isResendOTP">
         <button mat-raised-button color="accent" (click)="clickGenerateOTP($event)">Resend OTP</button>
       </div>
     </div>
+    </mat-card>
+    <br>
+    <mat-card fxLayout="column" >
+    <label ast-required> Enter captcha</label>
+    <div  fxLayout="row inline" fxLayoutGap="5px">
+    <div  fxFlex="30" class="">
+      <input type="text"   class="form-control captcha_gen " value={{captcha}} readonly>
+    </div>
+    <div  fxFlex="20">
+    <button mat-raised-button type="button" (click)="generateCaptcha()" id="refresh" class="refresh"><img src="../../assets/images/refresh.png"></button>
+    </div>
+    <div  fxFlex="50">
+    <input type="text" formControlName="enteredCaptcha"  placeholder="Enter captcha" (blur)="captcha_validation()">
+    </div>
+    </div>
+    <br>
+    <div  fxFlex="60" >
+      <label>{{captchaStatus}}</label>
+      </div>
     </mat-card>
      <br>
      <div fxLayout="row inline" fxLayoutGap="20px">

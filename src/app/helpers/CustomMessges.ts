@@ -25,8 +25,8 @@ export const errorMessages: { [key: string]: string } = {
   emailDuplicate: 'Email id already exists',
   mobileNoDuplicate: 'Mobile Number already exists',
   otpTimerExpires: 'Time out , Resend OTP again',
-  otpSuccess: 'Success',
-  otpFailure: 'Failure',
+  success: 'Success',
+  failure: 'Failure',
 };
 
 export const hintPasswordMessages: { [key: string]: string } = {

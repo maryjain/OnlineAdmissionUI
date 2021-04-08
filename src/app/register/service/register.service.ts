@@ -12,7 +12,7 @@ import { map, switchMap } from 'rxjs/operators';
 export class RegisterService {
   result : Observable<Person>;
   apiUrl = `${environment.profileapiUrl}`;
-  otpapiUrl = `${environment.commonapiUrl}`;
+  commonapiUrl = `${environment.commonapiUrl}`;
   otp: string;
   public headers = new HttpHeaders().set('Accept', 'application/json')
   .set('content-type', 'application/json');
@@ -28,25 +28,8 @@ export class RegisterService {
   }
 
     generateEmailOTP(emailid: string): Observable<any>{
-    return  this.http.get<any>(this.otpapiUrl +  "/send-mail/" + emailid);
-    /*return timer(1000)
-    .pipe(
-      switchMap(() => {
-        // generate otp
-        return this.http.get<any>(this.apiUrl +  "/sensd-mail/"+emailid);
-      })
-    )
-    .pipe(
-      map(res => {
-        // if otp is present
-        if (res != null && res !== undefined) {
-          // return error
-          console.log("Response = "+res);
-          return  res;
-        }
-      })
-    );
-    */
+    return  this.http.get<any>(this.commonapiUrl +  "otp/send-mail/" + emailid);
+
 
  /*   await this.http.get(this.apiUrl + "/send-mail/"+emailid).subscribe((response: string) => {
     this.otp = response;
@@ -61,5 +44,9 @@ export class RegisterService {
   }
   );
   }*/
+}
+generateCaptcha(): Observable<any>{
+  console.log(" this.commonapiUrl ="+this.commonapiUrl);
+  return  this.http.get<any>(this.commonapiUrl +  'captcha',{responseType: 'json'});
 }
 }
