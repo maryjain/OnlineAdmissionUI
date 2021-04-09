@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UtilityService } from '../shared/utility/utility.service';
 import { LoginService } from './service/login.service';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ import { LoginService } from './service/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, public utilitysrv: UtilityService, public loginsrv: LoginService) { }
+  constructor(private fb: FormBuilder, public utilitysrv: UtilityService, public loginsrv: LoginService, private router: Router) { }
 
   sample: any;
   errors = errorMessages;
@@ -66,28 +67,32 @@ public hintEmailArr = [ hintEmailMessages.email1,
     this.loginForm.get('emailid').value, null,
     this.loginForm.get('passwordplain').value);
 
-   /* this.loginsrv.login(this.person).subscribe((data) => {
-      console.log('POST profileid= ' + data.profileid);
-      this.person.profileid = data.profileid;
-     // this.validatesrv.getlatestProfile(this.person);
-     this.router.navigate(['/register']);
-
+    this.loginsrv.login(this.person).subscribe((res) => {
+      console.log('POST login status= ' + res.data);
+      if(res.data === "true"){
+          this.router.navigate(['/register']);
+      }
     },
       (err) => {
         if (err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){
         this.errorlist =  err.error['message'];
-        for (let index in this.errorlist) {
-        let key: string = this.errorlist[index].split(':')[0].split('.')[2];
+        let key: string;
+        for (let index in this.errorlist){
+        if(this.errorlist[index].split(':')[0].split('.')[2] != null && this.errorlist[index].split(':')[0].split('.')[2] != undefined)
+          {
+            key = this.errorlist[index].split(':')[0].split('.')[2];
+          }
+          else{
+            key = this.errorlist[index].split(':')[0];
+          }
         let value: string = this.errorlist[index].split(':')[1];
         this.fieldMapping.set(key, value);
         }
-        console.log("err.error['message'][0] = " + this.errorlist[0].split(':')[0].split('.')[2]);
-        console.log("fieldMapping.get('emailid') = " + this.fieldMapping.get('emailid'));
-        console.log("fieldMapping.get('mobileno') = " + this.fieldMapping.get('mobileno'));
+        console.log("err.error['message'][0] = " + key);
         console.log("err.error['status'] = " + err.error['status']);
         }
      });
-     */
+
   }
 
 
@@ -114,7 +119,7 @@ public hintEmailArr = [ hintEmailMessages.email1,
   {
     this.isvalidCaptchaEntered = false;
     this.captchaStatus = "";
-    if (this.captcha !== ""){
+    if (this.captcha.trim() !== ""){
     let arr = this.captcha.split(' ');
     this.inputCaptcha = parseInt(this.loginForm.get('enteredCaptcha').value, 10);
     let ans = 0;
