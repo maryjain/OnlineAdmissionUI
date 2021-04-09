@@ -45,8 +45,5 @@ export class RegisterService {
   );
   }*/
 }
-generateCaptcha(): Observable<any>{
-  console.log(" this.commonapiUrl ="+this.commonapiUrl);
-  return  this.http.get<any>(this.commonapiUrl +  'captcha',{responseType: 'json'});
-}
+
 }

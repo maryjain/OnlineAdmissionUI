@@ -16,7 +16,7 @@ import {ValidationService} from './shared/validate/validation.service';
 import {UtilityService} from './shared/utility/utility.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { RegisterService } from './register/service/register.service';
-
+import { LoginService } from './login/service/login.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +34,7 @@ import { RegisterService } from './register/service/register.service';
     HttpClientModule,
 
   ],
-  providers: [ValidationService, UtilityService, RegisterService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  providers: [ValidationService, UtilityService, RegisterService, LoginService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],
   bootstrap: [AppComponent]
 })

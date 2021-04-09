@@ -1,1 +1,102 @@
-<p>login works!</p>
+<div  class="container" fxLayout="row" >
+  <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div class="card my-5">
+      <div class="card-body">
+        <mat-card-header class="centrecss">
+          <mat-card-title>{{title}}</mat-card-title>
+        </mat-card-header>
+    <mat-card class="customcss">
+    <mat-card-content>
+      <form [formGroup]="loginForm" #ngForm="ngForm" (ngSubmit)="loginForm.valid  && isvalidCaptchaEntered && profileLogin()">
+          <div *ngIf="ngForm.submitted && errorlist !=null" class="alert">
+          <span class="material-icons">
+            error
+          </span> Error
+          <ul>
+            <li *ngFor="let err of errorlist">
+            <span>{{err}}</span>
+           </li>
+          </ul>
+        </div>
+        <br>
+        <div class="form-group">
+          <div fxLayout="row" fxLayoutAlign="start">
+            <div><label ast-required>Email</label></div>
+          </div>
+         <mat-form-field class="example-full-width">
+          <span matPrefix><mat-icon>email</mat-icon>&nbsp;</span>
+          <input type="email" matInput formControlName="emailid" placeholder="aaa@example.com" >
+          <mat-error *ngIf ="loginForm.touched && emailid.hasError('pattern') && !emailid.hasError('required')">
+            {{errors.email}}
+          </mat-error>
+          <mat-error *ngIf ="loginForm.touched && emailid.hasError('EmailidExists') && !emailid.hasError('required')">
+            {{errors.emailDuplicate}}
+          </mat-error>
+          <mat-error *ngIf ="emailid.hasError('required')">
+            {{errors.emailRequired}}
+          </mat-error>
+        </mat-form-field>
+        </div>
+        <div class="form-group">
+          <div fxLayout="row" fxLayoutAlign="start">
+            <div fxFlex="75"><label  ast-required>Password</label></div> <div fxFlex="25"><a href="#" style="float:right;font-size:12px;">Forgot password?</a></div>
+          </div>
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordplain" appBlockCopyPaste >
+              <br>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf ="passwordplain.hasError('required')">
+                {{errors.passwordRequired}}
+              </mat-error>
+              <mat-error *ngIf ="loginForm.touched && passwordplain.hasError('pattern') && !passwordplain.hasError('required')">
+                {{errors.password}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="start">
+          <label ast-required> Enter captcha</label>
+          </div>
+          <div  fxLayout="row inline" fxLayoutGap="5px">
+          <div  fxFlex="30" class="">
+            <input type="text"   class="form-control captcha_gen " value={{captcha}} readonly>
+          </div>
+          <div  fxFlex="20">
+          <button mat-raised-button type="button" (click)="generateCaptcha()" id="refresh" class="refresh"><img src="../../assets/images/refresh.png"></button>
+          </div>
+          <div  fxFlex="50">
+          <input type="text" formControlName="enteredCaptcha"  placeholder="Enter captcha" (blur)="captcha_validation()">
+          </div>
+          </div>
+          <br>
+          <div  fxFlex="60" >
+            <label>{{captchaStatus}}</label>
+          </div>
+          </div>
+           <br>
+           <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+            <div >
+            <button mat-raised-button (click)="loginForm.reset()"class="button-color">Cancel</button>
+            </div>
+            <div >
+            <button mat-raised-button color="warn">Submit</button>
+            </div>
+           </div>
+          </form>
+          <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+            <div >
+
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    </div>
+    </div>
+  </div>
+      <p>{{loginForm.value|json}}</p>
+      <p>{{loginForm.valid}}</p>
+      <p>{{sample}}</p>

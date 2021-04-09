@@ -14,6 +14,7 @@ import {RegisterService} from './service/register.service';
 import {Person} from '../model/Person';
 import { interval, Observable, Subscription, timer } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -97,7 +98,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
 
   constructor(private fb: FormBuilder, public validatesrv: ValidationService, public utilitysrv: UtilityService,
-    public registersrv: RegisterService) {
+    public registersrv: RegisterService, private router: Router) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 50, 0, 1);
     this.maxDate = new Date(currentYear - 14, 11, 31);
@@ -122,7 +123,12 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
   }
 
-  ngOnDestroy() { this.sub.unsubscribe(); }
+  ngOnDestroy() {
+    if(this.sub != null && this.sub !== undefined)
+    {
+      this.sub.unsubscribe();
+    }
+    }
 
   onDateChange( $event ) {
     const formatted = $event.value;
@@ -154,6 +160,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
       console.log('POST profileid= ' + data.profileid);
       this.person.profileid = data.profileid;
      // this.validatesrv.getlatestProfile(this.person);
+     this.router.navigate(['/login']);
     },
       (err) => {
         if(err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){
@@ -261,7 +268,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
     this.isvalidCaptchaEntered= false;
     this.captchaStatus= "";
     this.captcha="";
-    this.registersrv.generateCaptcha().subscribe((res ) => {
+    this.utilitysrv.generateCaptcha().subscribe((res ) => {
       this.captcha = res.data;
       console.log('this.captcha = ' + this.captcha);
      },
