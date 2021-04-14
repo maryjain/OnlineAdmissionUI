@@ -11,17 +11,18 @@ import { SharedModule } from './shared/shared.module';
 
 import { HomeModule } from './home/home.module';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
-
+import {ProfilesummaryComponent} from './profilesummary/profilesummary.component'
 import {ValidationService} from './shared/validate/validation.service';
 import {UtilityService} from './shared/utility/utility.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { RegisterService } from './register/service/register.service';
 import { LoginService } from './login/service/login.service';
+import { RegistrationdetailsModule } from './registrationdetails/registrationdetails.module';
 @NgModule({
   declarations: [
     AppComponent,
     PagenotfoundComponent,
-
+    ProfilesummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +33,7 @@ import { LoginService } from './login/service/login.service';
     SharedModule,
     HomeModule,
     HttpClientModule,
+    RegistrationdetailsModule,
 
   ],
   providers: [ValidationService, UtilityService, RegisterService, LoginService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

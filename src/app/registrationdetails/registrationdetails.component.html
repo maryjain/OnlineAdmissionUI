@@ -1,0 +1,22 @@
+<div class="container-fluid customHeader">
+<h2>Personal Details</h2>
+</div>
+
+<mat-sidenav-container class="example-container" >
+
+	<mat-sidenav #sidenav  class="example-sidenav navlist" mode="side" opened="true" >
+    <mat-nav-list >
+      <ng-container *ngFor="let item of getKeys(map) | keyvalue">
+       <a mat-list-item [routerLink]=map.get(item.value) class="router-link-active"> {{item.value}} </a>
+       <mat-divider></mat-divider>
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div >
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+  </mat-sidenav-container>
+
+

@@ -7,15 +7,27 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class LoginService {
+  constructor(private http: HttpClient) { this.isloggedIn = false; }
+
   apiUrl = `${environment.profileapiUrl}`;
+  isloggedIn: boolean;
   public headers = new HttpHeaders().set('Accept', 'application/json')
   .set('content-type', 'application/json');
-  constructor(private http: HttpClient) { }
+
 
  login(person: Person): Observable<any> {
   const body = JSON.stringify(person);
   console.log("Json Body : "+body);
   return this.http.post<Person>(this.apiUrl+"/login", body,{'headers': this.headers});
+}
 
+setisloggedIn(value: boolean): void
+{
+  this.isloggedIn = value;
+}
+
+getisloggedIn( ): boolean
+{
+  return this.isloggedIn;
 }
 }

@@ -1,12 +1,24 @@
-
-<div class="d-flex justify-content-end sub-menu">
-  <div class="p-2"><a mat-button class="btn-style" routerLink="/register">Register</a></div>
-  <div class="p-2"><a mat-button  class="btn-style" routerLink="/login">Login</a></div>
-</div>
-<br>
-
+  <div class="d-flex sub-menu">
+    <div class="flex-grow-1"><span class="material-icons" *ngIf="!loginsrv.getisloggedIn()">home</span>
+        <a mat-button *ngIf="!loginsrv.getisloggedIn()" >Home</a></div>
+    <div>
+      <span class="material-icons" *ngIf="!loginsrv.getisloggedIn()">
+      person_add
+      </span><a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/register">Register</a></div>
+    <div>
+      <span class="material-icons" *ngIf="!loginsrv.getisloggedIn()" >
+      login
+      </span><a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/login">Login</a></div>
+      <div>
+        <span class="material-icons" *ngIf="loginsrv.getisloggedIn()">
+          logout
+          </span>
+        <a mat-button *ngIf="loginsrv.getisloggedIn()"  routerLink="">Log Out</a>
+      </div>
+  </div>
+<div>
 <router-outlet></router-outlet>
-
+</div>
 
 
 

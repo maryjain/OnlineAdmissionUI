@@ -5,6 +5,7 @@ import { LoginComponent } from './login.component';
 import {AppMaterialModule} from '../app-material/app-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from '../shared/shared.module';
+import { RegistrationdetailsModule } from '../registrationdetails/registrationdetails.module';
 @NgModule({
   declarations: [LoginComponent],
   imports: [
@@ -14,6 +15,7 @@ import { SharedModule } from '../shared/shared.module';
     AppMaterialModule,
     FlexLayoutModule,
     SharedModule,
+    RegistrationdetailsModule
   ]
   ,
   exports: [

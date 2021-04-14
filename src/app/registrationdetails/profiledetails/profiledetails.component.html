@@ -1,0 +1,65 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="formNameGroup" label="Personal Details" >
+
+        <form [formGroup]="formNameGroup">
+            <div >
+              <mat-form-field >
+                <input matInput placeholder="Name" required formControlName="userName">
+                <mat-error *ngIf="formNameGroup.controls['userName'].hasError('required')">
+                        Username is required!
+                    </mat-error>
+              </mat-form-field>
+            </div>
+            <br/>
+            <button mat-raised-button color="primary"  type= "button" matStepperNext>Next</button>
+        </form>
+  </mat-step>
+  <mat-step [stepControl]="formPasswordGroup" label="Educational Qualification" >
+    <div style="padding-top: 3%;">
+        <form [formGroup]="formPasswordGroup">
+            <!-- <ng-template matStepLabel>Name</ng-template> -->
+            <div >
+              <mat-form-field >
+                <input type="password" matInput placeholder="Password" required formControlName="passWord">
+                <mat-error *ngIf="formPasswordGroup.controls['passWord'].hasError('required')">
+                        Password is required!
+                    </mat-error>
+              </mat-form-field>
+            </div>
+            <br/>
+            <button mat-raised-button color="primary" type="button" matStepperNext>Next</button>
+        </form>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="formEmailGroup" label="Upload Documents" >
+    <div style="padding-top: 3%;">
+        <form [formGroup]="formEmailGroup">
+            <!-- <ng-template matStepLabel>Name</ng-template> -->
+            <div >
+              <mat-form-field >
+                <input type="text" matInput placeholder="Email" required formControlName="emailID">
+                <mat-error *ngIf="formEmailGroup.controls['emailID'].hasError('required')">
+                        Email is required!
+                    </mat-error>
+                <mat-error *ngIf="formEmailGroup.controls['emailID'].hasError('email')">
+                    Email is not Valid!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <br/>
+            <button mat-raised-button color="primary"  type= "button" matStepperNext>Next</button>
+        </form>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Preview</ng-template>
+    <h5>Please Preview the application before submit</h5>
+    <div>
+        <button mat-raised-button color="primary" type="button" matStepperPrevious>Back</button> &nbsp; &nbsp;
+        <button class="btn btn-primary" type="button" matStepperPrevious>Preview</button> &nbsp; &nbsp;
+        <button mat-raised-button color="accent" type="submit">Submit</button> &nbsp; &nbsp;
+        <button mat-raised-button color="warn" type="button" (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
+

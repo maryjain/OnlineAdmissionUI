@@ -70,10 +70,15 @@ public hintEmailArr = [ hintEmailMessages.email1,
     this.loginsrv.login(this.person).subscribe((res) => {
       console.log('POST login status= ' + res.data);
       if(res.data === "true"){
-          this.router.navigate(['/register']);
+        this.loginsrv.setisloggedIn(true);
+        this.router.navigate(['/registrationdetails']);
+      }
+      else{
+        this.loginsrv.setisloggedIn(false);
       }
     },
       (err) => {
+        this.loginsrv.setisloggedIn(false);
         if (err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){
         this.errorlist =  err.error['message'];
         let key: string;
@@ -108,8 +113,8 @@ public hintEmailArr = [ hintEmailMessages.email1,
       console.log('this.captcha = ' + this.captcha);
      },
     (err: HttpErrorResponse) => {
-      console.log("Error status = " + err.statusText);
-     console.log("Error occured Captcha = " + err.message);
+    console.log("Error status = " + err.statusText);
+    console.log("Error occured Captcha = " + err.message);
 
     });
     this.loginForm.get('enteredCaptcha').setValue('');

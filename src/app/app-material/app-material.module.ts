@@ -11,7 +11,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatListModule} from '@angular/material/list';
+import {MatStepperModule} from '@angular/material/stepper';
 @NgModule({
   declarations: [],
   imports: [
@@ -27,6 +30,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatRippleModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatSidenavModule,
+    MatCheckboxModule,
+    MatListModule,
+    MatStepperModule
   ],
   exports: [
     MatButtonModule,
@@ -41,6 +48,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatRippleModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatSidenavModule,
+    MatCheckboxModule,
+    MatListModule,
+    MatStepperModule
   ]
 })
 export class AppMaterialModule { }
