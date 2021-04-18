@@ -9,7 +9,8 @@ export const environment = {
  // commonapiUrl:"http://192.168.175.108:81/api/"
 
  profileapiUrl: 'http://10.162.14.145/api/persons',
- commonapiUrl:"http://10.162.14.145:81/api/"
+ commonapiUrl:"http://10.162.14.145:81/api/",
+ profileMasterapiUrl:"http://10.162.14.145/api/profilemanagement"
 };
 
 /*

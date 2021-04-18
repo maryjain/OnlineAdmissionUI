@@ -7,6 +7,7 @@ import { EducationqualificationComponent } from './educationqualification/educat
 import { UploaddocumentsComponent } from './uploaddocuments/uploaddocuments.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AppMaterialModule} from '../app-material/app-material.module';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [RegistrationdetailsComponent, ProfiledetailsComponent, EducationqualificationComponent, UploaddocumentsComponent ],
   imports: [
@@ -14,7 +15,8 @@ import {AppMaterialModule} from '../app-material/app-material.module';
     AppMaterialModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports: [
     RegistrationdetailsComponent,
@@ -22,6 +24,7 @@ import {AppMaterialModule} from '../app-material/app-material.module';
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,
+    SharedModule
   ]
 })
 export class RegistrationdetailsModule { }

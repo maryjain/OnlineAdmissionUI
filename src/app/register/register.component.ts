@@ -7,7 +7,7 @@ import {errorMessages,
     hintFullNameMessages,
     hintEmailMessages,
     hintPhoneMessages,
-    registrationFormMessage} from '../helpers/CustomMessges'
+    registrationFormMessage} from '../helpers/CustomMessges';
 import {ValidationService} from '../shared/validate/validation.service';
 import {UtilityService} from '../shared/utility/utility.service';
 import {RegisterService} from './service/register.service';
