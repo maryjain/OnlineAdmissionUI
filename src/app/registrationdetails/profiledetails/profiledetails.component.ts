@@ -10,6 +10,8 @@ import {errorMessages,
     registrationFormMessage} from '../../helpers/CustomMessges';
 import { RegistrationdetailsService } from '../service/registrationdetails.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Person } from 'src/app/model/Person';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-profiledetails',
   templateUrl: './profiledetails.component.html',
@@ -18,6 +20,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class ProfiledetailsComponent  {
+  profileID: any;
+  person: Person;
+  errorlist: string[];
   jsonGender = [];
   jsonNationality = [];
   jsonReligion = [];
@@ -26,6 +31,7 @@ export class ProfiledetailsComponent  {
   isnextButton:boolean;
   isShowCommunity:boolean;
   errors = errorMessages;
+  religionText: string;
   //genderList: Array<any> = [];
   public hintAnnualIncomeMessages = hintAnnualIncomeMessages.annualIncome1;
   public warnmessage = registrationFormMessage.saveWarnMessage;
@@ -41,13 +47,17 @@ export class ProfiledetailsComponent  {
   public hintMobileDisplay = this.hintMobileArr.join('\r\n');
 
 
-  constructor(private fb: FormBuilder, public utilitysrv: UtilityService, public registrationdetailsSrv: RegistrationdetailsService, private currencyPipe: CurrencyPipe) {
+  constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
+    public registrationdetailsSrv: RegistrationdetailsService, private currencyPipe: CurrencyPipe, public router: Router) {
 
    }
 
   ngOnInit(): void {
-    this.isnextButton= false;
-    this.isShowCommunity= false;
+    this.person = new Person('', null, '', null, '');
+    this.religionText="";
+    this.profileID = 2100000004;
+    this.isnextButton = false;
+    this.isShowCommunity = false;
    this.registrationdetailsSrv.getGender().subscribe((res ) => {
       let json = res;
       for (var type in json) {
@@ -112,6 +122,19 @@ export class ProfiledetailsComponent  {
 
     });
 
+
+   /* this.registrationdetailsSrv.getProfileByID(this.profileID).subscribe((res ) => {
+      let json = res;
+    this.person = new Person(json['fullname'],json['dob'],json['emailid'],json['mobileno'],"");
+      console.log('this.Person full name= ' + this.person.fullname);
+     },
+    (err: HttpErrorResponse) => {
+      console.log("Error status = "+ err.statusText);
+     console.log("Error occured profile = "+ err.message);
+
+    });
+    */
+
   }
 
   isLinear = true;
@@ -130,6 +153,33 @@ export class ProfiledetailsComponent  {
     creamylayer:['', [Validators.required]]
   });
 
+  updatePerson() {
+
+    this.person.fathername= this.personalDetailsForm.get('fathername').value;
+    this.person.mothername= this.personalDetailsForm.get('mothername').value;
+    this.person.guardianname= this.personalDetailsForm.get('guardianname').value;
+    this.person.guardianmobileno= this.personalDetailsForm.get('guardianmobileno').value;
+    this.person.gender= this.personalDetailsForm.get('gender').value;
+    this.person.nationality= this.personalDetailsForm.get('nationality').value;
+    this.person.state= this.personalDetailsForm.get('state').value;
+    this.person.religion= this.religionText;
+    this.person.community= this.personalDetailsForm.get('community').value;
+    this.person.annualincome= this.personalDetailsForm.get('annualincome').value;
+    this.person.creamylayer= this.personalDetailsForm.get('creamylayer').value;
+
+
+    this.person.profileid=this.profileID;
+    this.registrationdetailsSrv.updatePerson(this.person).subscribe((data) => {
+      console.log('PUT profileid= ' + data.profileid);
+     // this.validatesrv.getlatestProfile(this.person);
+     this.router.navigate(['/login']);
+    },
+    (err: HttpErrorResponse) => {
+      console.log("Error status = "+ err.statusText);
+     console.log("Error occured update personal details = "+ err.message);
+
+    });
+  }
 
 
 
@@ -144,23 +194,46 @@ export class ProfiledetailsComponent  {
   });
 
   public isClickedNext():void{
-
+    this.isnextButton= false;
     console.log(" Annual income =   "+this.personalDetailsForm.get('annualincome').value);
+    console.log(" creamylayer=   "+this.personalDetailsForm.get('creamylayer').value);
     console.log(" gender=   "+this.personalDetailsForm.get('gender').value);
+    console.log(" nationality=   "+this.personalDetailsForm.get('nationality').value);
+    console.log("state=  "+this.personalDetailsForm.get('state').value);
+    console.log(" religion ***=   "+this.religionText);
+
     if(this.personalDetailsForm.get('gender').value === ""){
-      console.log(" gender=   "+this.personalDetailsForm.get('gender').value);
-      this.isnextButton= true;
-    }else if(this.personalDetailsForm.get('nationality').value === ""){
-      console.log(" nationality=   "+this.personalDetailsForm.get('nationality').value);
+
       this.isnextButton= true;
     }
-    else if(this.personalDetailsForm.get('state').value === ""){
-      console.log("state=  "+this.personalDetailsForm.get('state').value);
+
+    if(this.personalDetailsForm.get('nationality').value === ""){
+
       this.isnextButton= true;
     }
-    else if(this.personalDetailsForm.get('religion').value === ""){
-      console.log(" religion=   "+this.personalDetailsForm.get('religion').value);
+
+    if(this.personalDetailsForm.get('state').value === ""){
+
       this.isnextButton= true;
+    }
+
+    if(this.personalDetailsForm.get('religion').value === ""){
+
+      this.isnextButton= true;
+    }
+
+    if(this.personalDetailsForm.get('annualincome').value === ""){
+
+      this.isnextButton= true;
+    }
+
+    if(this.personalDetailsForm.get('creamylayer').value === ""){
+
+      this.isnextButton= true;
+    }
+    if(this.isnextButton === false)
+    {
+      this.updatePerson();
     }
 
   }
@@ -178,9 +251,12 @@ export class ProfiledetailsComponent  {
   }
 
  // Community is present for Hindu( 1 ) and Christain( 3 ) as per database value
-  public  onChange(religionValue){
+  public  onChange($event){
     this.isShowCommunity = false;
-    console.log(" religionValue= "+religionValue);
+    let religionValue=$event.target.value;
+    this.religionText=$event.target.options[$event.target.options.selectedIndex].text;
+    console.log(" religionValue= "+$event.target.value);
+    console.log(" religionText= "+this.religionText);
     if(religionValue == 1 || religionValue == 3){
     this.isShowCommunity =true;
     this.registrationdetailsSrv.getCommunityByReligion(religionValue).subscribe((res ) => {

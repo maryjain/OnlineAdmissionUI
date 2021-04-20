@@ -33,17 +33,7 @@ export class ValidationService{
   }
   );
 }
-getlatestProfile(person: Person): void {
 
- this.http.get(this.apiUrl +'/'+ person.profileid).subscribe((response: Response) => {
-    console.log(response);
-  },
-    (err: HttpErrorResponse) => {
-    if ( err.error instanceof Error){
-      console.log("Error occured GET Profile id");
-    }
-   });
-}
 
 searchEmailid(text) {
   // debounce

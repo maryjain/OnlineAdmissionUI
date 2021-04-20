@@ -75,7 +75,7 @@
           </div>
             <select class="custom-select" formControlName="gender">
                <option value="">Select</option>
-                <option *ngFor="let item of this.jsonGender;let i = index" value="{{item.key}}" [selected]="i == 0">
+                <option *ngFor="let item of this.jsonGender;let i = index" value="{{item.value}}" [selected]="i == 0">
                   {{item.value}}
                 </option>
               </select>
@@ -91,7 +91,7 @@
           </div>
             <select class="custom-select" formControlName="nationality">
                <option value="">Select</option>
-                <option *ngFor="let item of this.jsonNationality;let i = index" value="{{item.key}}" [selected]="i == 0">
+                <option *ngFor="let item of this.jsonNationality;let i = index" value="{{item.value}}" [selected]="i == 0">
                   {{item.value}}
                 </option>
               </select>
@@ -107,7 +107,7 @@
           </div>
             <select class="custom-select" formControlName="state">
                <option value="">Select</option>
-                <option *ngFor="let item of this.jsonState;let i = index" value="{{item.key}}" [selected]="i == 0">
+                <option *ngFor="let item of this.jsonState;let i = index" value="{{item.value}}" [selected]="i == 0">
                   {{item.value}}
                 </option>
               </select>
@@ -124,7 +124,7 @@
           <div fxLayout="row" fxLayoutAlign="start">
             <div fxFlex="75"><label ast-required>Religion</label></div>
           </div>
-            <select class="custom-select" formControlName="religion" (change)="onChange($event.target.value)">
+            <select class="custom-select" formControlName="religion" (change)="onChange($event)">
                <option value="">Select</option>
                 <option *ngFor="let item of this.jsonReligion;let i = index" value="{{item.key}}" [selected]="i == 0">
                   {{item.value}}
@@ -136,27 +136,13 @@
           </mat-error>
           </small>
          </div>
-         <div class="form-group example-form">
-          <div class="row" >
-            <div class="col-6"><label ast-required>Annual Income</label></div>
-            <div class="col-6"><small><mat-hint  matTooltipClass="test" matTooltip="{{hintAnnualIncomeMessages}}">Hint</mat-hint></small></div>
-          </div>
-           <mat-form-field class="example-full-width">
-
-           <input matInput type="text"  formControlName="annualincome" appMoneyOnly maxDigits="9" (focus)="onfocusAnnualIncome()"  placeholder="₹100000.0" >
-
-          <mat-error *ngIf ="annualincome.hasError('required')">
-            {{errors.annualincomeRequired}}
-          </mat-error>
-          </mat-form-field>
-         </div>
          <div *ngIf = "isShowCommunity" class="form-group example-form">
           <div fxLayout="row" fxLayoutAlign="start">
             <div fxFlex="75"><label ast-required>Community</label></div>
           </div>
             <select class="custom-select" formControlName="community">
                <option value="">Select</option>
-                <option *ngFor="let item of this.jsonCommunity;let i = index" value="{{item.communitycode}}" [selected]="i == 0">
+                <option *ngFor="let item of this.jsonCommunity;let i = index" value="{{item.communityname}}" [selected]="i == 0">
                   {{item.communityname}}
                 </option>
               </select>
@@ -166,12 +152,36 @@
           </mat-error>
           </small>
          </div>
+         <div class="form-group example-form">
+          <div class="row" >
+            <div class="col-6"><label ast-required>Annual Income</label></div>
+            <div class="col-6"><small><mat-hint  matTooltipClass="test" matTooltip="{{hintAnnualIncomeMessages}}">Hint</mat-hint></small></div>
+          </div>
+           <mat-form-field class="example-full-width">
+           <input matInput type="text"  formControlName="annualincome" appMoneyOnly maxDigits="9" (focus)="onfocusAnnualIncome()"  placeholder="₹100000.0" >
+          <mat-error *ngIf ="((annualincome.touched || isnextButton) && annualincome.hasError('required'))">
+            {{errors.annualincomeRequired}}
+          </mat-error>
+          </mat-form-field>
+         </div>
+         <div class="form-group example-form">
+          <label id="creamylayer-group-label" ast-required >Whether belong to Creamy Layer ?</label>
+            <mat-radio-group aria-label="creamylayer-group-label"  formControlName="creamylayer" class="example-radio-group">
+              <mat-radio-button value="true"  class="example-radio-button">Yes</mat-radio-button>
+              <mat-radio-button value="false"  class="example-radio-button">No</mat-radio-button>
+            </mat-radio-group>
+            <small>
+            <mat-error *ngIf ="((creamylayer.touched || isnextButton) && creamylayer.hasError('required'))">
+            {{errors.creamyLayerRequired}}
+          </mat-error>
+           </small>
+         </div>
          <br>
          <br>
          <br>
          <hr>
          <br>
-         <button mat-raised-button  color="primary" (click)="isClickedNext()" type= "button" matStepperNext>Next</button>
+         <button mat-raised-button  color="primary" (click)="isClickedNext()"  matStepperNext>Next</button>
         </div>
         </div>
       </form>
