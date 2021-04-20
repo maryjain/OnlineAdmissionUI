@@ -17,6 +17,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { RegisterService } from './register/service/register.service';
 import { LoginService } from './login/service/login.service';
 import { RegistrationdetailsModule } from './registrationdetails/registrationdetails.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { RegistrationdetailsModule } from './registrationdetails/registrationdet
     HomeModule,
     HttpClientModule,
     RegistrationdetailsModule,
+    PdfViewerModule
 
   ],
   providers: [ValidationService, UtilityService, RegisterService, LoginService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

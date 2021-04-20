@@ -12,6 +12,11 @@ import { RegistrationdetailsService } from '../service/registrationdetails.servi
 import { HttpErrorResponse } from '@angular/common/http';
 import { Person } from 'src/app/model/Person';
 import { Router } from '@angular/router';
+
+import { AngularFileUploaderConfig } from '../../shared/AngularFileUploader/angular-file-uploader.types';
+import { MatRadioChange } from '@angular/material/radio';
+
+
 @Component({
   selector: 'app-profiledetails',
   templateUrl: './profiledetails.component.html',
@@ -32,6 +37,7 @@ export class ProfiledetailsComponent  {
   isShowCommunity:boolean;
   errors = errorMessages;
   religionText: string;
+  isEWSvisible:boolean;
   //genderList: Array<any> = [];
   public hintAnnualIncomeMessages = hintAnnualIncomeMessages.annualIncome1;
   public warnmessage = registrationFormMessage.saveWarnMessage;
@@ -46,6 +52,20 @@ export class ProfiledetailsComponent  {
     ];
   public hintMobileDisplay = this.hintMobileArr.join('\r\n');
 
+  resetUpload1: boolean;
+  resetUpload2: boolean;
+  resetUpload3: boolean;
+
+  fileuploadConfig: AngularFileUploaderConfig = {
+    id: 112233,
+    multiple: false,
+    maxSize: 204800,
+    formatsAllowed: '.jpg,.jpeg,.pdf',
+    uploadAPI: {
+      url: 'https://slack.com/api/files.upload',
+    }
+  };
+
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
     public registrationdetailsSrv: RegistrationdetailsService, private currencyPipe: CurrencyPipe, public router: Router) {
@@ -53,6 +73,7 @@ export class ProfiledetailsComponent  {
    }
 
   ngOnInit(): void {
+    this.isEWSvisible=false;
     this.person = new Person('', null, '', null, '');
     this.religionText="";
     this.profileID = 2100000004;
@@ -245,6 +266,21 @@ export class ProfiledetailsComponent  {
 
   }
   */
+
+ public onChangeCreamyLayer(mrChange: MatRadioChange):void
+ {
+  console.log(" *** creamy ="+mrChange.value);
+  if(mrChange.value === 'true')
+  {
+    this.isEWSvisible = false;
+  }
+  else if(mrChange.value === 'false'){
+    this.isEWSvisible =true;
+  }
+
+ console.log(" this.isEWSvisible "+this.isEWSvisible);
+
+ }
   onfocusAnnualIncome()
   {
     this.personalDetailsForm.controls['annualincome'].reset();
@@ -291,6 +327,10 @@ export class ProfiledetailsComponent  {
   get creamylayer() { return this.personalDetailsForm.get('creamylayer'); }
   get passWord() { return this.formPasswordGroup.get('passWord'); }
 
+  docUpload(event) {
+    console.log('ApiResponse -> docUpload -> Event: ',event);
+  }
+
  //get passWord() { return this.formPasswordGroup.get('passWord'); }
-  //get passWord() { return this.formPasswordGroup.get('passWord'); }
+
 }

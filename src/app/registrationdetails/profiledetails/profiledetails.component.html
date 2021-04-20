@@ -153,6 +153,18 @@
           </small>
          </div>
          <div class="form-group example-form">
+          <label id="creamylayer-group-label" ast-required >Whether belong to Creamy Layer ?</label>
+            <mat-radio-group aria-label="creamylayer-group-label"  formControlName="creamylayer" class="example-radio-group" (change)="onChangeCreamyLayer($event)">
+              <mat-radio-button value="true"  class="example-radio-button" >Yes</mat-radio-button>
+              <mat-radio-button value="false"  class="example-radio-button" >No</mat-radio-button>
+            </mat-radio-group>
+            <small>
+            <mat-error *ngIf ="((creamylayer.touched || isnextButton) && creamylayer.hasError('required'))">
+            {{errors.creamyLayerRequired}}
+          </mat-error>
+           </small>
+         </div>
+         <div class="form-group example-form">
           <div class="row" >
             <div class="col-6"><label ast-required>Annual Income</label></div>
             <div class="col-6"><small><mat-hint  matTooltipClass="test" matTooltip="{{hintAnnualIncomeMessages}}">Hint</mat-hint></small></div>
@@ -164,18 +176,12 @@
           </mat-error>
           </mat-form-field>
          </div>
-         <div class="form-group example-form">
-          <label id="creamylayer-group-label" ast-required >Whether belong to Creamy Layer ?</label>
-            <mat-radio-group aria-label="creamylayer-group-label"  formControlName="creamylayer" class="example-radio-group">
-              <mat-radio-button value="true"  class="example-radio-button">Yes</mat-radio-button>
-              <mat-radio-button value="false"  class="example-radio-button">No</mat-radio-button>
-            </mat-radio-group>
-            <small>
-            <mat-error *ngIf ="((creamylayer.touched || isnextButton) && creamylayer.hasError('required'))">
-            {{errors.creamyLayerRequired}}
-          </mat-error>
-           </small>
-         </div>
+         <div class="form-group example-form" *ngIf ="isEWSvisible">
+          <label >Upload EWS Certificate</label><br>
+          <app-angular-file-uploader [resetUpload]=resetUpload1 [config]="fileuploadConfig"  (ApiResponse)="docUpload($event)">
+          </app-angular-file-uploader>
+        </div>
+
          <br>
          <br>
          <br>

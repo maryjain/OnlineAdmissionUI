@@ -9,31 +9,37 @@ import { AppBlockCopyPasteDirective } from './directive/BlockCopyPaste/app-block
 import { AlphabetOnlyDirective } from './directive/AlphabetOnly/alphabet-only.directive';
 import { MoneyOnlyDirective } from './directive/MoneyOnly/money-only.directive';
 import {CurrencyPipe} from '@angular/common';
-
-
+import { AngularFileUploaderComponent } from './AngularFileUploader/angular-file-uploader.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 
 @NgModule({
-  declarations: [MarkAsteriskDirective, AppBlockCopyPasteDirective, AlphabetOnlyDirective, MoneyOnlyDirective, ],
-  providers: [CurrencyPipe
-
+  declarations: [MarkAsteriskDirective, AppBlockCopyPasteDirective, AlphabetOnlyDirective, MoneyOnlyDirective,
+    AngularFileUploaderComponent ],
+  providers: [CurrencyPipe,PdfViewerComponent
 
   ],
   imports: [
+    CommonModule,
+    HttpClientModule,
     AppMaterialModule,
     FooterModule,
     HeaderModule,
-
+    PdfViewerModule
   ],
   exports:
   [
     CommonModule,
+    HttpClientModule,
     FooterModule,
     HeaderModule,
     AppMaterialModule,
     MarkAsteriskDirective,
     AppBlockCopyPasteDirective,
     AlphabetOnlyDirective,
-    MoneyOnlyDirective
+    MoneyOnlyDirective,
+    AngularFileUploaderComponent,
+    PdfViewerModule
   ]
 
 })

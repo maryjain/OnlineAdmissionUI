@@ -1,0 +1,46 @@
+.constraints-info {
+  margin-top: 10px;
+  font-style: italic;
+}
+.padMarg {
+  padding: 1px;
+  margin-bottom: 0px;
+}
+.caption {
+  margin-right: 5px;
+}
+.textOverflow {
+  white-space: nowrap;
+  padding-right: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.up_btn {
+  color: black;
+  background-color: transparent;
+  border: 2px solid rgb(92, 91, 91);
+  border-radius: 22px;
+}
+.delFileIcon {
+  text-decoration: none;
+  color: #ce0909;
+}
+
+
+  .caption {
+    font-size: 10px;
+  }
+
+.resetBtn {
+  margin-left: 3px;
+}
+
+.moveRight
+{
+  margin-left: 8px;
+}
+
+.progressWidth
+{
+  min-width: 100px;
+}
