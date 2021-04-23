@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 
 import { AngularFileUploaderConfig } from '../../shared/AngularFileUploader/angular-file-uploader.types';
 import { MatRadioChange } from '@angular/material/radio';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -25,7 +26,9 @@ import { MatRadioChange } from '@angular/material/radio';
 })
 
 export class ProfiledetailsComponent  {
-  profileID: any;
+  logintUserProfileId :any;
+  apiUrl = `${environment.profileapiUrl}`;
+  //profileID: any;
   person: Person;
   errorlist: string[];
   jsonGender = [];
@@ -62,7 +65,7 @@ export class ProfiledetailsComponent  {
     maxSize: 204800,
     formatsAllowed: '.jpg,.jpeg,.pdf',
     uploadAPI: {
-      url: 'https://slack.com/api/files.upload',
+      url: this.apiUrl+'/upload/',
     }
   };
 
@@ -76,7 +79,9 @@ export class ProfiledetailsComponent  {
     this.isEWSvisible=false;
     this.person = new Person('', null, '', null, '');
     this.religionText="";
-    this.profileID = 2100000004;
+    this.logintUserProfileId = 2100000004;
+    this.fileuploadConfig.uploadAPI.url+=this.logintUserProfileId;
+    console.log("______*****______this.fileuploadConfig.uploadAPI.url ="+this.fileuploadConfig.uploadAPI.url);
     this.isnextButton = false;
     this.isShowCommunity = false;
    this.registrationdetailsSrv.getGender().subscribe((res ) => {
@@ -189,7 +194,7 @@ export class ProfiledetailsComponent  {
     this.person.creamylayer= this.personalDetailsForm.get('creamylayer').value;
 
 
-    this.person.profileid=this.profileID;
+    this.person.profileid=this.logintUserProfileId;
     this.registrationdetailsSrv.updatePerson(this.person).subscribe((data) => {
       console.log('PUT profileid= ' + data.profileid);
      // this.validatesrv.getlatestProfile(this.person);

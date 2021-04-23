@@ -184,6 +184,7 @@ export class AngularFileUploaderComponent implements OnChanges {
         reader.onload = (event) => { // called once readAsDataURL is completed
           this.url = event.target.result;
           this.pdfSrc = event.target.result;
+          console.log("***********+++++++++++********************  this.pdfSrc ="+this.pdfSrc);
       };
      } else {
         this.notAllowedFiles.push({
@@ -224,9 +225,13 @@ export class AngularFileUploaderComponent implements OnChanges {
     // Add data to be sent in this request
     this.allowedFiles.forEach((file, i) => {
       formData.append(
-        this.Caption[i] || 'file' + (this.fileNameIndex ? i : ''),
+         'file',
         this.allowedFiles[i]
       );
+      formData.append('DocumentDTO','{"documentname": "EWSpdf","documenttype": "EWS","documentformat": "image/jpeg","updateddate":"2021-04-12" }');
+      console.log("************* "+ this.allowedFiles[0].arrayBuffer.toString);
+      console.log("************* "+ formData.get('DocumentDTO').toString());
+      console.log("*************++  filename extension= "+this.fileExtRegExp.exec(this.allowedFiles[0].name)[1].toLowerCase() );
     });
 
 
