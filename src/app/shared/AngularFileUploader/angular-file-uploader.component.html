@@ -19,7 +19,7 @@
     </div>
 
     <div class="row" *ngIf="allowedFiles.length>0">
-      <div class="col-6" >
+      <div class="col-6" *ngIf="fileExtRegExp.exec(allowedFiles[0].name)[1].toLowerCase() !=='pdf'">
         <img [src]="url" height="80" width="80">
       </div>
       <div class="col-6" >

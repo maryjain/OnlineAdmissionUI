@@ -5,8 +5,8 @@ import * as moment from 'moment';
 import {CurrencyPipe} from '@angular/common';
 import {errorMessages,
    customregExps,
-    hintFullNameMessages,
-    hintPhoneMessages,hintAnnualIncomeMessages,
+    hintFullNameMessages, hintAddressMessages,
+    hintPhoneMessages, hintAnnualIncomeMessages,
     registrationFormMessage} from '../../helpers/CustomMessges';
 import { RegistrationdetailsService } from '../service/registrationdetails.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -26,6 +26,8 @@ import { environment } from 'src/environments/environment';
 })
 
 export class ProfiledetailsComponent  {
+  isLinear = false;
+  addresstype = {present:'Present Address',permanent:'Permanent Address'};
   logintUserProfileId :any;
   apiUrl = `${environment.profileapiUrl}`;
   //profileID: any;
@@ -36,18 +38,25 @@ export class ProfiledetailsComponent  {
   jsonReligion = [];
   jsonCommunity = [];
   jsonState = [];
+  jsonDistrict=[];
+  stateTextSelected:any;
   isnextButton:boolean;
+  isnextAddressButton:boolean;
   isShowCommunity:boolean;
   errors = errorMessages;
   religionText: string;
   isEWSvisible:boolean;
-  //genderList: Array<any> = [];
+  public hintAdressArr =[ hintAddressMessages.addressline1,
+    hintAddressMessages.addressline2,
+    hintAddressMessages.addressline3
+   ];
+   public hintAddressdMessages = this.hintAdressArr.join('\r\n');
   public hintAnnualIncomeMessages = hintAnnualIncomeMessages.annualIncome1;
   public warnmessage = registrationFormMessage.saveWarnMessage;
   public hintFullNameArr = [ hintFullNameMessages.fullname1,
     hintFullNameMessages.fullname2,
     hintFullNameMessages.fullname3,
-    hintFullNameMessages.fullname4
+    hintFullNameMessages.fullname4,
     ];
   public hintFullNamedDisplay = this.hintFullNameArr.join('\r\n');
   public hintMobileArr = [ hintPhoneMessages.phone1,
@@ -55,6 +64,8 @@ export class ProfiledetailsComponent  {
     ];
   public hintMobileDisplay = this.hintMobileArr.join('\r\n');
 
+// File upload start
+// variable used in shared/angular-file-uploader.component
   resetUpload1: boolean;
   resetUpload2: boolean;
   resetUpload3: boolean;
@@ -69,6 +80,8 @@ export class ProfiledetailsComponent  {
     }
   };
 
+// File upload end
+
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
     public registrationdetailsSrv: RegistrationdetailsService, private currencyPipe: CurrencyPipe, public router: Router) {
@@ -76,14 +89,20 @@ export class ProfiledetailsComponent  {
    }
 
   ngOnInit(): void {
+    this.personalDetailsForm.controls['annualincome'].setValue(0);
     this.isEWSvisible=false;
     this.person = new Person('', null, '', null, '');
+
     this.religionText="";
     this.logintUserProfileId = 2100000004;
     this.fileuploadConfig.uploadAPI.url+=this.logintUserProfileId;
     console.log("______*****______this.fileuploadConfig.uploadAPI.url ="+this.fileuploadConfig.uploadAPI.url);
     this.isnextButton = false;
+    this.isnextAddressButton = false;
     this.isShowCommunity = false;
+
+
+
    this.registrationdetailsSrv.getGender().subscribe((res ) => {
       let json = res;
       for (var type in json) {
@@ -163,7 +182,6 @@ export class ProfiledetailsComponent  {
 
   }
 
-  isLinear = true;
 
   public personalDetailsForm  = this.fb.group({
     fathername: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
@@ -179,26 +197,39 @@ export class ProfiledetailsComponent  {
     creamylayer:['', [Validators.required]]
   });
 
-  updatePerson() {
+  public addressDetailsForm  = this.fb.group({
+    permanent_addressline1: ['', [Validators.required,Validators.pattern(customregExps.addressline)]],
+    permanent_addressline2: ['', [Validators.required,Validators.pattern(customregExps.addressline)]],
+   // permanent_addresstype: ['', [Validators.required]],
+    permanent_pincode: ['', [Validators.required, Validators.pattern(customregExps.pincode)]],
+    permanent_districtcode: ['', [Validators.required]],
+    present_addressline1: ['', [Validators.required,Validators.pattern(customregExps.addressline)]],
+    present_addressline2: ['', [Validators.required,Validators.pattern(customregExps.addressline)]],
+  //  present_addresstype: ['', [Validators.required]],
+    present_pincode: ['', [Validators.required, Validators.pattern(customregExps.pincode)]],
+    present_districtcode: ['', [Validators.required]],
+    addresscheckbox:['']
+  });
 
+
+
+  updatePerson() {
     this.person.fathername= this.personalDetailsForm.get('fathername').value;
     this.person.mothername= this.personalDetailsForm.get('mothername').value;
     this.person.guardianname= this.personalDetailsForm.get('guardianname').value;
     this.person.guardianmobileno= this.personalDetailsForm.get('guardianmobileno').value;
     this.person.gender= this.personalDetailsForm.get('gender').value;
     this.person.nationality= this.personalDetailsForm.get('nationality').value;
-    this.person.state= this.personalDetailsForm.get('state').value;
+    this.person.state= this.stateTextSelected;
     this.person.religion= this.religionText;
     this.person.community= this.personalDetailsForm.get('community').value;
     this.person.annualincome= this.personalDetailsForm.get('annualincome').value;
     this.person.creamylayer= this.personalDetailsForm.get('creamylayer').value;
-
-
     this.person.profileid=this.logintUserProfileId;
     this.registrationdetailsSrv.updatePerson(this.person).subscribe((data) => {
       console.log('PUT profileid= ' + data.profileid);
      // this.validatesrv.getlatestProfile(this.person);
-     this.router.navigate(['/login']);
+     //this.router.navigate(['/login']);
     },
     (err: HttpErrorResponse) => {
       console.log("Error status = "+ err.statusText);
@@ -219,6 +250,15 @@ export class ProfiledetailsComponent  {
     mobile: ['', Validators.compose([Validators.required, Validators.min(10)])]
   });
 
+
+
+public isClickedAddressNext():void
+{
+
+
+}
+
+  // first personal details Next button click
   public isClickedNext():void{
     this.isnextButton= false;
     console.log(" Annual income =   "+this.personalDetailsForm.get('annualincome').value);
@@ -247,12 +287,6 @@ export class ProfiledetailsComponent  {
 
       this.isnextButton= true;
     }
-
-    if(this.personalDetailsForm.get('annualincome').value === ""){
-
-      this.isnextButton= true;
-    }
-
     if(this.personalDetailsForm.get('creamylayer').value === ""){
 
       this.isnextButton= true;
@@ -260,17 +294,49 @@ export class ProfiledetailsComponent  {
     if(this.isnextButton === false)
     {
       this.updatePerson();
+      // Kerala statecode =1
+     this.registrationdetailsSrv.getDistrictByState(this.personalDetailsForm.get('state').value).subscribe((res ) => {
+      let json = res;
+      for (var type in json) {
+        let item = {key:"",value:""};
+        item.key = type;
+        item.value = json[type];
+        this.jsonDistrict.push(item);
+    }
+      console.log('this.jsonDistrict = ' + this.jsonDistrict);
+     },
+    (err: HttpErrorResponse) => {
+      console.log("Error status = "+ err.statusText);
+     console.log("Error occured district = "+ err.message);
+    });
     }
 
   }
 
-
+  onChangeTrim($event):void
+  {
+    $event.target.value=$event.target.value.trim();
+  }
  /* onChangeAnnualIncome(annualIncomeValue)
   {
     this.personalDetailsForm.controls['annualincome'].setValue(this.currencyPipe.transform(annualIncomeValue,'INR'));
 
   }
   */
+
+  public onChangeAddressCheckBox():void
+  {
+    if(this.addressDetailsForm.get('addresscheckbox').value === true){
+      this.addressDetailsForm.controls['permanent_addressline1'].setValue(this.addressDetailsForm.get('present_addressline1').value);
+      this.addressDetailsForm.controls['permanent_addressline2'].setValue(this.addressDetailsForm.get('present_addressline2').value);
+      //this.addressDetailsForm.controls['permanent_addresstype'].setValue(this.addressDetailsForm.get('present_addresstype').value);
+      this.addressDetailsForm.controls['permanent_districtcode'].setValue(this.addressDetailsForm.get('present_districtcode').value);
+      this.addressDetailsForm.controls['permanent_pincode'].setValue(this.addressDetailsForm.get('present_pincode').value);
+    }
+    else{
+      this.addressDetailsForm.reset();
+    }
+  }
 
  public onChangeCreamyLayer(mrChange: MatRadioChange):void
  {
@@ -291,6 +357,11 @@ export class ProfiledetailsComponent  {
     this.personalDetailsForm.controls['annualincome'].reset();
   }
 
+
+  onChangeState($event):void
+  {
+    this.stateTextSelected = $event.target.options[$event.target.options.selectedIndex].text;
+  }
  // Community is present for Hindu( 1 ) and Christain( 3 ) as per database value
   public  onChange($event){
     this.isShowCommunity = false;
@@ -316,9 +387,7 @@ export class ProfiledetailsComponent  {
     });
   }
   }
-
-
-
+// personal details
   get fathername() { return this.personalDetailsForm.get('fathername'); }
   get mothername() { return this.personalDetailsForm.get('mothername'); }
   get guardianname() { return this.personalDetailsForm.get('guardianname'); }
@@ -330,6 +399,21 @@ export class ProfiledetailsComponent  {
   get state() { return this.personalDetailsForm.get('state'); }
   get annualincome() { return this.personalDetailsForm.get('annualincome'); }
   get creamylayer() { return this.personalDetailsForm.get('creamylayer'); }
+
+  //Present Address  details
+  get present_addressline1() { return this.addressDetailsForm.get('present_addressline1'); }
+  get present_addressline2() { return this.addressDetailsForm.get('present_addressline2'); }
+  get present_addresstype() { return this.addressDetailsForm.get('present_addresstype'); }
+  get present_districtcode() { return this.addressDetailsForm.get('present_districtcode'); }
+  get present_pincode() { return this.addressDetailsForm.get('present_pincode'); }
+
+  //Permanent Address  details
+  get permanent_addressline1() { return this.addressDetailsForm.get('permanent_addressline1'); }
+  get permanent_addressline2() { return this.addressDetailsForm.get('permanent_addressline2'); }
+  get permanent_addresstype() { return this.addressDetailsForm.get('permanent_addresstype'); }
+  get permanent_districtcode() { return this.addressDetailsForm.get('permanent_districtcode'); }
+  get permanent_pincode() { return this.addressDetailsForm.get('permanent_pincode'); }
+
   get passWord() { return this.formPasswordGroup.get('passWord'); }
 
   docUpload(event) {

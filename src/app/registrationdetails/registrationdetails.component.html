@@ -1,9 +1,14 @@
-<div class="container-fluid customHeader">
-<h2>Personal Details</h2>
+
+<div class="d-flex customHeader">
+<div class="flex-grow-1">
+<h3>Welcome user</h3>
+</div>
+<div >
+<h4><i>Registration No: 2100000000</i> &nbsp;&nbsp;&nbsp;&nbsp;</h4>
+</div>
 </div>
 
 <mat-sidenav-container class="example-container" >
-
 	<mat-sidenav #sidenav  class="example-sidenav navlist" mode="side" opened="true" >
     <mat-nav-list >
       <ng-container *ngFor="let item of getKeys(map) | keyvalue">

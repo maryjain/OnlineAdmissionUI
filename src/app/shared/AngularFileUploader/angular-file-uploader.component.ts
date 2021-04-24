@@ -228,7 +228,7 @@ export class AngularFileUploaderComponent implements OnChanges {
          'file',
         this.allowedFiles[i]
       );
-      formData.append('DocumentDTO','{"documentname": "EWSpdf","documenttype": "EWS","documentformat": "image/jpeg","updateddate":"2021-04-12" }');
+      formData.append('DocumentDTO','{"documenttype": "EWS","documentformat": "image/jpeg"}');
       console.log("************* "+ this.allowedFiles[0].arrayBuffer.toString);
       console.log("************* "+ formData.get('DocumentDTO').toString());
       console.log("*************++  filename extension= "+this.fileExtRegExp.exec(this.allowedFiles[0].name)[1].toLowerCase() );

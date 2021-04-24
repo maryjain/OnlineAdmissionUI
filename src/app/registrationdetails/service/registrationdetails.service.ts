@@ -29,6 +29,10 @@ export class RegistrationdetailsService {
     return  this.http.get<any>(this.profileMasterapiUrl +  '/state', {responseType: 'json'});
   }
 
+  getDistrictByState(code): Observable<any>{
+    console.log(" this.profileapiUrl ="+this.profileMasterapiUrl);
+    return  this.http.get<any>(this.profileMasterapiUrl +  '/state/'+code+"/district", {responseType: 'json'});
+  }
   getReligion(): Observable<any>{
     console.log(" this.profileapiUrl ="+this.profileMasterapiUrl);
     return  this.http.get<any>(this.profileMasterapiUrl +  '/religion', {responseType: 'json'});

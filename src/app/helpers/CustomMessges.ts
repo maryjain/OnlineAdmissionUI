@@ -6,6 +6,8 @@ export const customregExps: { [key: string]: RegExp } = {
   email: /^(?!.*\.\.)(?!.*\_\_)(?!.*\-\-)(?!.*\.\-)(?!.*\-\.)(?!.*\_\-)(?!.*\-\_)(?!.*\.\_)(?!.*\_\.)[a-zA-Z0-9][a-zA-Z0-9._-]+@(?!.*\.\.)(?!.*\-\-)(?!.*\.\-)(?!.*\-\.)[a-zA-Z0-9]{1,}[a-zA-Z0-9.-]+[.][a-zA-Z]{2,4}$/,
   fullName: /^[a-zA-Z][a-zA-Z ]{1,200}$/,
   mobile: /^[6-9]\d{9}$/,
+  addressline: /^((?=.*[a-z]{2})[a-zA-Z0-9][a-zA-Z0-9 .]{1,149})$/,
+  pincode: /^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/
 
 };
 
@@ -17,6 +19,7 @@ export const errorMessages: { [key: string]: string } = {
   email: 'Please enter valid email address',
   password: 'Please enter valid password',
   mobile: 'Please enter valid mobile number',
+  pincode:'Please enter valid pincode',
   annualincome: 'Please enter valid annual income',
   fullNameRequired: 'Full name is required',
   emailRequired: 'Email address is  required',
@@ -31,6 +34,11 @@ export const errorMessages: { [key: string]: string } = {
   annualincomeRequired: 'Annual Income required',
   nationalityRequired: 'Nationality is required',
   stateRequired: 'State is required',
+  addresslineRequired: 'Address Line is required',
+  addresstypeRequired: 'Address Type is required',
+  pincodeRequired: 'Pincode is required',
+  districtRequired: 'District is required',
+  addressline: 'Please enter valid Address Line',
   emailDuplicate: 'Email id already exists',
   mobileNoDuplicate: 'Mobile Number already exists',
   otpTimerExpires: 'Time out , Resend OTP again',
@@ -69,6 +77,13 @@ export const hintPhoneMessages: { [key: string]: string } = {
  export const hintAnnualIncomeMessages: { [key: string]: string } = {
   annualIncome1: 'Maximum 9 digit AnnualIncome ',
  };
+
+ export const hintAddressMessages: { [key: string]: string } = {
+  addressline1: 'Start with characters a - z A - Z 0 -9',
+  addressline2: 'Minimum 4 characters',
+  addressline3: 'Allowed special characters . space',
+ };
+
 
 export const registrationFormMessage: { [key: string]: string } = {
   saveWarnMessage: 'Data is saved only when Submit button is clicked'

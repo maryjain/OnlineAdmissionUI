@@ -1,19 +1,38 @@
   <div class="d-flex sub-menu">
-    <div class="flex-grow-1"><span class="material-icons" *ngIf="!loginsrv.getisloggedIn()">home</span>
-        <a mat-button *ngIf="!loginsrv.getisloggedIn()" >Home</a></div>
+    <div class="flex-grow-1" *ngIf="!loginsrv.getisloggedIn()">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>menu</mat-icon><span>Menu</span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>event</mat-icon>
+          <span>Latest Events</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>contact_page</mat-icon>
+          <span>Contact Us</span>
+        </button>
+      </mat-menu>
+      </div>
     <div>
-      <span class="material-icons" *ngIf="!loginsrv.getisloggedIn()">
-      person_add
-      </span><a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/register">Register</a></div>
+      <a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/register">
+      <span class="material-icons" > person_add</span>Register</a>
+    </div>
     <div>
-      <span class="material-icons" *ngIf="!loginsrv.getisloggedIn()" >
-      login
-      </span><a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/login">Login</a></div>
+      <a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/login">
+      <span class="material-icons" >login</span>Login User</a>
+    </div>
+    <div>
+      <a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/loginadmin">
+      <span class="material-icons" >login</span>Login Admin</a>
+    </div>
       <div>
-        <span class="material-icons" *ngIf="loginsrv.getisloggedIn()">
-          logout
-          </span>
-        <a mat-button *ngIf="loginsrv.getisloggedIn()"  routerLink="">Log Out</a>
+        <a mat-button *ngIf="loginsrv.getisloggedIn()"  routerLink="">
+        <span class="material-icons" *ngIf="loginsrv.getisloggedIn()">logout</span>Log Out</a>
       </div>
   </div>
 <div>
