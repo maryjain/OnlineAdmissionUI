@@ -26,7 +26,8 @@ import { environment } from 'src/environments/environment';
 })
 
 export class ProfiledetailsComponent  {
-  isLinear = false;
+//******    variable  declaration ******
+  isLinear = true;  // for mat-tepper navigation property
   addresstype = {present:'Present Address',permanent:'Permanent Address'};
   logintUserProfileId :any;
   apiUrl = `${environment.profileapiUrl}`;
@@ -88,8 +89,9 @@ export class ProfiledetailsComponent  {
 
    }
 
+   //******   ngOnInit declaration start ******
   ngOnInit(): void {
-    this.personalDetailsForm.controls['annualincome'].setValue(0);
+    this.personalDetailsForm.controls['annualincome'].setValue(1);
     this.isEWSvisible=false;
     this.person = new Person('', null, '', null, '');
 
@@ -100,8 +102,6 @@ export class ProfiledetailsComponent  {
     this.isnextButton = false;
     this.isnextAddressButton = false;
     this.isShowCommunity = false;
-
-
 
    this.registrationdetailsSrv.getGender().subscribe((res ) => {
       let json = res;
@@ -168,6 +168,8 @@ export class ProfiledetailsComponent  {
     });
 
 
+       //******   ngOnInit declaration ends ******
+
    /* this.registrationdetailsSrv.getProfileByID(this.profileID).subscribe((res ) => {
       let json = res;
     this.person = new Person(json['fullname'],json['dob'],json['emailid'],json['mobileno'],"");
@@ -182,6 +184,7 @@ export class ProfiledetailsComponent  {
 
   }
 
+//******    Forms declaration ******
 
   public personalDetailsForm  = this.fb.group({
     fathername: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
@@ -222,7 +225,14 @@ export class ProfiledetailsComponent  {
     this.person.nationality= this.personalDetailsForm.get('nationality').value;
     this.person.state= this.stateTextSelected;
     this.person.religion= this.religionText;
+    if(this.personalDetailsForm.get('community').value === "")
+    {
+      this.person.community='N/A';
+    }
+    else
+    {
     this.person.community= this.personalDetailsForm.get('community').value;
+    }
     this.person.annualincome= this.personalDetailsForm.get('annualincome').value;
     this.person.creamylayer= this.personalDetailsForm.get('creamylayer').value;
     this.person.profileid=this.logintUserProfileId;
@@ -237,7 +247,7 @@ export class ProfiledetailsComponent  {
 
     });
   }
-
+//******    Forms declaration  ends ******
 
 
   public formPasswordGroup= this.fb.group({
@@ -250,7 +260,7 @@ export class ProfiledetailsComponent  {
     mobile: ['', Validators.compose([Validators.required, Validators.min(10)])]
   });
 
-
+//******    Events method declaration ******
 
 public isClickedAddressNext():void
 {
@@ -312,7 +322,7 @@ public isClickedAddressNext():void
     }
 
   }
-
+//******    Trim Text value for start and end spaces declaration ******
   onChangeTrim($event):void
   {
     $event.target.value=$event.target.value.trim();
@@ -387,6 +397,9 @@ public isClickedAddressNext():void
     });
   }
   }
+
+//******    Formcontrol access from HTML declaration ******
+
 // personal details
   get fathername() { return this.personalDetailsForm.get('fathername'); }
   get mothername() { return this.personalDetailsForm.get('mothername'); }
@@ -414,12 +427,14 @@ public isClickedAddressNext():void
   get permanent_districtcode() { return this.addressDetailsForm.get('permanent_districtcode'); }
   get permanent_pincode() { return this.addressDetailsForm.get('permanent_pincode'); }
 
-  get passWord() { return this.formPasswordGroup.get('passWord'); }
 
+
+
+  //******    Upload Documents REST api call status ******
   docUpload(event) {
     console.log('ApiResponse -> docUpload -> Event: ',event);
   }
 
- //get passWord() { return this.formPasswordGroup.get('passWord'); }
+
 
 }

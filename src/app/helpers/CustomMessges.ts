@@ -7,7 +7,7 @@ export const customregExps: { [key: string]: RegExp } = {
   fullName: /^[a-zA-Z][a-zA-Z ]{1,200}$/,
   mobile: /^[6-9]\d{9}$/,
   addressline: /^((?=.*[a-z]{2})[a-zA-Z0-9][a-zA-Z0-9 .]{1,149})$/,
-  pincode: /^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/
+  pincode: /^[1-9]{1}[0-9]{5}$/
 
 };
 
