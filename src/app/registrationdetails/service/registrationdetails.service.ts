@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Address } from 'src/app/model/Address';
 import { Person } from 'src/app/model/Person';
 import { environment } from 'src/environments/environment';
 
@@ -50,6 +51,14 @@ export class RegistrationdetailsService {
     return this.http.put<Person>(this.apiUrl+'/details/'+person.profileid, body,{'headers': this.headers});
 
   }
+
+  addAddress(address: Address): Observable<Address> {
+    const body = JSON.stringify(address);
+    console.log("Json Body : "+body);
+    return this.http.post<Address>(this.apiUrl+'/'+address.profileid+'/addresses', body,{'headers': this.headers});
+
+  }
+
   getProfileByID(profileid: bigint):  Observable<any> {
     return  this.http.get<any>(this.apiUrl + '/' + profileid, {responseType: 'json'});
 

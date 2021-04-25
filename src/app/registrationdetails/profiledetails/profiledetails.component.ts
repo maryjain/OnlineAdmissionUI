@@ -16,6 +16,9 @@ import { Router } from '@angular/router';
 import { AngularFileUploaderConfig } from '../../shared/AngularFileUploader/angular-file-uploader.types';
 import { MatRadioChange } from '@angular/material/radio';
 import { environment } from 'src/environments/environment';
+import { MatStepper } from '@angular/material/stepper';
+import { ViewChild } from '@angular/core';
+import { Address } from 'src/app/model/Address';
 
 
 @Component({
@@ -28,11 +31,14 @@ import { environment } from 'src/environments/environment';
 export class ProfiledetailsComponent  {
 //******    variable  declaration ******
   isLinear = true;  // for mat-tepper navigation property
+
   addresstype = {present:'Present Address',permanent:'Permanent Address'};
   logintUserProfileId :any;
   apiUrl = `${environment.profileapiUrl}`;
   //profileID: any;
   person: Person;
+  present_address: Address;
+  permanent_address: Address;
   errorlist: string[];
   jsonGender = [];
   jsonNationality = [];
@@ -41,8 +47,10 @@ export class ProfiledetailsComponent  {
   jsonState = [];
   jsonDistrict=[];
   stateTextSelected:any;
-  isnextButton:boolean;
+  isnextPersonalButton:boolean;
   isnextAddressButton:boolean;
+  isSelectOptionPersonalInvalid: boolean;
+  isSelectOptionAddressInvalid: boolean;
   isShowCommunity:boolean;
   errors = errorMessages;
   religionText: string;
@@ -91,17 +99,26 @@ export class ProfiledetailsComponent  {
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
+    this.addressDetailsForm.get('addresscheckbox').setValue(false);
     this.personalDetailsForm.controls['annualincome'].setValue(1);
+    this.personalDetailsForm.controls['community'].setValue('N/A');
     this.isEWSvisible=false;
+    this.isnextPersonalButton = false;
+    this.isnextAddressButton = false;
+    this.isShowCommunity = false;
+    this.isSelectOptionPersonalInvalid= false;
+    this.isSelectOptionAddressInvalid= false;
+    // create object to be pass as json in rest api PUT,POST call
+
     this.person = new Person('', null, '', null, '');
+    this.present_address = new Address('', '', '', null,null,false,null);
+    this.permanent_address = new Address('', '', '', null,null,false,null);
 
     this.religionText="";
     this.logintUserProfileId = 2100000004;
     this.fileuploadConfig.uploadAPI.url+=this.logintUserProfileId;
     console.log("______*****______this.fileuploadConfig.uploadAPI.url ="+this.fileuploadConfig.uploadAPI.url);
-    this.isnextButton = false;
-    this.isnextAddressButton = false;
-    this.isShowCommunity = false;
+
 
    this.registrationdetailsSrv.getGender().subscribe((res ) => {
       let json = res;
@@ -216,7 +233,55 @@ export class ProfiledetailsComponent  {
 
 
 
+
+   addAddress()
+  {
+    this.present_address = new Address('', '', '', null,null,false,null);
+    this.present_address.addressline1= this.addressDetailsForm.get('present_addressline1').value;
+    this.present_address.addressline2= this.addressDetailsForm.get('present_addressline2').value;
+    this.present_address.districtcode= this.addressDetailsForm.get('present_districtcode').value;
+    this.present_address.pincode= this.addressDetailsForm.get('present_pincode').value;
+    this.present_address.addresstype= 'Present';
+    this.present_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
+    this.present_address.profileid= this.logintUserProfileId;
+    this.registrationdetailsSrv.addAddress(this.present_address).subscribe((data) => {
+      console.log('present POST addid= ' + data.addid);
+      if(this.addressDetailsForm.get('addresscheckbox').value === false){
+        console.log('+++++');
+        this.permanent_address = new Address('', '', '', null,null,false,null);
+        this.permanent_address.addressline1= this.addressDetailsForm.get('permanent_addressline1').value;
+        this.permanent_address.addressline2= this.addressDetailsForm.get('permanent_addressline2').value;
+        this.permanent_address.districtcode= this.addressDetailsForm.get('permanent_districtcode').value;
+        this.permanent_address.pincode= this.addressDetailsForm.get('permanent_pincode').value;
+        this.permanent_address.addresstype= 'Permanent';
+        this.permanent_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
+        this.permanent_address.profileid= this.logintUserProfileId;
+        this.registrationdetailsSrv.addAddress(this.permanent_address).subscribe((data) => {
+          console.log('permanent POST addid= ' + data.addid);
+        },
+        (err: HttpErrorResponse) => {
+          console.log("Error status = "+ err.statusText);
+         console.log("Error occured Address insert = "+ err.message);
+        });
+      }
+
+    },
+    (err: HttpErrorResponse) => {
+      console.log("Error status = "+ err.statusText);
+     console.log("Error occured Address insert = "+ err.message);
+    });
+
+    console.log("Same address Check box ="+this.addressDetailsForm.get('addresscheckbox').value);
+
+
+
+  }
+
+
+
   updatePerson() {
+
+    this.person = new Person('', null, '', null, '');
     this.person.fathername= this.personalDetailsForm.get('fathername').value;
     this.person.mothername= this.personalDetailsForm.get('mothername').value;
     this.person.guardianname= this.personalDetailsForm.get('guardianname').value;
@@ -225,14 +290,7 @@ export class ProfiledetailsComponent  {
     this.person.nationality= this.personalDetailsForm.get('nationality').value;
     this.person.state= this.stateTextSelected;
     this.person.religion= this.religionText;
-    if(this.personalDetailsForm.get('community').value === "")
-    {
-      this.person.community='N/A';
-    }
-    else
-    {
     this.person.community= this.personalDetailsForm.get('community').value;
-    }
     this.person.annualincome= this.personalDetailsForm.get('annualincome').value;
     this.person.creamylayer= this.personalDetailsForm.get('creamylayer').value;
     this.person.profileid=this.logintUserProfileId;
@@ -264,13 +322,39 @@ export class ProfiledetailsComponent  {
 
 public isClickedAddressNext():void
 {
+  this.isnextAddressButton=true;
+  this.isSelectOptionAddressInvalid= false;
+  console.log("Present addressline1 =   "+this.addressDetailsForm.get('present_addressline1').value);
+  console.log(" Present districtcode =   "+this.addressDetailsForm.get('present_districtcode').value);
+  console.log(" Present pincode =   "+this.addressDetailsForm.get('present_pincode').value);
 
+  console.log(" Permanent addressline1 =   "+this.addressDetailsForm.get('permanent_addressline1').value);
+  console.log(" Permanent pincode=  "+this.addressDetailsForm.get('permanent_pincode').value);
+
+  if(this.addressDetailsForm.get('present_districtcode').value === ""){
+
+    this.isSelectOptionAddressInvalid= true;
+  }
+
+  if(this.addressDetailsForm.get('addresscheckbox').value === false && this.addressDetailsForm.get('permanent_districtcode').value === "")
+    {
+      this.isSelectOptionAddressInvalid= true;
+      console.log("****** Invalid permanent adrress pincode **********")
+    }
+
+  if(this.isSelectOptionAddressInvalid === false)
+  {
+    this.addAddress();
+  }
 
 }
 
+
   // first personal details Next button click
-  public isClickedNext():void{
-    this.isnextButton= false;
+  public isClickedPersonalNext():void{
+    //this.myStepper.next();
+    this.isnextPersonalButton= true;
+    this.isSelectOptionPersonalInvalid= false;
     console.log(" Annual income =   "+this.personalDetailsForm.get('annualincome').value);
     console.log(" creamylayer=   "+this.personalDetailsForm.get('creamylayer').value);
     console.log(" gender=   "+this.personalDetailsForm.get('gender').value);
@@ -280,48 +364,45 @@ public isClickedAddressNext():void
 
     if(this.personalDetailsForm.get('gender').value === ""){
 
-      this.isnextButton= true;
+      this.isSelectOptionPersonalInvalid= true;
     }
 
     if(this.personalDetailsForm.get('nationality').value === ""){
 
-      this.isnextButton= true;
+      this.isSelectOptionPersonalInvalid= true;
     }
 
     if(this.personalDetailsForm.get('state').value === ""){
 
-      this.isnextButton= true;
+      this.isSelectOptionPersonalInvalid= true;
     }
 
     if(this.personalDetailsForm.get('religion').value === ""){
 
-      this.isnextButton= true;
+      this.isSelectOptionPersonalInvalid= true;
     }
     if(this.personalDetailsForm.get('creamylayer').value === ""){
 
-      this.isnextButton= true;
+      this.isSelectOptionPersonalInvalid= true;
     }
-    if(this.isnextButton === false)
+    if(this.personalDetailsForm.controls['community'].value === null)
     {
-      this.updatePerson();
-      // Kerala statecode =1
-     this.registrationdetailsSrv.getDistrictByState(this.personalDetailsForm.get('state').value).subscribe((res ) => {
-      let json = res;
-      for (var type in json) {
-        let item = {key:"",value:""};
-        item.key = type;
-        item.value = json[type];
-        this.jsonDistrict.push(item);
-    }
-      console.log('this.jsonDistrict = ' + this.jsonDistrict);
-     },
-    (err: HttpErrorResponse) => {
-      console.log("Error status = "+ err.statusText);
-     console.log("Error occured district = "+ err.message);
-    });
+      this.isSelectOptionPersonalInvalid= true;
     }
 
+    if(this.personalDetailsForm.controls['annualincome'].value === null)
+    {
+      this.isSelectOptionPersonalInvalid= true;
+    }
+
+    if(this.isSelectOptionPersonalInvalid === false)
+    {
+      this.updatePerson();
+    }
+
+
   }
+
 //******    Trim Text value for start and end spaces declaration ******
   onChangeTrim($event):void
   {
@@ -350,12 +431,14 @@ public isClickedAddressNext():void
 
  public onChangeCreamyLayer(mrChange: MatRadioChange):void
  {
+  this.personalDetailsForm.controls['annualincome'].setValue(1);
   console.log(" *** creamy ="+mrChange.value);
   if(mrChange.value === 'true')
   {
     this.isEWSvisible = false;
   }
   else if(mrChange.value === 'false'){
+    this.personalDetailsForm.controls['annualincome'].reset();
     this.isEWSvisible =true;
   }
 
@@ -370,17 +453,35 @@ public isClickedAddressNext():void
 
   onChangeState($event):void
   {
+      // Kerala statecode =1
     this.stateTextSelected = $event.target.options[$event.target.options.selectedIndex].text;
+    this.registrationdetailsSrv.getDistrictByState(this.personalDetailsForm.get('state').value).subscribe((res ) => {
+      let json = res;
+      for (var type in json) {
+        let item = {key:"",value:""};
+        item.key = type;
+        item.value = json[type];
+        this.jsonDistrict.push(item);
+    }
+      console.log('this.jsonDistrict = ' + this.jsonDistrict);
+     },
+    (err: HttpErrorResponse) => {
+      console.log("Error status = "+ err.statusText);
+     console.log("Error occured district = "+ err.message);
+    });
   }
  // Community is present for Hindu( 1 ) and Christain( 3 ) as per database value
-  public  onChange($event){
+  public  onChangeReligion($event){
+    this.personalDetailsForm.controls['community'].setValue('N/A');
     this.isShowCommunity = false;
     let religionValue=$event.target.value;
     this.religionText=$event.target.options[$event.target.options.selectedIndex].text;
     console.log(" religionValue= "+$event.target.value);
     console.log(" religionText= "+this.religionText);
+    // religionValue Hindu =1 and Christain =3
     if(religionValue == 1 || religionValue == 3){
     this.isShowCommunity =true;
+    this.personalDetailsForm.controls['community'].reset();
     this.registrationdetailsSrv.getCommunityByReligion(religionValue).subscribe((res ) => {
       let json = res;
         for (var type in json) {

@@ -83,7 +83,7 @@
                 </option>
               </select>
           <small>
-          <mat-error  *ngIf ="((gender.touched || isnextButton) && gender.hasError('required'))">
+          <mat-error  *ngIf ="((gender.touched || isnextPersonalButton) && gender.hasError('required'))">
             {{errors.genderRequired}}
           </mat-error>
           </small>
@@ -99,7 +99,7 @@
                 </option>
               </select>
           <small>
-          <mat-error  *ngIf ="((nationality.touched || isnextButton) && nationality.hasError('required'))">
+          <mat-error  *ngIf ="((nationality.touched || isnextPersonalButton) && nationality.hasError('required'))">
             {{errors.nationalityRequired}}
           </mat-error>
           </small>
@@ -115,7 +115,7 @@
                 </option>
               </select>
           <small>
-          <mat-error  *ngIf ="((state.touched || isnextButton) && state.hasError('required'))">
+          <mat-error  *ngIf ="((state.touched || isnextPersonalButton) && state.hasError('required'))">
             {{errors.stateRequired}}
           </mat-error>
           </small>
@@ -127,14 +127,14 @@
           <div fxLayout="row" fxLayoutAlign="start">
             <div fxFlex="75"><label ast-required>Religion</label></div>
           </div>
-            <select class="custom-select" formControlName="religion" (change)="onChange($event)">
+            <select class="custom-select" formControlName="religion" (change)="onChangeReligion($event)">
                <option value="">Select</option>
                 <option *ngFor="let item of this.jsonReligion;let i = index" value="{{item.key}}" [selected]="i == 0">
                   {{item.value}}
                 </option>
               </select>
           <small>
-          <mat-error  *ngIf ="((religion.touched || isnextButton) && religion.hasError('required'))">
+          <mat-error  *ngIf ="((religion.touched || isnextPersonalButton) && religion.hasError('required'))">
             {{errors.religionRequired}}
           </mat-error>
           </small>
@@ -150,7 +150,7 @@
                 </option>
               </select>
           <small>
-          <mat-error  *ngIf ="((community.touched || isnextButton) && community.hasError('required'))">
+          <mat-error  *ngIf ="((community.touched || isnextPersonalButton)  && community.hasError('required'))">
             {{errors.communityRequired}}
           </mat-error>
           </small>
@@ -162,7 +162,7 @@
               <mat-radio-button value="false"  class="example-radio-button" >No</mat-radio-button>
             </mat-radio-group>
             <small>
-            <mat-error *ngIf ="((creamylayer.touched || isnextButton) && creamylayer.hasError('required'))">
+            <mat-error *ngIf ="((creamylayer.touched || isnextPersonalButton) && creamylayer.hasError('required'))">
             {{errors.creamyLayerRequired}}
           </mat-error>
            </small>
@@ -174,7 +174,7 @@
           </div>
            <mat-form-field class="example-full-width">
            <input matInput type="text"  formControlName="annualincome" appMoneyOnly maxDigits="9" (focus)="onfocusAnnualIncome()"  placeholder="₹100000.0" >
-          <mat-error *ngIf ="((annualincome.touched || isnextButton) && annualincome.hasError('required'))">
+          <mat-error *ngIf ="((annualincome.touched || isnextPersonalButton) && annualincome.hasError('required'))">
             {{errors.annualincomeRequired}}
           </mat-error>
           </mat-form-field>
@@ -190,7 +190,7 @@
          <br>
          <hr>
          <br>
-         <button mat-raised-button  color="primary" (click)="isClickedNext()" matStepperNext>Next</button>
+         <button mat-raised-button color="primary" (click)="isClickedPersonalNext()" matStepperNext>Next</button>
         </div>
         </div>
       </form>
@@ -214,7 +214,7 @@
         </div>
         <mat-form-field class="example-full-width">
         <span matPrefix><mat-icon>other_houses</mat-icon>&nbsp;</span>
-        <input matInput type="text"  formControlName="present_addressline1"  required (keypress)="onChangeTrim($event)" >
+        <input matInput type="text"  formControlName="present_addressline1"  required (blur)="onChangeTrim($event)" >
         <mat-error *ngIf ="addressDetailsForm.touched && present_addressline1.hasError('pattern') && !present_addressline1.hasError('required')">
           {{errors.addressline}}
         </mat-error>
@@ -231,7 +231,7 @@
           </div>
           <mat-form-field class="example-full-width">
           <span matPrefix><mat-icon>other_houses</mat-icon>&nbsp;</span>
-          <input matInput type="text"  formControlName="present_addressline2"  required (keypress)="onChangeTrim($event)">
+          <input matInput type="text"  formControlName="present_addressline2"  required (blur)="onChangeTrim($event)">
           <mat-error *ngIf ="addressDetailsForm.touched && present_addressline2.hasError('pattern') && !present_addressline2.hasError('required')">
             {{errors.addressline}}
           </mat-error>
@@ -246,7 +246,7 @@
           </div>
             <select class="custom-select" formControlName="present_districtcode">
                <option value="">Select</option>
-                <option *ngFor="let item of this.jsonDistrict;let i = index" value="{{item.value}}" [selected]="i == 0">
+                <option *ngFor="let item of this.jsonDistrict;let i = index" value="{{item.key}}" [selected]="i == 0">
                   {{item.value}}
                 </option>
               </select>
@@ -285,7 +285,7 @@
             </div>
             <mat-form-field class="example-full-width">
             <span matPrefix><mat-icon>house</mat-icon>&nbsp;</span>
-            <input matInput type="text"  formControlName="permanent_addressline1"  required (keypress)="onChangeTrim($event)">
+            <input matInput type="text"  formControlName="permanent_addressline1"  required (blur)="onChangeTrim($event)">
             <mat-error *ngIf ="addressDetailsForm.touched && permanent_addressline1.hasError('pattern') && !permanent_addressline1.hasError('required')">
               {{errors.addressline}}
             </mat-error>
@@ -301,7 +301,7 @@
               </div>
               <mat-form-field class="example-full-width">
               <span matPrefix><mat-icon>house</mat-icon>&nbsp;</span>
-              <input matInput type="text"  formControlName="permanent_addressline2"  required (keypress)="onChangeTrim($event)">
+              <input matInput type="text"  formControlName="permanent_addressline2"  required (blur)="onChangeTrim($event)">
               <mat-error *ngIf ="addressDetailsForm.touched && permanent_addressline2.hasError('pattern') && !permanent_addressline2.hasError('required')">
                 {{errors.addressline}}
               </mat-error>
@@ -316,7 +316,7 @@
               </div>
                 <select class="custom-select" formControlName="permanent_districtcode">
                    <option value="">Select</option>
-                    <option *ngFor="let item of this.jsonDistrict;let i = index" value="{{item.value}}" [selected]="i == 0">
+                    <option *ngFor="let item of this.jsonDistrict;let i = index" value="{{item.key}}" [selected]="i == 0">
                       {{item.value}}
                     </option>
                   </select>
