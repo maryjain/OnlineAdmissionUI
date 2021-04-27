@@ -198,7 +198,7 @@
       </mat-card>
   </mat-step>
 
-  <mat-step [stepControl]="addressDetailsForm" label="Address" >
+  <mat-step [stepControl]="addressDetailsForm" label="Address Details" >
       <mat-card >
       <mat-card-content>
         <form [formGroup]="addressDetailsForm" >
@@ -457,20 +457,12 @@
 
   </mat-step>
 
-  <mat-step [stepControl]="formPhoneGroup" label="Mobile" >
+  <mat-step [stepControl]="formUploadDocumemtsGroup" label="Upload Documents" >
     <div style="padding-top: 3%;">
-        <form [formGroup]="formPhoneGroup">
+        <form [formGroup]="formUploadDocumemtsGroup">
             <!-- <ng-template matStepLabel>Name</ng-template> -->
             <div class="example-form">
-              <mat-form-field class="example-full-width">
-                <input type="tel" matInput placeholder="Mobile" required formControlName="mobile">
-                <mat-error *ngIf="formPhoneGroup.controls['mobile'].hasError('required')">
-                        Mobile is required!
-                    </mat-error>
-                 <mat-error *ngIf="formPhoneGroup.controls['mobile'].hasError('min')">
-                        Mobile No is Wrong!
-                    </mat-error>
-              </mat-form-field>
+
             </div>
             <br/>
             <button mat-raised-button color="primary" matStepperNext>Next</button>
@@ -478,7 +470,7 @@
     </div>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Review</ng-template>
+    <ng-template matStepLabel>Payment Details</ng-template>
     <h5>You are now done.</h5>
     <div>
         <button mat-raised-button color="primary" matStepperPrevious>Back</button> &nbsp; &nbsp;

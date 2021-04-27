@@ -309,7 +309,7 @@ export class ProfiledetailsComponent  {
   public formEmailGroup  = this.fb.group({
     emailID: ['', Validators.compose([Validators.required, Validators.email])]
   });
-  public formPhoneGroup  = this.fb.group({
+  public formUploadDocumemtsGroup  = this.fb.group({
     mobile: ['', Validators.compose([Validators.required, Validators.min(10)])]
   });
 
@@ -413,7 +413,7 @@ updatePerson() {
   this.person.profileid=this.logintUserProfileId;
   this.registrationdetailsSrv.updatePerson(this.person).subscribe((data) => {
     console.log('PUT profileid= ' + data.profileid);
-   // this.validatesrv.getlatestProfile(this.person);
+
    //this.router.navigate(['/login']);
   },
   (err: HttpErrorResponse) => {
