@@ -352,19 +352,20 @@
         </mat-card>
        </mat-step>
 
-  <mat-step [stepControl]="formEducationDetailsGroup" label="Education" >
-
-
-
+  <mat-step [stepControl]="formEducationDetailsGroup" label="Education Details" >
+    <button class="addButton" mat-button (click)="addQualification()"><span class="material-icons">
+      add_circle
+      </span> Add Education details</button><br>
+      <small class="smallInfo">Please enter details from 10th standard onwards</small>
             <div  class="example-container mat-elevation-z8">
-              <mat-table #table [dataSource]="dataSource">
-                <form [formGroup]="formEducationDetailsGroup">
+              <mat-table #table [dataSource]="EducationArray.controls">
+
                 <!-- Position Column -->
                 <ng-container matColumnDef="qualificationtype">
                   <mat-header-cell *matHeaderCellDef> Qualification Type </mat-header-cell>
                   <mat-cell *matCellDef="let element">
                   <mat-form-field class="example-full-width" floatLabel="never" appearance="none" >
-                    <mat-select placeholder="Select" formControlName="qualificationtype">
+                    <mat-select placeholder="Select"  [formControl]="element.get('qualificationtype')" >
                       <mat-option *ngFor="let item of this.jsonQualification;let i = index" [value]="item.value">
                         {{item.value}}
                       </mat-option>
@@ -378,7 +379,7 @@
                   <mat-header-cell *matHeaderCellDef> Institution </mat-header-cell>
                     <mat-cell *matCellDef="let element">
                     <mat-form-field floatLabel="never">
-                    <input matInput type="text" placeholder=""  formControlName="institution"  required >
+                    <input matInput type="text" placeholder="" [formControl]="element.get('institution')"  required >
                   </mat-form-field>
                 </mat-cell>
                 </ng-container>
@@ -388,7 +389,7 @@
                   <mat-header-cell *matHeaderCellDef> University </mat-header-cell>
                    <mat-cell *matCellDef="let element" >
                     <mat-form-field floatLabel="never">
-                    <input matInput type="text" placeholder=""  formControlName="university"  required >
+                    <input matInput type="text" placeholder="" [formControl]="element.get('university')"  required >
                   </mat-form-field>
                  </mat-cell>
                 </ng-container>
@@ -398,48 +399,50 @@
                 <mat-header-cell *matHeaderCellDef> Year of pass </mat-header-cell>
                 <mat-cell *matCellDef="let element;let i=index;">
                 <mat-form-field class="example-full-width" appearance="fill">
-                <input matInput
-                [matDatepicker]=pickers
-                [formControl]="yearofpass"
-                readonly>
+                <input matInput [matDatepicker]=pickers [formControl]="element.get('yearofpass')" readonly [min]="minDate" [max]="maxDate">
+                <mat-datepicker-toggle matSuffix [for]=pickers></mat-datepicker-toggle>
+                <mat-datepicker #pickers startView="multi-year" (yearSelected)="chosenYearHandler($event,pickers,i,element.get('yearofpass'))" panelClass="example-year-picker">
+                </mat-datepicker>
 
-              <mat-datepicker-toggle matSuffix [for]=pickers></mat-datepicker-toggle>
-
-              <mat-datepicker #pickers
-              startView="multi-year"
-              (yearSelected)="chosenYearHandler($event,pickers,i)"
-              panelClass="example-year-picker">
-              </mat-datepicker>
-
-                    <mat-error *ngIf ="yearofpass.hasError('required')">
-                      {{errors.yearofpassRequired}}
-                    </mat-error>
-                  </mat-form-field>
-                  </mat-cell>
+                </mat-form-field>
+                </mat-cell>
                 </ng-container>
 
-                <!-- Fav Column -->
+                <!-- Registration No Column -->
                 <ng-container matColumnDef="registrationno">
                   <mat-header-cell *matHeaderCellDef> Registration No </mat-header-cell>
                   <mat-cell *matCellDef="let element">
-                    <mat-cell *matCellDef="let element"> {{element.registrationno}} </mat-cell>
+                    <mat-form-field floatLabel="never">
+                    <input matInput type="text" placeholder="R40000"  [formControl]="element.get('registrationno')"  required >
+                    </mat-form-field>
                   </mat-cell>
                 </ng-container>
-
+                <!-- CGPA Column -->
                 <ng-container matColumnDef="cgpa">
                   <mat-header-cell *matHeaderCellDef> CGPA </mat-header-cell>
                   <mat-cell *matCellDef="let element">
-                    <mat-cell *matCellDef="let element"> {{element.cgpa}} </mat-cell>
+                    <mat-form-field floatLabel="never">
+                    <input matInput type="text" placeholder="8.5" [formControl]="element.get('cgpa')"  required >
+                    </mat-form-field>
                   </mat-cell>
                 </ng-container>
-
+                <!-- Percentage Column -->
                 <ng-container matColumnDef="percentage">
                   <mat-header-cell *matHeaderCellDef> Percentage </mat-header-cell>
                   <mat-cell *matCellDef="let element">
-                    <mat-cell *matCellDef="let element"> {{element.percentage}} </mat-cell>
+                    <mat-form-field floatLabel="never">
+                    <input matInput type="text" placeholder="60.25" [formControl]="element.get('percentage')" required >
+                    </mat-form-field>
                   </mat-cell>
                 </ng-container>
-              </form>
+                <ng-container matColumnDef="Delete">
+                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                  <mat-cell *matCellDef="let i = index;">
+                    &nbsp;&nbsp;&nbsp;
+                    <button mat-button class="deleteButton" (click)="removeQualification(i)">Delete</button>
+                    </mat-cell>
+                </ng-container>
+
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 

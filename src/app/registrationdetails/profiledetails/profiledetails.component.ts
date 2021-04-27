@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {UtilityService} from '../../shared/utility/utility.service';
 import * as moment from 'moment';
 
@@ -20,7 +20,7 @@ import { environment } from 'src/environments/environment';
 import { MatStepper } from '@angular/material/stepper';
 import { ViewChild } from '@angular/core';
 import { Address } from 'src/app/model/Address';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -71,9 +71,13 @@ const ELEMENT_DATA: EDUCATION[] = [
   ],
 })
 export class ProfiledetailsComponent  {
-  displayedColumns = ['qualificationtype', 'institution', 'university', 'yearofpass', 'registrationno','cgpa','percentage'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
+  //**Education Details  **/
+  minDate: Date;
+  maxDate: Date;
+  displayedColumns = ['qualificationtype', 'institution', 'university', 'yearofpass', 'registrationno','cgpa','percentage','Delete'];
+  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
+  EducationArray = new FormArray([]);
+  dataSource;
 //******    variable  declaration ******
   isLinear = false;  // for mat-tepper navigation property
 
@@ -81,7 +85,7 @@ export class ProfiledetailsComponent  {
   logintUserProfileId :any;
   apiUrl = `${environment.profileapiUrl}`;
   //profileID: any;
-  minDate : Date;
+
   passYear:any;
   person: Person;
   present_address: Address;
@@ -149,13 +153,20 @@ export class ProfiledetailsComponent  {
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
+     //**Education Details  **/
+    this.EducationArray.push(this.createGroup({ qualificationtype: "", institution: "", university: "",yearofpass:2000,registrationno:"",cgpa:0,percentage:0 }));
 
-    this.formEducationDetailsGroup.controls['yearofpass']=new FormControl(moment());
+    this.dataSource = this.EducationArray.controls;
+
     console.log(" jsonQualification =" +this.jsonQualification);
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 90, 0, 1);
+    this.maxDate = new Date(currentYear + 1, 0, 0);
 
+
+    //**Address Details  **/
     this.addressDetailsForm.get('addresscheckbox').setValue(false);
+
     this.personalDetailsForm.controls['annualincome'].setValue(1);
     this.personalDetailsForm.controls['community'].setValue('N/A');
     this.isEWSvisible=false;
@@ -288,13 +299,7 @@ export class ProfiledetailsComponent  {
   });
 
   public formEducationDetailsGroup= this.fb.group({
-    qualificationtype: ['', [Validators.required]],
-    institution: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
-    university: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
-    yearofpass: ['', [Validators.required,Validators.pattern(customregExps.yearofpass)]],
-    registrationno: ['', [Validators.required,Validators.pattern(customregExps.registrationno)]],
-    cgpa: ['', [Validators.required,Validators.pattern(customregExps.cgpa)]],
-    percentage: ['', [Validators.required,Validators.pattern(customregExps.percentage)]],
+
   });
 
 
@@ -310,6 +315,45 @@ export class ProfiledetailsComponent  {
 
 //******    Events method declaration ******
 
+//**** Education qualification ***/
+
+
+/****** datepicker starts *******/
+
+chosenYearHandler(normalizedYear: Moment,datepicker: MatDatepicker<Moment>,rows:any,element:any) {
+
+   const ctrlValue = element.value.value;
+   console.log("****ctrlValue= "+ctrlValue);
+   ctrlValue.year(normalizedYear.year());
+  console.log("************ row ="+rows+"   Year = "+moment(ctrlValue).format('yyyy'));
+ // console.log("************  element.get('qualificationtype').value= "+element.get('qualificationtype').value);
+  element.setValue(ctrlValue);
+  datepicker.close();
+}
+public createGroup(data: any) {
+  data = data || { qualificationtype: "", institution: "", university: "",yearofpass:2000,registrationno:"",cgpa:0,percentage:0};
+  return this.fb.group({
+    qualificationtype: ['', [Validators.required]],
+    institution: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
+    university: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
+    yearofpass: [new FormControl(moment()), [Validators.required,Validators.pattern(customregExps.yearofpass)]],
+    registrationno: ['', [Validators.required,Validators.pattern(customregExps.registrationno)]],
+    cgpa: ['', [Validators.required,Validators.pattern(customregExps.cgpa)]],
+    percentage: ['', [Validators.required,Validators.pattern(customregExps.percentage)]],
+  });
+}
+addQualification():void
+{
+
+  this.EducationArray.push(this.createGroup(null));
+  this.table.renderRows();
+}
+
+removeQualification(index: number) {
+  this.EducationArray.removeAt(index);
+  this.table.renderRows();
+}
+/****** datepicker ends *******/
 
 addAddress()
 {
@@ -467,6 +511,8 @@ public isClickedAddressNext():void
   {
     $event.target.value=$event.target.value.trim();
   }
+
+
  /* onChangeAnnualIncome(annualIncomeValue)
   {
     this.personalDetailsForm.controls['annualincome'].setValue(this.currencyPipe.transform(annualIncomeValue,'INR'));
@@ -474,52 +520,8 @@ public isClickedAddressNext():void
   }
   */
 
-/****** datepicker starts *******/
-
-chosenYearHandler(normalizedYear: Moment,datepicker: MatDatepicker<Moment>,rows:any) {
-  const ctrlValue = this.formEducationDetailsGroup.get('yearofpass').value;
-  ctrlValue.year(normalizedYear.year());
-  console.log("************ row ="+rows+"Year = "+moment(ctrlValue).format('yyyy'));
-  console.log("************  this.formEducationDetailsGroup.get('qualificationtype').value = "+this.formEducationDetailsGroup.get('qualificationtype').value);
-  this.formEducationDetailsGroup.controls['yearofpass'].setValue(ctrlValue);
-  datepicker.close();
-}
-
-/*
-_yearSelectedHandler($event, datepicker: MatDatepicker<Moment>) {
-
-this.formEducationDetailsGroup.controls['yearofpass'].setValue(
-  moment($event.value).format('yyyy'));
-  console.log(" **** year of pass =   "+ moment($event.value).format('yyyy'));
-  datepicker.close();
-}
 
 
-_yearSelectedHandler(chosenDate: Moment, datepicker: MatDatepicker<Moment>) {
-    this.formEducationDetailsGroup.controls['yearofpass'].setValue(chosenDate, { emitEvent: false });
-  this.onChange(chosenDate.toDate());
-  this.onTouched();
-  datepicker.close();
-}
- writeValue(date: Date): void {
-  if (date) {
-    const momentDate = moment(date);
-    if (momentDate.isValid()) {
-      this.formEducationDetailsGroup.controls['yearofpass'].setValue(moment(date), { emitEvent: false });
-    }
-  }
-}
-
- onDateChange( date: Date ) :void{
-  if (date) {
-    const momentDate = moment(date);
-    if (momentDate.isValid()) {
-      this.formEducationDetailsGroup.controls['yearofpass'].setValue(moment(date), { emitEvent: false });
-    }
-  }
-}
-*/
-/****** datepicker ends *******/
 
   public onChangeAddressCheckBox():void
   {
@@ -636,14 +638,14 @@ _yearSelectedHandler(chosenDate: Moment, datepicker: MatDatepicker<Moment>) {
 
 
   //Education Qualification
-  get qualificationtype() { return this.formEducationDetailsGroup.get('qualificationtype'); }
-  get institution() { return this.formEducationDetailsGroup.get('institution'); }
-  get university() { return this.formEducationDetailsGroup.get('university'); }
-  get yearofpass() { return this.formEducationDetailsGroup.get('yearofpass'); }
-  get registrationno() { return this.formEducationDetailsGroup.get('registrationno'); }
-  get cgpa() { return this.formEducationDetailsGroup.get('cgpa'); }
-  get percentage() { return this.formEducationDetailsGroup.get('percentage'); }
-
+ /* get qualificationtype() { return this.EducationArray.get('qualificationtype'); }
+  get institution() { return this.EducationArray.get('institution'); }
+  get university() { return this.EducationArray.get('university'); }
+  get yearofpass() { return this.EducationArray.get('yearofpass'); }
+  get registrationno() { return this.EducationArray.get('registrationno'); }
+  get cgpa() { return this.EducationArray.get('cgpa'); }
+  get percentage() { return this.EducationArray.get('percentage'); }
+*/
 
   //******    Upload Documents REST api call status ******
   docUpload(event) {

@@ -47,6 +47,32 @@ mat-card{
 {
   color:#BF360C;
 }
+
+
+mat-error{
+  font-weight: bold;
+}
+
+
+.nextButton
+{
+  margin-left: 15px;
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+
+
+// ***** Mat table css starts  *****
+
 mat-table
 {
   background-color:#FBE9E7;
@@ -112,23 +138,19 @@ text-align: center;
 
 
 
-mat-error{
+.smallInfo{
   font-weight: bold;
+  color:#BF360C;
+
+}
+
+.deleteButton{
+  background-color:#FFAB91;
+}
+.addButton{
+  background-color:#b5d394;
 }
 
 
-.nextButton
-{
-  margin-left: 15px;
-}
 
-.example-radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
-}
-
-.example-radio-button {
-  margin: 5px;
-}
-
+// ***** Mat table css ends  *****
