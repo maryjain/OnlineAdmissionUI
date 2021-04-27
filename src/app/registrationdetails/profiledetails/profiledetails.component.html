@@ -5,7 +5,7 @@
         <mat-card-title>Personal Details</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-      <form [formGroup]="personalDetailsForm" #ngForm="ngForm">
+      <form [formGroup]="personalDetailsForm" >
         <br>
         <div class="row">
         <div class="col-6 div-right">
@@ -352,25 +352,106 @@
         </mat-card>
        </mat-step>
 
-  <mat-step [stepControl]="formEmailGroup" label="Email" >
-    <div style="padding-top: 3%;">
-        <form [formGroup]="formEmailGroup">
-            <!-- <ng-template matStepLabel>Name</ng-template> -->
-            <div class="example-form">
-              <mat-form-field class="example-full-width">
-                <input type="text" matInput placeholder="Email" required formControlName="emailID">
-                <mat-error *ngIf="formEmailGroup.controls['emailID'].hasError('required')">
-                        Email is required!
+  <mat-step [stepControl]="formEducationDetailsGroup" label="Education" >
+
+
+
+            <div  class="example-container mat-elevation-z8">
+              <mat-table #table [dataSource]="dataSource">
+                <form [formGroup]="formEducationDetailsGroup">
+                <!-- Position Column -->
+                <ng-container matColumnDef="qualificationtype">
+                  <mat-header-cell *matHeaderCellDef> Qualification Type </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                  <mat-form-field class="example-full-width" floatLabel="never" appearance="none" >
+                    <mat-select placeholder="Select" formControlName="qualificationtype">
+                      <mat-option *ngFor="let item of this.jsonQualification;let i = index" [value]="item.value">
+                        {{item.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  </mat-cell>
+                </ng-container>
+
+                <!-- institution Column -->
+                <ng-container matColumnDef="institution">
+                  <mat-header-cell *matHeaderCellDef> Institution </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                    <mat-form-field floatLabel="never">
+                    <input matInput type="text" placeholder=""  formControlName="institution"  required >
+                  </mat-form-field>
+                </mat-cell>
+                </ng-container>
+
+                <!-- university Column -->
+                <ng-container matColumnDef="university">
+                  <mat-header-cell *matHeaderCellDef> University </mat-header-cell>
+                   <mat-cell *matCellDef="let element" >
+                    <mat-form-field floatLabel="never">
+                    <input matInput type="text" placeholder=""  formControlName="university"  required >
+                  </mat-form-field>
+                 </mat-cell>
+                </ng-container>
+
+                <!-- yearofpass Column -->
+                <ng-container matColumnDef="yearofpass">
+                <mat-header-cell *matHeaderCellDef> Year of pass </mat-header-cell>
+                <mat-cell *matCellDef="let element;let i=index;">
+                <mat-form-field class="example-full-width" appearance="fill">
+                <input matInput
+                [matDatepicker]=pickers
+                [formControl]="yearofpass"
+                readonly>
+
+              <mat-datepicker-toggle matSuffix [for]=pickers></mat-datepicker-toggle>
+
+              <mat-datepicker #pickers
+              startView="multi-year"
+              (yearSelected)="chosenYearHandler($event,pickers,i)"
+              panelClass="example-year-picker">
+              </mat-datepicker>
+
+                    <mat-error *ngIf ="yearofpass.hasError('required')">
+                      {{errors.yearofpassRequired}}
                     </mat-error>
-                <mat-error *ngIf="formEmailGroup.controls['emailID'].hasError('email')">
-                    Email is not Valid!
-                </mat-error>
-              </mat-form-field>
+                  </mat-form-field>
+                  </mat-cell>
+                </ng-container>
+
+                <!-- Fav Column -->
+                <ng-container matColumnDef="registrationno">
+                  <mat-header-cell *matHeaderCellDef> Registration No </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <mat-cell *matCellDef="let element"> {{element.registrationno}} </mat-cell>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="cgpa">
+                  <mat-header-cell *matHeaderCellDef> CGPA </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <mat-cell *matCellDef="let element"> {{element.cgpa}} </mat-cell>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="percentage">
+                  <mat-header-cell *matHeaderCellDef> Percentage </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <mat-cell *matCellDef="let element"> {{element.percentage}} </mat-cell>
+                  </mat-cell>
+                </ng-container>
+              </form>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+              </mat-table>
+
             </div>
+
             <br/>
             <button mat-raised-button color="primary" matStepperNext>Next</button>
-        </form>
-    </div>
+
+
+
   </mat-step>
 
   <mat-step [stepControl]="formPhoneGroup" label="Mobile" >

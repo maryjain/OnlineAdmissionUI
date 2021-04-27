@@ -13,9 +13,11 @@ import { AngularFileUploaderComponent } from './AngularFileUploader/angular-file
 import { HttpClientModule } from '@angular/common/http';
 import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 
+
 @NgModule({
   declarations: [MarkAsteriskDirective, AppBlockCopyPasteDirective, AlphabetOnlyDirective, MoneyOnlyDirective,
-    AngularFileUploaderComponent ],
+    AngularFileUploaderComponent
+    ],
   providers: [CurrencyPipe,PdfViewerComponent
 
   ],
@@ -39,7 +41,8 @@ import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
     AlphabetOnlyDirective,
     MoneyOnlyDirective,
     AngularFileUploaderComponent,
-    PdfViewerModule
+    PdfViewerModule,
+
   ]
 
 })

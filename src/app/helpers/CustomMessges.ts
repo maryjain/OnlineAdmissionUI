@@ -7,8 +7,11 @@ export const customregExps: { [key: string]: RegExp } = {
   fullName: /^[a-zA-Z][a-zA-Z ]{1,200}$/,
   mobile: /^[6-9]\d{9}$/,
   addressline: /^((?=.*[a-z]{2})[a-zA-Z0-9][a-zA-Z0-9 .]{1,149})$/,
-  pincode: /^[1-9]{1}[0-9]{5}$/
-
+  pincode: /^[1-9]{1}[0-9]{5}$/,
+  yearofpass:/^\d{4}$/,
+  cgpa: /^[0-9]\.\d{1,2}$/,
+  percentage: /^[0-9]{1,2}\.\d{1,2}$/,
+  registrationno: /^[a-zA-Z0-9][a-zA-Z0-9 ]{1,98}$/,
 };
 
 /**
@@ -38,10 +41,21 @@ export const errorMessages: { [key: string]: string } = {
   addresstypeRequired: 'Address Type is required',
   pincodeRequired: 'Pincode is required',
   districtRequired: 'District is required',
+  qualificationtypeRequired: 'Qualification Type is required',
+  institutionRequired: 'Institution is required',
+  universityRequired: 'University is required',
+  yearofpassRequired: 'Year of Pass required',
+  cgpaRequired:'CGPA is required',
+  percentageRequired: 'Percentage is required',
   addressline: 'Please enter valid Address Line',
   emailDuplicate: 'Email id already exists',
   mobileNoDuplicate: 'Mobile Number already exists',
   otpTimerExpires: 'Time out , Resend OTP again',
+  institution: 'Please enter valid Institution',
+  university: 'Please enter valid University',
+  yearofpass: 'Please enter valid Year of Pass',
+  cgpa: 'Please enter valid CGPA',
+  percentage: 'Please enter valid Percentage',
   success: 'Success',
   failure: 'Failure',
 };

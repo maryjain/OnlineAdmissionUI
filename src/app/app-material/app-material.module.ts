@@ -17,6 +17,9 @@ import {MatListModule} from '@angular/material/list';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [],
@@ -39,6 +42,10 @@ import {MatMenuModule} from '@angular/material/menu';
     MatStepperModule,
     MatRadioModule,
     MatMenuModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSelectModule,
+    MatNativeDateModule
   ],
   exports: [
     MatButtonModule,
@@ -58,7 +65,11 @@ import {MatMenuModule} from '@angular/material/menu';
     MatListModule,
     MatStepperModule,
     MatRadioModule,
-    MatMenuModule
+    MatMenuModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSelectModule,
+    MatNativeDateModule
   ]
 })
 export class AppMaterialModule { }

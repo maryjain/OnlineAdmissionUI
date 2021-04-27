@@ -47,6 +47,70 @@ mat-card{
 {
   color:#BF360C;
 }
+mat-table
+{
+  background-color:#FBE9E7;
+}
+mat-header-cell{
+  background-color:#FFAB91;
+  font-weight: bold;
+  font-size:medium;
+}
+
+
+/*
+mat-footer-row, mat-header-row, mat-row {
+  border-bottom-width: 2px solid #FF8A65;
+}
+*/
+mat-header-cell{
+  display: flex;
+  justify-content: center;
+ // align-items: flex-start ;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+ .mat-column-qualificationtype{
+border-right: 2px solid #E0E0E0;
+border-bottom: 2px solid #E0E0E0;
+align-self: stretch;
+text-align: center
+}
+.mat-column-institution{
+border-right: 2px solid #E0E0E0;
+align-self: stretch;
+text-align: center;
+
+}
+.mat-column-university{
+border-right: 2px solid #E0E0E0;
+align-self: stretch;
+text-align: center;
+
+}
+.mat-column-yearofpass{
+  border-right: 2px solid #E0E0E0;
+  align-self: stretch;
+  text-align: center;
+}
+
+.mat-column-registrationno{
+  border-right: 2px solid #E0E0E0;
+  align-self: stretch;
+  text-align: center;
+}
+
+.mat-column-cgpa{
+  border-right: 2px solid #E0E0E0;
+  align-self: stretch;
+  text-align: center;
+}
+
+
 
 mat-error{
   font-weight: bold;

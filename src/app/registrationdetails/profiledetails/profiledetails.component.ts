@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {UtilityService} from '../../shared/utility/utility.service';
 import * as moment from 'moment';
+
 import {CurrencyPipe} from '@angular/common';
 import {errorMessages,
    customregExps,
@@ -19,23 +20,69 @@ import { environment } from 'src/environments/environment';
 import { MatStepper } from '@angular/material/stepper';
 import { ViewChild } from '@angular/core';
 import { Address } from 'src/app/model/Address';
+import { MatTableDataSource } from '@angular/material/table';
+import { Moment } from 'moment';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'YYYY',
+  },
+  display: {
+    dateInput: 'YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
+
+
+
+export interface EDUCATION {
+  qualificationtype: string;
+  institution: string;
+  university: string;
+  yearofpass: number;
+  registrationno: string;
+  cgpa: number;
+  percentage: number;
+
+}
+const ELEMENT_DATA: EDUCATION[] = [
+  { qualificationtype: "10th", institution: '', university: 'CBSE', yearofpass: 2005, registrationno: "M900000",cgpa:4.0,percentage:0 },
+  { qualificationtype: "12th", institution: '', university: 'THSE', yearofpass: 2007, registrationno: "RT565000",cgpa:0,percentage:80 },
+];
 
 @Component({
   selector: 'app-profiledetails',
   templateUrl: './profiledetails.component.html',
   styleUrls: ['./profiledetails.component.scss'],
-  providers: [UtilityService, RegistrationdetailsService],
-})
+  providers: [UtilityService, RegistrationdetailsService,
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
 
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
+})
 export class ProfiledetailsComponent  {
+  displayedColumns = ['qualificationtype', 'institution', 'university', 'yearofpass', 'registrationno','cgpa','percentage'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+
 //******    variable  declaration ******
-  isLinear = true;  // for mat-tepper navigation property
+  isLinear = false;  // for mat-tepper navigation property
 
   addresstype = {present:'Present Address',permanent:'Permanent Address'};
   logintUserProfileId :any;
   apiUrl = `${environment.profileapiUrl}`;
   //profileID: any;
+  minDate : Date;
+  passYear:any;
   person: Person;
   present_address: Address;
   permanent_address: Address;
@@ -45,7 +92,8 @@ export class ProfiledetailsComponent  {
   jsonReligion = [];
   jsonCommunity = [];
   jsonState = [];
-  jsonDistrict=[];
+  jsonDistrict= [];
+  jsonQualification= [{key:1,value:'10th'},{key:2,value:'12th'},{key:3,value:'Degree'},{key:4,value:'PG'},{key:5,value:'PHD'},{key:6,value:'Certification'},{key:7,value:'Others'}];
   stateTextSelected:any;
   isnextPersonalButton:boolean;
   isnextAddressButton:boolean;
@@ -55,6 +103,8 @@ export class ProfiledetailsComponent  {
   errors = errorMessages;
   religionText: string;
   isEWSvisible:boolean;
+  onChange = (year: Date) => { };
+  onTouched = () => { };
   public hintAdressArr =[ hintAddressMessages.addressline1,
     hintAddressMessages.addressline2,
     hintAddressMessages.addressline3
@@ -99,6 +149,12 @@ export class ProfiledetailsComponent  {
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
+
+    this.formEducationDetailsGroup.controls['yearofpass']=new FormControl(moment());
+    console.log(" jsonQualification =" +this.jsonQualification);
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 90, 0, 1);
+
     this.addressDetailsForm.get('addresscheckbox').setValue(false);
     this.personalDetailsForm.controls['annualincome'].setValue(1);
     this.personalDetailsForm.controls['community'].setValue('N/A');
@@ -231,86 +287,20 @@ export class ProfiledetailsComponent  {
     addresscheckbox:['']
   });
 
+  public formEducationDetailsGroup= this.fb.group({
+    qualificationtype: ['', [Validators.required]],
+    institution: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
+    university: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
+    yearofpass: ['', [Validators.required,Validators.pattern(customregExps.yearofpass)]],
+    registrationno: ['', [Validators.required,Validators.pattern(customregExps.registrationno)]],
+    cgpa: ['', [Validators.required,Validators.pattern(customregExps.cgpa)]],
+    percentage: ['', [Validators.required,Validators.pattern(customregExps.percentage)]],
+  });
 
 
 
-   addAddress()
-  {
-    this.present_address = new Address('', '', '', null,null,false,null);
-    this.present_address.addressline1= this.addressDetailsForm.get('present_addressline1').value;
-    this.present_address.addressline2= this.addressDetailsForm.get('present_addressline2').value;
-    this.present_address.districtcode= this.addressDetailsForm.get('present_districtcode').value;
-    this.present_address.pincode= this.addressDetailsForm.get('present_pincode').value;
-    this.present_address.addresstype= 'Present';
-    this.present_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
-    this.present_address.profileid= this.logintUserProfileId;
-    this.registrationdetailsSrv.addAddress(this.present_address).subscribe((data) => {
-      console.log('present POST addid= ' + data.addid);
-      if(this.addressDetailsForm.get('addresscheckbox').value === false){
-        console.log('+++++');
-        this.permanent_address = new Address('', '', '', null,null,false,null);
-        this.permanent_address.addressline1= this.addressDetailsForm.get('permanent_addressline1').value;
-        this.permanent_address.addressline2= this.addressDetailsForm.get('permanent_addressline2').value;
-        this.permanent_address.districtcode= this.addressDetailsForm.get('permanent_districtcode').value;
-        this.permanent_address.pincode= this.addressDetailsForm.get('permanent_pincode').value;
-        this.permanent_address.addresstype= 'Permanent';
-        this.permanent_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
-        this.permanent_address.profileid= this.logintUserProfileId;
-        this.registrationdetailsSrv.addAddress(this.permanent_address).subscribe((data) => {
-          console.log('permanent POST addid= ' + data.addid);
-        },
-        (err: HttpErrorResponse) => {
-          console.log("Error status = "+ err.statusText);
-         console.log("Error occured Address insert = "+ err.message);
-        });
-      }
-
-    },
-    (err: HttpErrorResponse) => {
-      console.log("Error status = "+ err.statusText);
-     console.log("Error occured Address insert = "+ err.message);
-    });
-
-    console.log("Same address Check box ="+this.addressDetailsForm.get('addresscheckbox').value);
-
-
-
-  }
-
-
-
-  updatePerson() {
-
-    this.person = new Person('', null, '', null, '');
-    this.person.fathername= this.personalDetailsForm.get('fathername').value;
-    this.person.mothername= this.personalDetailsForm.get('mothername').value;
-    this.person.guardianname= this.personalDetailsForm.get('guardianname').value;
-    this.person.guardianmobileno= this.personalDetailsForm.get('guardianmobileno').value;
-    this.person.gender= this.personalDetailsForm.get('gender').value;
-    this.person.nationality= this.personalDetailsForm.get('nationality').value;
-    this.person.state= this.stateTextSelected;
-    this.person.religion= this.religionText;
-    this.person.community= this.personalDetailsForm.get('community').value;
-    this.person.annualincome= this.personalDetailsForm.get('annualincome').value;
-    this.person.creamylayer= this.personalDetailsForm.get('creamylayer').value;
-    this.person.profileid=this.logintUserProfileId;
-    this.registrationdetailsSrv.updatePerson(this.person).subscribe((data) => {
-      console.log('PUT profileid= ' + data.profileid);
-     // this.validatesrv.getlatestProfile(this.person);
-     //this.router.navigate(['/login']);
-    },
-    (err: HttpErrorResponse) => {
-      console.log("Error status = "+ err.statusText);
-     console.log("Error occured update personal details = "+ err.message);
-
-    });
-  }
 //******    Forms declaration  ends ******
 
-
-  public formPasswordGroup= this.fb.group({
-    passWord: ['', Validators.required]
-  });
   public formEmailGroup  = this.fb.group({
     emailID: ['', Validators.compose([Validators.required, Validators.email])]
   });
@@ -319,6 +309,77 @@ export class ProfiledetailsComponent  {
   });
 
 //******    Events method declaration ******
+
+
+addAddress()
+{
+  this.present_address = new Address('', '', '', null,null,false,null);
+  this.present_address.addressline1= this.addressDetailsForm.get('present_addressline1').value;
+  this.present_address.addressline2= this.addressDetailsForm.get('present_addressline2').value;
+  this.present_address.districtcode= this.addressDetailsForm.get('present_districtcode').value;
+  this.present_address.pincode= this.addressDetailsForm.get('present_pincode').value;
+  this.present_address.addresstype= 'Present';
+  this.present_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
+  this.present_address.profileid= this.logintUserProfileId;
+  this.registrationdetailsSrv.addAddress(this.present_address).subscribe((data) => {
+    console.log('present POST addid= ' + data.addid);
+    if(this.addressDetailsForm.get('addresscheckbox').value === false){
+      console.log('+++++');
+      this.permanent_address = new Address('', '', '', null,null,false,null);
+      this.permanent_address.addressline1= this.addressDetailsForm.get('permanent_addressline1').value;
+      this.permanent_address.addressline2= this.addressDetailsForm.get('permanent_addressline2').value;
+      this.permanent_address.districtcode= this.addressDetailsForm.get('permanent_districtcode').value;
+      this.permanent_address.pincode= this.addressDetailsForm.get('permanent_pincode').value;
+      this.permanent_address.addresstype= 'Permanent';
+      this.permanent_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
+      this.permanent_address.profileid= this.logintUserProfileId;
+      this.registrationdetailsSrv.addAddress(this.permanent_address).subscribe((data) => {
+        console.log('permanent POST addid= ' + data.addid);
+      },
+      (err: HttpErrorResponse) => {
+        console.log("Error status = "+ err.statusText);
+       console.log("Error occured Address insert = "+ err.message);
+      });
+    }
+
+  },
+  (err: HttpErrorResponse) => {
+    console.log("Error status = "+ err.statusText);
+   console.log("Error occured Address insert = "+ err.message);
+  });
+
+  console.log("Same address Check box ="+this.addressDetailsForm.get('addresscheckbox').value);
+
+}
+
+updatePerson() {
+
+  this.person = new Person('', null, '', null, '');
+  this.person.fathername= this.personalDetailsForm.get('fathername').value;
+  this.person.mothername= this.personalDetailsForm.get('mothername').value;
+  this.person.guardianname= this.personalDetailsForm.get('guardianname').value;
+  this.person.guardianmobileno= this.personalDetailsForm.get('guardianmobileno').value;
+  this.person.gender= this.personalDetailsForm.get('gender').value;
+  this.person.nationality= this.personalDetailsForm.get('nationality').value;
+  this.person.state= this.stateTextSelected;
+  this.person.religion= this.religionText;
+  this.person.community= this.personalDetailsForm.get('community').value;
+  this.person.annualincome= this.personalDetailsForm.get('annualincome').value;
+  this.person.creamylayer= this.personalDetailsForm.get('creamylayer').value;
+  this.person.profileid=this.logintUserProfileId;
+  this.registrationdetailsSrv.updatePerson(this.person).subscribe((data) => {
+    console.log('PUT profileid= ' + data.profileid);
+   // this.validatesrv.getlatestProfile(this.person);
+   //this.router.navigate(['/login']);
+  },
+  (err: HttpErrorResponse) => {
+    console.log("Error status = "+ err.statusText);
+   console.log("Error occured update personal details = "+ err.message);
+
+  });
+}
+
+
 
 public isClickedAddressNext():void
 {
@@ -399,8 +460,6 @@ public isClickedAddressNext():void
     {
       this.updatePerson();
     }
-
-
   }
 
 //******    Trim Text value for start and end spaces declaration ******
@@ -414,6 +473,53 @@ public isClickedAddressNext():void
 
   }
   */
+
+/****** datepicker starts *******/
+
+chosenYearHandler(normalizedYear: Moment,datepicker: MatDatepicker<Moment>,rows:any) {
+  const ctrlValue = this.formEducationDetailsGroup.get('yearofpass').value;
+  ctrlValue.year(normalizedYear.year());
+  console.log("************ row ="+rows+"Year = "+moment(ctrlValue).format('yyyy'));
+  console.log("************  this.formEducationDetailsGroup.get('qualificationtype').value = "+this.formEducationDetailsGroup.get('qualificationtype').value);
+  this.formEducationDetailsGroup.controls['yearofpass'].setValue(ctrlValue);
+  datepicker.close();
+}
+
+/*
+_yearSelectedHandler($event, datepicker: MatDatepicker<Moment>) {
+
+this.formEducationDetailsGroup.controls['yearofpass'].setValue(
+  moment($event.value).format('yyyy'));
+  console.log(" **** year of pass =   "+ moment($event.value).format('yyyy'));
+  datepicker.close();
+}
+
+
+_yearSelectedHandler(chosenDate: Moment, datepicker: MatDatepicker<Moment>) {
+    this.formEducationDetailsGroup.controls['yearofpass'].setValue(chosenDate, { emitEvent: false });
+  this.onChange(chosenDate.toDate());
+  this.onTouched();
+  datepicker.close();
+}
+ writeValue(date: Date): void {
+  if (date) {
+    const momentDate = moment(date);
+    if (momentDate.isValid()) {
+      this.formEducationDetailsGroup.controls['yearofpass'].setValue(moment(date), { emitEvent: false });
+    }
+  }
+}
+
+ onDateChange( date: Date ) :void{
+  if (date) {
+    const momentDate = moment(date);
+    if (momentDate.isValid()) {
+      this.formEducationDetailsGroup.controls['yearofpass'].setValue(moment(date), { emitEvent: false });
+    }
+  }
+}
+*/
+/****** datepicker ends *******/
 
   public onChangeAddressCheckBox():void
   {
@@ -529,6 +635,14 @@ public isClickedAddressNext():void
   get permanent_pincode() { return this.addressDetailsForm.get('permanent_pincode'); }
 
 
+  //Education Qualification
+  get qualificationtype() { return this.formEducationDetailsGroup.get('qualificationtype'); }
+  get institution() { return this.formEducationDetailsGroup.get('institution'); }
+  get university() { return this.formEducationDetailsGroup.get('university'); }
+  get yearofpass() { return this.formEducationDetailsGroup.get('yearofpass'); }
+  get registrationno() { return this.formEducationDetailsGroup.get('registrationno'); }
+  get cgpa() { return this.formEducationDetailsGroup.get('cgpa'); }
+  get percentage() { return this.formEducationDetailsGroup.get('percentage'); }
 
 
   //******    Upload Documents REST api call status ******
