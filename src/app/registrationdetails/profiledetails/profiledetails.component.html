@@ -370,6 +370,11 @@
                         {{item.value}}
                       </mat-option>
                     </mat-select>
+                    <small>
+                      <mat-error  *ngIf ="((element.get('qualificationtype').touched || isnextEducationButton) && element.get('qualificationtype').hasError('required'))">
+                        {{errors.qualificationtypeRequired}}
+                      </mat-error>
+                    </small>
                   </mat-form-field>
                   </mat-cell>
                 </ng-container>
@@ -379,7 +384,15 @@
                   <mat-header-cell *matHeaderCellDef> Institution </mat-header-cell>
                     <mat-cell *matCellDef="let element">
                     <mat-form-field floatLabel="never">
-                    <input matInput type="text" placeholder="" [formControl]="element.get('institution')"  required >
+                    <input matInput type="text" placeholder="" [formControl]="element.get('institution')"  required appAlphabetOnly>
+                    <small>
+                    <mat-error *ngIf ="element.get('institution').touched && element.get('institution').hasError('pattern') && !element.get('institution').hasError('required')">
+                      {{errors.institution}}
+                    </mat-error>
+                    <mat-error *ngIf ="(element.get('institution').touched ||isnextEducationButton) && element.get('institution').hasError('required')">
+                      {{errors.institutionRequired}}
+                    </mat-error>
+                  </small>
                   </mat-form-field>
                 </mat-cell>
                 </ng-container>
@@ -389,7 +402,15 @@
                   <mat-header-cell *matHeaderCellDef> University </mat-header-cell>
                    <mat-cell *matCellDef="let element" >
                     <mat-form-field floatLabel="never">
-                    <input matInput type="text" placeholder="" [formControl]="element.get('university')"  required >
+                    <input matInput type="text" placeholder="" [formControl]="element.get('university')"  required appAlphabetOnly>
+                    <small>
+                      <mat-error *ngIf ="element.touched && element.get('university').hasError('pattern') && !element.get('university').hasError('required')">
+                        {{errors.university}}
+                      </mat-error>
+                      <mat-error *ngIf ="(element.get('university').touched ||isnextEducationButton) && element.get('university').hasError('required')">
+                        {{errors.universityRequired}}
+                      </mat-error>
+                    </small>
                   </mat-form-field>
                  </mat-cell>
                 </ng-container>
@@ -403,7 +424,11 @@
                 <mat-datepicker-toggle matSuffix [for]=pickers></mat-datepicker-toggle>
                 <mat-datepicker #pickers startView="multi-year" (yearSelected)="chosenYearHandler($event,pickers,i,element.get('yearofpass'))" panelClass="example-year-picker">
                 </mat-datepicker>
-
+                <small>
+                <mat-error *ngIf ="(element.get('yearofpass').touched ||isnextEducationButton) && element.get('yearofpass').hasError('required')">
+                  {{errors.yearofpassRequired}}
+                </mat-error>
+                </small>
                 </mat-form-field>
                 </mat-cell>
                 </ng-container>
@@ -414,6 +439,14 @@
                   <mat-cell *matCellDef="let element">
                     <mat-form-field floatLabel="never">
                     <input matInput type="text" placeholder="R40000"  [formControl]="element.get('registrationno')"  required >
+                    <small>
+                      <mat-error *ngIf ="element.touched && element.get('registrationno').hasError('pattern') && !element.get('registrationno').hasError('required')">
+                        {{errors.registrationno}}
+                      </mat-error>
+                      <mat-error *ngIf =" (element.get('registrationno').touched ||isnextEducationButton) && element.get('registrationno').hasError('required')">
+                        {{errors.registrationnoRequired}}
+                      </mat-error>
+                    </small>
                     </mat-form-field>
                   </mat-cell>
                 </ng-container>
@@ -422,7 +455,15 @@
                   <mat-header-cell *matHeaderCellDef> CGPA </mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <mat-form-field floatLabel="never">
-                    <input matInput type="text" placeholder="8.5" [formControl]="element.get('cgpa')"  required >
+                    <input matInput type="text" placeholder="8.15" [formControl]="element.get('cgpa')"  required CGPA>
+                    <small>
+                      <mat-error *ngIf ="element.touched && element.get('cgpa').hasError('pattern') && !element.get('cgpa').hasError('required')">
+                        {{errors.cgpa}}
+                      </mat-error>
+                      <mat-error *ngIf ="(element.get('cgpa').touched ||isnextEducationButton) && element.get('cgpa').hasError('required')">
+                        {{errors.cgpaRequired}}
+                      </mat-error>
+                    </small>
                     </mat-form-field>
                   </mat-cell>
                 </ng-container>
@@ -431,7 +472,15 @@
                   <mat-header-cell *matHeaderCellDef> Percentage </mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <mat-form-field floatLabel="never">
-                    <input matInput type="text" placeholder="60.25" [formControl]="element.get('percentage')" required >
+                    <input matInput type="text" placeholder="60.25" [formControl]="element.get('percentage')" required Percentage>
+                    <small>
+                      <mat-error *ngIf ="element.touched && element.get('percentage').hasError('pattern') && !element.get('percentage').hasError('required')">
+                        {{errors.percentage}}
+                      </mat-error>
+                      <mat-error *ngIf ="(element.get('percentage').touched  ||isnextEducationButton) && element.get('percentage').hasError('required')">
+                        {{errors.percentageRequired}}
+                      </mat-error>
+                    </small>
                     </mat-form-field>
                   </mat-cell>
                 </ng-container>
@@ -451,7 +500,7 @@
             </div>
 
             <br/>
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
+            <button mat-raised-button color="primary"  matStepperNext>Next</button>
 
 
 

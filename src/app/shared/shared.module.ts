@@ -12,11 +12,15 @@ import {CurrencyPipe} from '@angular/common';
 import { AngularFileUploaderComponent } from './AngularFileUploader/angular-file-uploader.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
+import { PercentageDirective } from './directive/Percentage/percentage.directive';
+import { CGPADirective } from './directive/CGPA/cgpa.directive';
 
 
 @NgModule({
   declarations: [MarkAsteriskDirective, AppBlockCopyPasteDirective, AlphabetOnlyDirective, MoneyOnlyDirective,
-    AngularFileUploaderComponent
+    AngularFileUploaderComponent,
+    PercentageDirective,
+    CGPADirective
     ],
   providers: [CurrencyPipe,PdfViewerComponent
 
@@ -40,6 +44,8 @@ import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
     AppBlockCopyPasteDirective,
     AlphabetOnlyDirective,
     MoneyOnlyDirective,
+    PercentageDirective,
+    CGPADirective,
     AngularFileUploaderComponent,
     PdfViewerModule,
 

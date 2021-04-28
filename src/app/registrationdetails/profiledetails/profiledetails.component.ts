@@ -25,6 +25,7 @@ import { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { Education } from 'src/app/model/Education';
 
 
 export const MY_FORMATS = {
@@ -90,6 +91,7 @@ export class ProfiledetailsComponent  {
   person: Person;
   present_address: Address;
   permanent_address: Address;
+  education: Education;
   errorlist: string[];
   jsonGender = [];
   jsonNationality = [];
@@ -103,6 +105,8 @@ export class ProfiledetailsComponent  {
   isnextAddressButton:boolean;
   isSelectOptionPersonalInvalid: boolean;
   isSelectOptionAddressInvalid: boolean;
+  isnextEducationButton:boolean;
+  isSelectOptionEducationInvalid:boolean;
   isShowCommunity:boolean;
   errors = errorMessages;
   religionText: string;
@@ -175,6 +179,8 @@ export class ProfiledetailsComponent  {
     this.isShowCommunity = false;
     this.isSelectOptionPersonalInvalid= false;
     this.isSelectOptionAddressInvalid= false;
+    this.isnextEducationButton = false;
+    this.isSelectOptionEducationInvalid= false;
     // create object to be pass as json in rest api PUT,POST call
 
     this.person = new Person('', null, '', null, '');
@@ -344,9 +350,9 @@ public createGroup(data: any) {
 }
 addQualification():void
 {
-
   this.EducationArray.push(this.createGroup(null));
   this.table.renderRows();
+
 }
 
 removeQualification(index: number) {
@@ -354,6 +360,29 @@ removeQualification(index: number) {
   this.table.renderRows();
 }
 /****** datepicker ends *******/
+
+POSTEducation()
+{
+  for (let c of this.EducationArray.controls) {
+    this.education = new Education('', '', '', null,'',null,null,null);
+    this.education.qualificationtype= c.get('qualificationtype').value;
+    this.education.institution= c.get('institution').value;
+    this.education.university= c.get('university').value;
+    this.education.yearofpass= c.get('yearofpass').value;
+    console.log("this.education.yearofpass ="+this.education.yearofpass);
+    this.education.registrationno= c.get('registrationno').value;
+    this.education.cgpa= c.get('cgpa').value;
+    this.education.percentage= c.get('percentage').value;
+    this.education.profileid= this.logintUserProfileId;
+    this.registrationdetailsSrv.addEducation(this.education).subscribe((data) => {
+      console.log('present POST educaid = ' + data.educaid);
+    },
+    (err: HttpErrorResponse) => {
+      console.log("Error status = "+ err.statusText);
+     console.log("Error occured Education insert = "+ err.message);
+    });
+}
+}
 
 addAddress()
 {
@@ -423,7 +452,11 @@ updatePerson() {
   });
 }
 
-
+public isClickeEducationNext():void{
+  this.isnextEducationButton = true;
+  this.isSelectOptionEducationInvalid= false;
+  this.POSTEducation();
+}
 
 public isClickedAddressNext():void
 {

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, timer } from 'rxjs';
 import {Person} from '../../model/Person';
 import { map, switchMap } from 'rxjs/operators';
+import { Education } from 'src/app/model/Education';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,8 @@ export class RegisterService {
     return this.http.post<Person>(this.apiUrl, body,{'headers': this.headers});
 
   }
+
+
 
     generateEmailOTP(emailid: string): Observable<any>{
     return  this.http.get<any>(this.commonapiUrl +  "otp/send-mail/" + emailid);

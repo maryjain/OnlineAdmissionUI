@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Address } from 'src/app/model/Address';
+import { Education } from 'src/app/model/Education';
 import { Person } from 'src/app/model/Person';
 import { environment } from 'src/environments/environment';
 
@@ -57,6 +58,12 @@ export class RegistrationdetailsService {
     console.log("Json Body : "+body);
     return this.http.post<Address>(this.apiUrl+'/'+address.profileid+'/addresses', body,{'headers': this.headers});
 
+  }
+
+  addEducation(education: Education): Observable<Education> {
+    const body = JSON.stringify(education);
+    console.log("Json Body education : "+body);
+    return this.http.post<Education>(this.apiUrl+'/'+education.profileid+'/educationqualifications', body,{'headers': this.headers});
   }
 
   getProfileByID(profileid: bigint):  Observable<any> {
