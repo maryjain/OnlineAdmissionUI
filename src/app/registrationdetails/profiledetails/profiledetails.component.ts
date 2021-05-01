@@ -27,7 +27,6 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Education } from 'src/app/model/Education';
 
-
 export const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY',
@@ -79,6 +78,12 @@ export class ProfiledetailsComponent  {
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
   EducationArray = new FormArray([]);
   dataSource;
+ //**Upload Documents Details  **/
+  displayedColumnsUploadDocuments = ['documenttype', 'documentname', 'Delete'];
+  @ViewChild('tableUploadDocuments', { static: false }) tableUploadDocuments: MatTable<any>;
+  UploadDocumentsArray = new FormArray([]);
+  dataSourceUploadDocuments;
+
 //******    variable  declaration ******
   isLinear = false;  // for mat-tepper navigation property
 
@@ -136,7 +141,14 @@ export class ProfiledetailsComponent  {
   resetUpload1: boolean;
   resetUpload2: boolean;
   resetUpload3: boolean;
-
+  doctypeEWS:string;
+  doctypePhoto:string;
+  doctypeSignature:string;
+  doctype10th:string;
+  doctype12th:string;
+  doctypeDegree:string;
+  doctypePHD:string;
+  doctypeOthers:string;
   fileuploadConfig: AngularFileUploaderConfig = {
     id: 112233,
     multiple: false,
@@ -151,16 +163,29 @@ export class ProfiledetailsComponent  {
 
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
-    public registrationdetailsSrv: RegistrationdetailsService, private currencyPipe: CurrencyPipe, public router: Router) {
+    public registrationdetailsSrv: RegistrationdetailsService,  public router: Router) {
 
    }
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
+    this.doctypeEWS="EWS";
+    this.doctypePhoto="Photo";
+    this.doctypeSignature="Signature";
+    this.doctype10th="10th";
+    this.doctype12th="12th";
+    this.doctypeDegree="Degree";
+    this.doctypePHD="PHD";
+    this.doctypeOthers="Others";
      //**Education Details  **/
     this.EducationArray.push(this.createGroup({ qualificationtype: "", institution: "", university: "",yearofpass:2000,registrationno:"",cgpa:0,percentage:0 }));
 
     this.dataSource = this.EducationArray.controls;
+
+    //**Upload Documents Details  **/
+    this.UploadDocumentsArray.push(this.createGroupUploadDocuments({ documenttype: "",documentname:""}));
+
+    this.dataSourceUploadDocuments = this.UploadDocumentsArray.controls;
 
     console.log(" jsonQualification =" +this.jsonQualification);
     const currentYear = new Date().getFullYear();
@@ -308,6 +333,9 @@ export class ProfiledetailsComponent  {
 
   });
 
+  public formUploadDocumemtsGroup  = this.fb.group({
+
+  });
 
 
 //******    Forms declaration  ends ******
@@ -315,11 +343,40 @@ export class ProfiledetailsComponent  {
   public formEmailGroup  = this.fb.group({
     emailID: ['', Validators.compose([Validators.required, Validators.email])]
   });
-  public formUploadDocumemtsGroup  = this.fb.group({
-    mobile: ['', Validators.compose([Validators.required, Validators.min(10)])]
-  });
+
 
 //******    Events method declaration ******
+
+//**** Upload Documents *****/
+
+public createGroupUploadDocuments(data: any) {
+
+  data = data || { documenttype: "",documentname: ""};
+  return this.fb.group({
+    documenttype: ['', [Validators.required]],
+    documentname: [''],
+
+  });
+}
+addUploadDocuments():void
+{
+
+  this.UploadDocumentsArray.push(this.createGroupUploadDocuments(null));
+
+  console.log("********** add UploadDocumentsArray len =" + this.UploadDocumentsArray.controls.length);
+
+
+ this.tableUploadDocuments.renderRows();
+
+}
+
+removeUploadDocuments(index: number) {
+  this.UploadDocumentsArray.removeAt(index);
+ //this.dataSourceUploadDocuments = this.UploadDocumentsArray.controls;
+  this.tableUploadDocuments.renderRows();
+}
+
+//*** Upload Document ends *****/
 
 //**** Education qualification ***/
 
@@ -328,14 +385,22 @@ export class ProfiledetailsComponent  {
 
 chosenYearHandler(normalizedYear: Moment,datepicker: MatDatepicker<Moment>,rows:any,element:any) {
 
-   const ctrlValue = element.value.value;
-   console.log("****ctrlValue= "+ctrlValue);
+   let ctrlValue = element.value.value;
+if(ctrlValue === null || ctrlValue === undefined)
+{
+  ctrlValue = element.value;
+}
+   console.log("**** +++ ctrlValue= "+ctrlValue);
    ctrlValue.year(normalizedYear.year());
   console.log("************ row ="+rows+"   Year = "+moment(ctrlValue).format('yyyy'));
  // console.log("************  element.get('qualificationtype').value= "+element.get('qualificationtype').value);
   element.setValue(ctrlValue);
   datepicker.close();
 }
+
+/****** datepicker ends *******/
+
+
 public createGroup(data: any) {
   data = data || { qualificationtype: "", institution: "", university: "",yearofpass:2000,registrationno:"",cgpa:0,percentage:0};
   return this.fb.group({
@@ -351,28 +416,56 @@ public createGroup(data: any) {
 addQualification():void
 {
   this.EducationArray.push(this.createGroup(null));
+  console.log("********** add EducationArray len =" + this.EducationArray.controls.length);
   this.table.renderRows();
 
 }
 
-removeQualification(index: number) {
+removeQualification(index: number):void {
   this.EducationArray.removeAt(index);
   this.table.renderRows();
 }
-/****** datepicker ends *******/
+
 
 POSTEducation()
 {
   for (let c of this.EducationArray.controls) {
-    this.education = new Education('', '', '', null,'',null,null,null);
+    this.education = new Education('', null, null, null,null,null,null,null);
     this.education.qualificationtype= c.get('qualificationtype').value;
-    this.education.institution= c.get('institution').value;
-    this.education.university= c.get('university').value;
-    this.education.yearofpass= c.get('yearofpass').value;
+    if( c.get('institution').value === "")
+    {
+      this.education.institution= null;
+    }else{
+      this.education.institution= c.get('institution').value;
+    }
+    if(  c.get('university').value === "")
+    {
+      this.education.university= null;
+    }else{
+      this.education.university= c.get('university').value;
+    }
+    this.education.yearofpass=Number(moment(c.get('yearofpass').value).format('yyyy')) ;
     console.log("this.education.yearofpass ="+this.education.yearofpass);
-    this.education.registrationno= c.get('registrationno').value;
-    this.education.cgpa= c.get('cgpa').value;
-    this.education.percentage= c.get('percentage').value;
+
+    if(  c.get('registrationno').value === "")
+    {
+      this.education.registrationno= null;
+    }else{
+      this.education.registrationno= c.get('registrationno').value;
+    }
+    if(  c.get('cgpa').value === "")
+    {
+      this.education.cgpa= 0.0;
+    }else{
+      this.education.cgpa= c.get('cgpa').value;
+    }
+    if(  c.get('percentage').value === "")
+    {
+      this.education.percentage= 0.0;
+    }else{
+      this.education.percentage= c.get('percentage').value;
+    }
+
     this.education.profileid= this.logintUserProfileId;
     this.registrationdetailsSrv.addEducation(this.education).subscribe((data) => {
       console.log('present POST educaid = ' + data.educaid);

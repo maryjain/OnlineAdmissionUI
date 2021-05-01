@@ -100,9 +100,9 @@ mat-header-cell{
   max-height: 500px;
 }
 
- .mat-column-qualificationtype{
+ .mat-column-qualificationtype,.mat-column-documenttype{
 border-right: 2px solid #E0E0E0;
-border-bottom: 2px solid #E0E0E0;
+//border-bottom: 2px solid #E0E0E0;
 align-self: stretch;
 text-align: center
 }
@@ -135,7 +135,11 @@ text-align: center;
   align-self: stretch;
   text-align: center;
 }
-
+.mat-column-percentage,.mat-column-documentname{
+  border-right: 2px solid #E0E0E0;
+  align-self: stretch;
+  text-align: center;
+}
 
 
 .smallInfo{

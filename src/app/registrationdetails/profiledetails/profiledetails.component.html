@@ -181,7 +181,7 @@
          </div>
          <div class="form-group example-form" *ngIf ="isEWSvisible">
           <label >Upload EWS Certificate</label><br>
-          <app-angular-file-uploader [resetUpload]=resetUpload1 [config]="fileuploadConfig"  (ApiResponse)="docUpload($event)">
+          <app-angular-file-uploader [resetUpload]=resetUpload1 [config]="fileuploadConfig" [documentType]="doctypeEWS" (ApiResponse)="docUpload($event)">
           </app-angular-file-uploader>
         </div>
 
@@ -386,10 +386,10 @@
                     <mat-form-field floatLabel="never">
                     <input matInput type="text" placeholder="" [formControl]="element.get('institution')"  required appAlphabetOnly>
                     <small>
-                    <mat-error *ngIf ="element.get('institution').touched && element.get('institution').hasError('pattern') && !element.get('institution').hasError('required')">
+                    <mat-error *ngIf ="element.get('university').hasError('required') && element.get('institution').hasError('pattern') && !element.get('institution').hasError('required')">
                       {{errors.institution}}
                     </mat-error>
-                    <mat-error *ngIf ="(element.get('institution').touched ||isnextEducationButton) && element.get('institution').hasError('required')">
+                    <mat-error *ngIf ="element.get('university').hasError('required') && (element.get('institution').touched ||isnextEducationButton) && element.get('institution').hasError('required')">
                       {{errors.institutionRequired}}
                     </mat-error>
                   </small>
@@ -404,10 +404,10 @@
                     <mat-form-field floatLabel="never">
                     <input matInput type="text" placeholder="" [formControl]="element.get('university')"  required appAlphabetOnly>
                     <small>
-                      <mat-error *ngIf ="element.touched && element.get('university').hasError('pattern') && !element.get('university').hasError('required')">
+                      <mat-error *ngIf ="element.get('institution').hasError('required') && element.get('university').hasError('pattern') && !element.get('university').hasError('required')">
                         {{errors.university}}
                       </mat-error>
-                      <mat-error *ngIf ="(element.get('university').touched ||isnextEducationButton) && element.get('university').hasError('required')">
+                      <mat-error *ngIf ="element.get('institution').hasError('required') && (element.get('university').touched ||isnextEducationButton) && element.get('university').hasError('required')">
                         {{errors.universityRequired}}
                       </mat-error>
                     </small>
@@ -457,10 +457,10 @@
                     <mat-form-field floatLabel="never">
                     <input matInput type="text" placeholder="8.15" [formControl]="element.get('cgpa')"  required CGPA>
                     <small>
-                      <mat-error *ngIf ="element.touched && element.get('cgpa').hasError('pattern') && !element.get('cgpa').hasError('required')">
+                      <mat-error *ngIf ="element.get('percentage').hasError('required') && element.get('cgpa').hasError('pattern') && !element.get('cgpa').hasError('required')">
                         {{errors.cgpa}}
                       </mat-error>
-                      <mat-error *ngIf ="(element.get('cgpa').touched ||isnextEducationButton) && element.get('cgpa').hasError('required')">
+                      <mat-error *ngIf ="element.get('percentage').hasError('required') && (element.get('cgpa').touched ||isnextEducationButton) && element.get('cgpa').hasError('required')">
                         {{errors.cgpaRequired}}
                       </mat-error>
                     </small>
@@ -474,10 +474,10 @@
                     <mat-form-field floatLabel="never">
                     <input matInput type="text" placeholder="60.25" [formControl]="element.get('percentage')" required Percentage>
                     <small>
-                      <mat-error *ngIf ="element.touched && element.get('percentage').hasError('pattern') && !element.get('percentage').hasError('required')">
+                      <mat-error *ngIf ="element.get('cgpa').hasError('required') && element.get('percentage').hasError('pattern') && !element.get('percentage').hasError('required')">
                         {{errors.percentage}}
                       </mat-error>
-                      <mat-error *ngIf ="(element.get('percentage').touched  ||isnextEducationButton) && element.get('percentage').hasError('required')">
+                      <mat-error *ngIf ="element.get('cgpa').hasError('required') && (element.get('percentage').touched  ||isnextEducationButton) && element.get('percentage').hasError('required')">
                         {{errors.percentageRequired}}
                       </mat-error>
                     </small>
@@ -500,23 +500,59 @@
             </div>
 
             <br/>
-            <button mat-raised-button color="primary"  matStepperNext>Next</button>
-
-
-
+            <button mat-raised-button color="primary" (click)="isClickeEducationNext()" matStepperNext>Next</button>
   </mat-step>
 
   <mat-step [stepControl]="formUploadDocumemtsGroup" label="Upload Documents" >
-    <div style="padding-top: 3%;">
-        <form [formGroup]="formUploadDocumemtsGroup">
-            <!-- <ng-template matStepLabel>Name</ng-template> -->
-            <div class="example-form">
+    <button class="addButton" mat-button (click)="addUploadDocuments()"><span class="material-icons">
+      add_circle
+      </span> Upload Document</button><br>
+      <small class="smallInfo">Please enter details from 10th standard onwards<br>
+      Please kindly select Type of document then upload document</small>
+            <div  class="example-container mat-elevation-z8">
+              <mat-table  #tableUploadDocuments [dataSource]="UploadDocumentsArray.controls" >
 
+                <!-- documenttype Column -->
+                <ng-container matColumnDef="documenttype">
+                  <mat-header-cell *matHeaderCellDef> Document Type </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                  <mat-form-field class="example-full-width" floatLabel="never" appearance="none" >
+                    <mat-select placeholder="Select"  [formControl]="element.get('documenttype')" >
+                      <mat-option *ngFor="let item of this.jsonQualification;let i = index" [value]="item.value">
+                        {{item.value}}
+                      </mat-option>
+                    </mat-select>
+                    <small>
+                      <mat-error  *ngIf ="((element.get('documenttype').touched || isnextEducationButton) && element.get('documenttype').hasError('required'))">
+                        {{errors.qualificationtypeRequired}}
+                      </mat-error>
+                    </small>
+                  </mat-form-field>
+                  </mat-cell>
+                </ng-container>
+
+                <!-- Documentname Column -->
+                <ng-container matColumnDef="documentname">
+                  <mat-header-cell *matHeaderCellDef> Document Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      <app-angular-file-uploader [resetUpload]=resetUpload1 [config]="fileuploadConfig" [documentType]="element.get('documenttype').value" (ApiResponse)="docUpload($event)">
+                      </app-angular-file-uploader>
+                </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Delete">
+                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                  <mat-cell *matCellDef="let i = index;">
+                    &nbsp;&nbsp;&nbsp;
+                    <button mat-button class="deleteButton" (click)="removeUploadDocuments(i)">Delete</button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumnsUploadDocuments"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsUploadDocuments"></mat-row>
+              </mat-table>
             </div>
-            <br/>
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
-        </form>
-    </div>
+
+            <br><br>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Payment Details</ng-template>

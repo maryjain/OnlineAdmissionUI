@@ -38,6 +38,8 @@ export class AngularFileUploaderComponent implements OnChanges {
   @Input()
   public resetUpload = false;
 
+  @Input()
+  public documentType:string;
   // Outputs
   @Output()
   public ApiResponse = new EventEmitter();
@@ -48,6 +50,7 @@ export class AngularFileUploaderComponent implements OnChanges {
   // Properties
   fileExtRegExp: RegExp = /(?:\.([^.]+))?$/;
   url:any;
+  currentFileExt:any;
   theme: string;
   id: number;
   hideProgressBar: boolean;
@@ -167,11 +170,11 @@ export class AngularFileUploaderComponent implements OnChanges {
 
     // 'forEach' does not exist on 'filelist' that's why this good old 'for' is used.
     for (let i = 0; i < fileList.length; i++) {
-      const currentFileExt = this.fileExtRegExp
+       this.currentFileExt = this.fileExtRegExp
         .exec(fileList[i].name)[1]
         .toLowerCase(); // Get file extension.
-      const isFormatValid = this.formatsAllowed.includes(currentFileExt);
-      console.log("***********+++++++++++********************"+currentFileExt);
+      const isFormatValid = this.formatsAllowed.includes(this.currentFileExt);
+      console.log("***********+++++++++++********************  "+this.currentFileExt);
       const isSizeValid = fileList[i].size <= this.maxSize;
 
       // Check whether current file format and size is correct as specified in the configurations.
@@ -228,7 +231,7 @@ export class AngularFileUploaderComponent implements OnChanges {
          'file',
         this.allowedFiles[i]
       );
-      formData.append('DocumentDTO','{"documenttype": "EWS","documentformat": "image/jpeg"}');
+      formData.append('DocumentDTO','{"documenttype": "'+this.documentType+'","documentformat": "'+this.currentFileExt+'"}');
       console.log("************* "+ this.allowedFiles[0].arrayBuffer.toString);
       console.log("************* "+ formData.get('DocumentDTO').toString());
       console.log("*************++  filename extension= "+this.fileExtRegExp.exec(this.allowedFiles[0].name)[1].toLowerCase() );
