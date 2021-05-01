@@ -181,7 +181,7 @@
          </div>
          <div class="form-group example-form" *ngIf ="isEWSvisible">
           <label >Upload EWS Certificate</label><br>
-          <app-angular-file-uploader [resetUpload]=resetUpload1 [config]="fileuploadConfig" [documentType]="doctypeEWS" (ApiResponse)="docUpload($event)">
+          <app-angular-file-uploader [resetUpload]=resetUpload1 [rowid]="0" [config]="fileuploadConfig" [documentType]="doctypeEWS" (ApiResponse)="docUpload($event)">
           </app-angular-file-uploader>
         </div>
 
@@ -504,11 +504,16 @@
   </mat-step>
 
   <mat-step [stepControl]="formUploadDocumemtsGroup" label="Upload Documents" >
-    <button class="addButton" mat-button (click)="addUploadDocuments()"><span class="material-icons">
-      add_circle
-      </span> Upload Document</button><br>
-      <small class="smallInfo">Please enter details from 10th standard onwards<br>
-      Please kindly select Type of document then upload document</small>
+    <mat-card  >
+      <mat-card-content>
+     <div class="row"> <div class="col2"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
+     <div class="col8"><h4 class="smallInfo">Please enter details from 10th standard onwards.
+      Please kindly select Type of document then upload document</h4></div></div>
+      <br>
+      <button class="addButton" mat-button (click)="addUploadDocuments()"><span class="material-icons">
+        add_circle
+        </span> Upload Document</button>
+        <br>
             <div  class="example-container mat-elevation-z8">
               <mat-table  #tableUploadDocuments [dataSource]="UploadDocumentsArray.controls" >
 
@@ -523,7 +528,7 @@
                       </mat-option>
                     </mat-select>
                     <small>
-                      <mat-error  *ngIf ="((element.get('documenttype').touched || isnextEducationButton) && element.get('documenttype').hasError('required'))">
+                      <mat-error  *ngIf ="((element.touched || isnextEducationButton) && element.get('documenttype').hasError('required'))">
                         {{errors.qualificationtypeRequired}}
                       </mat-error>
                     </small>
@@ -534,23 +539,24 @@
                 <!-- Documentname Column -->
                 <ng-container matColumnDef="documentname">
                   <mat-header-cell *matHeaderCellDef> Document Name </mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                      <app-angular-file-uploader [resetUpload]=resetUpload1 [config]="fileuploadConfig" [documentType]="element.get('documenttype').value" (ApiResponse)="docUpload($event)">
+                    <mat-cell *matCellDef="let element;let i = index">
+                      <mat-form-field class="example-full-width" floatLabel="never" appearance="none" >
+                        <input matInput type="text" placeholder="" [formControl]="element.get('documentname')" readonly  >
+                      <app-angular-file-uploader [formControls]="element.get('documentname')" [rowid]="i" [resetUpload]=resetUpload1  [config]="fileuploadConfig" [documentType]="element.get('documenttype').value" (ApiResponse)="docUpload($event)">
                       </app-angular-file-uploader>
+                     </mat-form-field>
+
+                      <br>
+                      <button mat-button class="deleteButton" (click)="removeUploadDocuments(i)">Delete</button>
                 </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="Delete">
-                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                  <mat-cell *matCellDef="let i = index;">
-                    &nbsp;&nbsp;&nbsp;
-                    <button mat-button class="deleteButton" (click)="removeUploadDocuments(i)">Delete</button>
-                    </mat-cell>
-                </ng-container>
+
                 <mat-header-row *matHeaderRowDef="displayedColumnsUploadDocuments"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumnsUploadDocuments"></mat-row>
               </mat-table>
             </div>
-
+          </mat-card-content>
+        </mat-card  >
             <br><br>
         <button mat-raised-button color="primary" matStepperNext>Next</button>
   </mat-step>

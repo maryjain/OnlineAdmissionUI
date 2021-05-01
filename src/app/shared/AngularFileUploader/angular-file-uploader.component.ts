@@ -21,6 +21,7 @@ import {
   HttpEventType,
 } from '@angular/common/http';
 import { PdfViewerModule } from '../../../../node_modules/ng2-pdf-viewer';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -40,6 +41,13 @@ export class AngularFileUploaderComponent implements OnChanges {
 
   @Input()
   public documentType:string;
+
+@Input()
+public formControls:FormControl;
+
+  @Input()
+  public rowid:string;
+
   // Outputs
   @Output()
   public ApiResponse = new EventEmitter();

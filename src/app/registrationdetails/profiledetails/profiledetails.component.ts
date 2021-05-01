@@ -26,6 +26,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Education } from 'src/app/model/Education';
+import { AngularFileUploaderComponent } from 'src/app/shared/AngularFileUploader/angular-file-uploader.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -79,11 +80,13 @@ export class ProfiledetailsComponent  {
   EducationArray = new FormArray([]);
   dataSource;
  //**Upload Documents Details  **/
-  displayedColumnsUploadDocuments = ['documenttype', 'documentname', 'Delete'];
+  displayedColumnsUploadDocuments = ['documenttype', 'documentname'];
   @ViewChild('tableUploadDocuments', { static: false }) tableUploadDocuments: MatTable<any>;
   UploadDocumentsArray = new FormArray([]);
   dataSourceUploadDocuments;
 
+
+//  @ViewChild('fileupload', { static: false }) fileupload: FormControl;
 //******    variable  declaration ******
   isLinear = false;  // for mat-tepper navigation property
 

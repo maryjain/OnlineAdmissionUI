@@ -19,6 +19,7 @@ import { LoginService } from './login/service/login.service';
 import { RegistrationdetailsModule } from './registrationdetails/registrationdetails.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     HomeModule,
     HttpClientModule,
     RegistrationdetailsModule,
-    PdfViewerModule
+    PdfViewerModule,
+
 
   ],
   providers: [ValidationService, UtilityService, RegisterService, LoginService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
