@@ -353,10 +353,13 @@
        </mat-step>
 
   <mat-step [stepControl]="formEducationDetailsGroup" label="Education Details" >
-    <button class="addButton" mat-button (click)="addQualification()"><span class="material-icons">
-      add_circle
-      </span> Add Education details</button><br>
-      <small class="smallInfo">Please enter details from 10th standard onwards</small>
+    <br>
+      <div class="row"> <div class="col2"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
+      <div class="col8"><h4 class="smallInfo">Please enter details from 10th standard onwards</h4></div>
+      </div>
+      <button class="addButton" mat-button (click)="addQualification()"><span class="material-icons">
+        add_circle
+        </span> Add Education details</button><br>
             <div  class="example-container mat-elevation-z8">
               <mat-table #table [dataSource]="EducationArray.controls">
 
@@ -504,24 +507,23 @@
   </mat-step>
 
   <mat-step [stepControl]="formUploadDocumemtsGroup" label="Upload Documents" >
-    <mat-card  >
-      <mat-card-content>
-     <div class="row"> <div class="col2"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
-     <div class="col8"><h4 class="smallInfo">Please enter details from 10th standard onwards.
-      Please kindly select Type of document then upload document</h4></div></div>
-      <br>
-      <button class="addButton" mat-button (click)="addUploadDocuments()"><span class="material-icons">
-        add_circle
-        </span> Upload Document</button>
-        <br>
-            <div  class="example-container mat-elevation-z8">
-              <mat-table  #tableUploadDocuments [dataSource]="UploadDocumentsArray.controls" >
+            <br>
+            <div  class="container">
+              <div class="row"> <div class="col2"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
+              <div class="col8"><h4 class="smallInfo">Please enter details from 10th standard onwards.
+               Please kindly select Type of document then upload document</h4></div></div>
+               <br>
+               <button class="addButton" mat-button (click)="addUploadDocuments()"><span class="material-icons">
+                 add_circle
+                 </span> Upload Document</button>
+                 <br>
+              <mat-table class="blog-shadow-dreamy" #tableUploadDocuments [dataSource]="UploadDocumentsArray.controls" >
 
                 <!-- documenttype Column -->
                 <ng-container matColumnDef="documenttype">
                   <mat-header-cell *matHeaderCellDef> Document Type </mat-header-cell>
                   <mat-cell *matCellDef="let element">
-                  <mat-form-field class="example-full-width" floatLabel="never" appearance="none" >
+                  <mat-form-field floatLabel="never" appearance="none" >
                     <mat-select placeholder="Select"  [formControl]="element.get('documenttype')" >
                       <mat-option *ngFor="let item of this.jsonQualification;let i = index" [value]="item.value">
                         {{item.value}}
@@ -554,20 +556,109 @@
                 <mat-header-row *matHeaderRowDef="displayedColumnsUploadDocuments"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumnsUploadDocuments"></mat-row>
               </mat-table>
-            </div>
-          </mat-card-content>
-        </mat-card  >
-            <br><br>
-        <button mat-raised-button color="primary" matStepperNext>Next</button>
+              <br><br>
+              <button mat-raised-button color="primary" matStepperNext>Next</button>
+             </div>
   </mat-step>
+  <mat-step [stepControl]="formPaymentGroup" label="Payment Details" >
+      <br>
+
+              <div class="container " >
+                <div class="row"> <div class="col4"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
+                <div class="col8"><h4 class="smallInfo">Please enter application fees payment details
+                 </h4></div></div>
+                 <br>
+              <mat-table class="blog-shadow-dreamy" #tablePaymentDetails [dataSource]="PaymentDetailsArray.controls" >
+                <!-- transactionid Column -->
+                <ng-container matColumnDef="transactionid">
+                  <mat-header-cell *matHeaderCellDef> Transaction Id</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <mat-form-field floatLabel="never">
+                      <input matInput type="text" placeholder="MM00/050"  [formControl]="element.get('transactionid')"  required >
+                      <small>
+                        <mat-error *ngIf ="element.touched && element.get('transactionid').hasError('pattern') && !element.get('transactionid').hasError('required')">
+                          {{errors.transactionid}}
+                        </mat-error>
+                        <mat-error *ngIf =" (element.touched ||isnextPaymentButton) && element.get('transactionid').hasError('required')">
+                          {{errors.transactionidRequired}}
+                        </mat-error>
+                      </small>
+                      </mat-form-field>
+                  </mat-cell>
+                </ng-container>
+
+                <!-- bank name Column -->
+                <ng-container matColumnDef="bank">
+                  <mat-header-cell *matHeaderCellDef> Bank Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element;let i = index">
+                      <mat-form-field floatLabel="never">
+                        <input matInput type="text" placeholder="SBI" appAlphabetOnly  [formControl]="element.get('bank')"  required >
+                        <small>
+                          <mat-error *ngIf ="element.touched && element.get('bank').hasError('pattern') && !element.get('bank').hasError('required')">
+                            {{errors.bank}}
+                          </mat-error>
+                          <mat-error *ngIf =" (element.touched ||isnextPaymentButton) && element.get('bank').hasError('required')">
+                            {{errors.bankRequired}}
+                          </mat-error>
+                        </small>
+                        </mat-form-field>
+                </mat-cell>
+                </ng-container>
+               <!-- Applfees Column -->
+                <ng-container matColumnDef="applfees">
+                  <mat-header-cell *matHeaderCellDef> Application fees</mat-header-cell>
+                    <mat-cell *matCellDef="let element;let i = index">
+                      <mat-form-field floatLabel="never">
+                        <input matInput type="text" placeholder="250" appMoneyOnly maxDigits="5"  [formControl]="element.get('applfees')"  required >
+                        <small>
+                          <mat-error *ngIf ="element.touched && element.get('applfees').hasError('pattern') && !element.get('applfees').hasError('required')">
+                            {{errors.applFees}}
+                          </mat-error>
+                          <mat-error *ngIf =" (element.touched ||isnextPaymentButton) && element.get('applfees').hasError('required')">
+                            {{errors.applFeesRequired}}
+                          </mat-error>
+                        </small>
+                        </mat-form-field>
+                </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumnsPaymentDetails"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsPaymentDetails"></mat-row>
+              </mat-table>
+              <br><br>
+            <button mat-raised-button color="primary" (click)="POSTPayment()" matStepperNext>Next</button>
+            </div>
+
+          </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Payment Details</ng-template>
-    <h5>You are now done.</h5>
+    <ng-template matStepLabel>Declaration</ng-template>
+    <div class="container " >
+      <div class="row"> <div class="col4"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
+      <div class="col8"><h4 class="smallInfo">Please preview application and select the checkbox
+      </h4></div></div>
+      <mat-card >
+      <mat-card-header>
+        <mat-card-title>Declaration</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="declaration-content">
+        <br>
+        <mat-checkbox (change)="onChangeAddressCheckBox()"
+        class="example-margin checkboxAddress"
+        formControlName="addresscheckbox">
+       </mat-checkbox>
+       <br>
+      <p><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I hereby declare that all the information given by me in this application is true and correct to the
+      best of my knowledge and belief. I also note that if any of the above statements are found to be
+      incorrect or false or any information or particulars have been suppressed or omitted there from, I
+      am liable to be disqualified and my admission may be cancelled</em></p>
+    </mat-card-content>
+    </mat-card >
+    <br>
     <div>
         <button mat-raised-button color="primary" matStepperPrevious>Back</button> &nbsp; &nbsp;
         <button mat-raised-button color="accent" type="submit">Submit</button> &nbsp; &nbsp;
         <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
     </div>
+  </div>
   </mat-step>
 <!-- <ng-template matStepperIcon="phone">
     <mat-icon>phone</mat-icon>

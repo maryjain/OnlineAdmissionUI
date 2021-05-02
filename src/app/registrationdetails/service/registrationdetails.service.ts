@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Address } from 'src/app/model/Address';
 import { Education } from 'src/app/model/Education';
+import { Payment } from 'src/app/model/Payment';
 import { Person } from 'src/app/model/Person';
 import { environment } from 'src/environments/environment';
 
@@ -65,6 +66,13 @@ export class RegistrationdetailsService {
     console.log("Json Body education : "+body);
     return this.http.post<Education>(this.apiUrl+'/'+education.profileid+'/educationqualifications', body,{'headers': this.headers});
   }
+
+  addPayment(payment: Payment): Observable<Payment> {
+    const body = JSON.stringify(payment);
+    console.log("Json Body payment : "+body);
+    return this.http.post<Payment>(this.apiUrl+'/payment/'+payment.profileid, body,{'headers': this.headers});
+  }
+
 
   getProfileByID(profileid: bigint):  Observable<any> {
     return  this.http.get<any>(this.apiUrl + '/' + profileid, {responseType: 'json'});

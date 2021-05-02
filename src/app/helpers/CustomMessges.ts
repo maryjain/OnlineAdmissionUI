@@ -12,6 +12,7 @@ export const customregExps: { [key: string]: RegExp } = {
   cgpa: /^[0-9]\.\d{1,2}$/,
   percentage: /^[0-9]{1,2}\.\d{1,2}$/,
   registrationno: /^[a-zA-Z0-9][a-zA-Z0-9 ]{1,98}$/,
+  transactionid:/^((?!.*\-\-)(?!.*\_\_)(?!.*\/\/)(?!.*\ \ )[a-zA-Z0-9][a-zA-Z0-9/_\- ]{1,299})$/
 };
 
 /**
@@ -48,7 +49,13 @@ export const errorMessages: { [key: string]: string } = {
   registrationnoRequired: 'Registration no required',
   cgpaRequired:'CGPA is required',
   percentageRequired: 'Percentage is required',
+  transactionidRequired: 'Transaction id is required',
+  bankRequired: 'Bank Name is required',
+  applFeesRequired: 'Application fees is required',
   addressline: 'Please enter valid Address Line',
+  transactionid: 'Please enter valid Transaction id',
+  bank: 'Please enter valid Bank Name',
+  applFees: 'Please enter valid Application fees',
   emailDuplicate: 'Email id already exists',
   mobileNoDuplicate: 'Mobile Number already exists',
   otpTimerExpires: 'Time out , Resend OTP again',

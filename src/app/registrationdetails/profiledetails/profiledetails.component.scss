@@ -73,74 +73,30 @@ mat-error{
 
 // ***** Mat table css starts  *****
 
-mat-table
+.mat-table
 {
   background-color:#FBE9E7;
+
+  overflow: auto;
+  max-height: 500px;
 }
 mat-header-cell{
   background-color:#FFAB91;
   font-weight: bold;
   font-size:medium;
-}
-
-
-/*
-mat-footer-row, mat-header-row, mat-row {
-  border-bottom-width: 2px solid #FF8A65;
-}
-*/
-mat-header-cell{
-  display: flex;
+  flex-direction: column;
   justify-content: center;
- // align-items: flex-start ;
 }
-
-.mat-table {
-  overflow: auto;
-  max-height: 500px;
-}
-
- .mat-column-qualificationtype,.mat-column-documenttype{
+ .mat-column-qualificationtype,.mat-column-documenttype,
+ .mat-column-institution,.mat-column-university,.mat-column-yearofpass,
+ .mat-column-registrationno,.mat-column-cgpa,.mat-column-percentage,.mat-column-documentname,
+ .mat-column-transactionid,.mat-column-bank,.mat-column-applfees{
 border-right: 2px solid #E0E0E0;
 //border-bottom: 2px solid #E0E0E0;
 align-self: stretch;
-text-align: center
-}
-.mat-column-institution{
-border-right: 2px solid #E0E0E0;
-align-self: stretch;
 text-align: center;
-
+font-weight: bold;
 }
-.mat-column-university{
-border-right: 2px solid #E0E0E0;
-align-self: stretch;
-text-align: center;
-
-}
-.mat-column-yearofpass{
-  border-right: 2px solid #E0E0E0;
-  align-self: stretch;
-  text-align: center;
-}
-
-.mat-column-registrationno{
-  border-right: 2px solid #E0E0E0;
-  align-self: stretch;
-  text-align: center;
-}
-
-.mat-column-cgpa{
-  border-right: 2px solid #E0E0E0;
-  align-self: stretch;
-  text-align: center;
-}
-.mat-column-percentage,.mat-column-documentname{
-  border-right: 2px solid #E0E0E0;
-  align-self: stretch;
-  text-align: center;
-}
-
 
 .smallInfo{
   font-weight: bold;
@@ -155,6 +111,14 @@ text-align: center;
   background-color:#b5d394;
 }
 
+.mat-column-transactionid,.mat-column-bank,.mat-column-applfees
+{
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 2.6em;
+  white-space: nowrap;
+  padding:10px;
+}
 
 
 // ***** Mat table css ends  *****
@@ -163,5 +127,29 @@ text-align: center;
 //*** bell animation starts ****//@at-root
 .info-icon
 {
+
   font-size:30px;
+}
+
+
+//raised shadow
+.blog-shadow-dreamy {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
+              0 2px 4px rgba(0,0,0,0.07),
+              0 4px 8px rgba(0,0,0,0.07),
+              0 8px 16px rgba(0,0,0,0.07),
+              0 16px 32px rgba(0,0,0,0.07),
+              0 32px 64px rgba(0,0,0,0.07);
+}
+
+p{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ // font-weight: bold;
+}
+
+.declaration-content
+{
+  padding:15px;
 }

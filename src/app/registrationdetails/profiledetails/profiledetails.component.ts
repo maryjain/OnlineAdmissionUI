@@ -27,6 +27,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Education } from 'src/app/model/Education';
 import { AngularFileUploaderComponent } from 'src/app/shared/AngularFileUploader/angular-file-uploader.component';
+import { Payment } from 'src/app/model/Payment';
 
 export const MY_FORMATS = {
   parse: {
@@ -85,11 +86,16 @@ export class ProfiledetailsComponent  {
   UploadDocumentsArray = new FormArray([]);
   dataSourceUploadDocuments;
 
+  //**Payment Details   **/
+  displayedColumnsPaymentDetails = ['transactionid', 'bank','applfees'];
+  @ViewChild('tablePaymentDetails', { static: false }) tablePaymentDetails: MatTable<any>;
+  PaymentDetailsArray = new FormArray([]);
+  dataSourcePaymentDetails;
 
-//  @ViewChild('fileupload', { static: false }) fileupload: FormControl;
+
 //******    variable  declaration ******
   isLinear = false;  // for mat-tepper navigation property
-
+  doctypeEWS:string;
   addresstype = {present:'Present Address',permanent:'Permanent Address'};
   logintUserProfileId :any;
   apiUrl = `${environment.profileapiUrl}`;
@@ -100,6 +106,7 @@ export class ProfiledetailsComponent  {
   present_address: Address;
   permanent_address: Address;
   education: Education;
+  payment:Payment;
   errorlist: string[];
   jsonGender = [];
   jsonNationality = [];
@@ -114,6 +121,7 @@ export class ProfiledetailsComponent  {
   isSelectOptionPersonalInvalid: boolean;
   isSelectOptionAddressInvalid: boolean;
   isnextEducationButton:boolean;
+  isnextPaymentButton:boolean;
   isSelectOptionEducationInvalid:boolean;
   isShowCommunity:boolean;
   errors = errorMessages;
@@ -144,14 +152,7 @@ export class ProfiledetailsComponent  {
   resetUpload1: boolean;
   resetUpload2: boolean;
   resetUpload3: boolean;
-  doctypeEWS:string;
-  doctypePhoto:string;
-  doctypeSignature:string;
-  doctype10th:string;
-  doctype12th:string;
-  doctypeDegree:string;
-  doctypePHD:string;
-  doctypeOthers:string;
+
   fileuploadConfig: AngularFileUploaderConfig = {
     id: 112233,
     multiple: false,
@@ -172,23 +173,18 @@ export class ProfiledetailsComponent  {
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
-    this.doctypeEWS="EWS";
-    this.doctypePhoto="Photo";
-    this.doctypeSignature="Signature";
-    this.doctype10th="10th";
-    this.doctype12th="12th";
-    this.doctypeDegree="Degree";
-    this.doctypePHD="PHD";
-    this.doctypeOthers="Others";
+    this.doctypeEWS = "EWS";
      //**Education Details  **/
     this.EducationArray.push(this.createGroup({ qualificationtype: "", institution: "", university: "",yearofpass:2000,registrationno:"",cgpa:0,percentage:0 }));
-
     this.dataSource = this.EducationArray.controls;
 
     //**Upload Documents Details  **/
     this.UploadDocumentsArray.push(this.createGroupUploadDocuments({ documenttype: "",documentname:""}));
-
     this.dataSourceUploadDocuments = this.UploadDocumentsArray.controls;
+
+    //**Payment Details  **/
+    this.PaymentDetailsArray.push(this.createGroupPaymentDetails({ transactionid: "", bank:"", applfees : 250}));
+    this.dataSourcePaymentDetails = this.PaymentDetailsArray.controls;
 
     console.log(" jsonQualification =" +this.jsonQualification);
     const currentYear = new Date().getFullYear();
@@ -208,6 +204,7 @@ export class ProfiledetailsComponent  {
     this.isSelectOptionPersonalInvalid= false;
     this.isSelectOptionAddressInvalid= false;
     this.isnextEducationButton = false;
+    this.isnextPaymentButton = false;
     this.isSelectOptionEducationInvalid= false;
     // create object to be pass as json in rest api PUT,POST call
 
@@ -340,15 +337,56 @@ export class ProfiledetailsComponent  {
 
   });
 
+  public formPaymentGroup  = this.fb.group({
+
+  });
 
 //******    Forms declaration  ends ******
 
-  public formEmailGroup  = this.fb.group({
-    emailID: ['', Validators.compose([Validators.required, Validators.email])]
-  });
+
 
 
 //******    Events method declaration ******
+//****  Payment Details *****/
+public createGroupPaymentDetails(data: any) {
+
+  data = data || {  transactionid: "", bank:"", applfees : 250};
+  return this.fb.group({
+    transactionid: ['', [Validators.required,Validators.pattern(customregExps.transactionid)]],
+    bank: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
+    applfees: ['', [Validators.required,Validators.pattern(customregExps.annualincome)]],
+  });
+}
+
+POSTPayment()
+{
+  this.isnextPaymentButton = true;
+  for (let c of this.PaymentDetailsArray.controls) {
+    this.payment = new Payment(null, null, null,null);
+    this.payment.transactionid= c.get('transactionid').value;
+    if( c.get('bank').value === "")
+    {
+      this.payment.bank= null;
+    }else{
+      this.payment.bank= c.get('bank').value;
+    }
+    if(  c.get('applfees').value === "")
+    {
+      this.payment.applfees= null;
+    }else{
+      this.payment.applfees= c.get('applfees').value;
+    }
+    this.payment.profileid= this.logintUserProfileId;
+    this.registrationdetailsSrv.addPayment(this.payment).subscribe((data) => {
+      console.log('present POST paymentid = ' + data.paymentid);
+    },
+    (err: HttpErrorResponse) => {
+      console.log("Error status = "+ err.statusText);
+     console.log("Error occured payment insert = "+ err.message);
+    });
+}
+}
+
 
 //**** Upload Documents *****/
 
@@ -766,15 +804,7 @@ public isClickedAddressNext():void
   get permanent_pincode() { return this.addressDetailsForm.get('permanent_pincode'); }
 
 
-  //Education Qualification
- /* get qualificationtype() { return this.EducationArray.get('qualificationtype'); }
-  get institution() { return this.EducationArray.get('institution'); }
-  get university() { return this.EducationArray.get('university'); }
-  get yearofpass() { return this.EducationArray.get('yearofpass'); }
-  get registrationno() { return this.EducationArray.get('registrationno'); }
-  get cgpa() { return this.EducationArray.get('cgpa'); }
-  get percentage() { return this.EducationArray.get('percentage'); }
-*/
+
 
   //******    Upload Documents REST api call status ******
   docUpload(event) {
