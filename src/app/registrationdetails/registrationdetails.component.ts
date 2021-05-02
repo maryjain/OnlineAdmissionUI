@@ -13,7 +13,7 @@ export class RegistrationdetailsComponent implements OnInit {
   ngOnInit(): void {
     this.map.set('Profile Summary', './profilesummary');
     this.map.set('Profile Details', './profiledetails');
-    this.map.set('Upload Documents', './uploaddocuments');
+    this.map.set('View Status', '');
 
   }
   public map: Map<string, string> = new Map<string, string>();

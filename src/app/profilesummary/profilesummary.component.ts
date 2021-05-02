@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {  MatDialogRef } from '@angular/material/dialog';
+import {  MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-profilesummary',
   templateUrl: './profilesummary.component.html',
@@ -11,5 +12,6 @@ export class ProfilesummaryComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
 
 }

@@ -629,7 +629,7 @@
             </div>
 
           </mat-step>
-  <mat-step>
+  <mat-step [stepControl]="formDeclarationGroup" label="Declaration" >
     <ng-template matStepLabel>Declaration</ng-template>
     <div class="container " >
       <div class="row"> <div class="col4"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
@@ -641,22 +641,29 @@
       </mat-card-header>
       <mat-card-content class="declaration-content">
         <br>
-        <mat-checkbox (change)="onChangeAddressCheckBox()"
-        class="example-margin checkboxAddress"
-        formControlName="addresscheckbox">
+        <form [formGroup]="formDeclarationGroup" >
+        <mat-checkbox [disabled]=!enableDeclarationChkBox (change)="onEnableDeclaration()"
+        class="example-margin"
+        formControlName="declarationcheckbox">
        </mat-checkbox>
+        </form>
        <br>
       <p><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I hereby declare that all the information given by me in this application is true and correct to the
       best of my knowledge and belief. I also note that if any of the above statements are found to be
       incorrect or false or any information or particulars have been suppressed or omitted there from, I
       am liable to be disqualified and my admission may be cancelled</em></p>
+      <br>
+      <br>
     </mat-card-content>
     </mat-card >
     <br>
-    <div>
-        <button mat-raised-button color="primary" matStepperPrevious>Back</button> &nbsp; &nbsp;
-        <button mat-raised-button color="accent" type="submit">Submit</button> &nbsp; &nbsp;
-        <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
+    <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+      <div >
+        <button mat-raised-button color="primary" matStepperPrevious>Back</button></div>
+        <div >
+        <button mat-raised-button (click)="openPreview()" color="warn" >Preview</button></div>
+        <div >
+        <button mat-raised-button [disabled]=!enableDeclarationSubmitBtn color="accent" type="submit">Submit</button></div>
     </div>
   </div>
   </mat-step>

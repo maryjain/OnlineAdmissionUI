@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 import { RegistrationdetailsComponent } from './registrationdetails.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { ProfiledetailsComponent } from './profiledetails/profiledetails.component';
-import { EducationqualificationComponent } from './educationqualification/educationqualification.component';
-import { UploaddocumentsComponent } from './uploaddocuments/uploaddocuments.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AppMaterialModule} from '../app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { PreviewdetailsComponent } from './previewdetails/previewdetails.component';
+
 
 @NgModule({
-  declarations: [RegistrationdetailsComponent, ProfiledetailsComponent, EducationqualificationComponent, UploaddocumentsComponent ],
+  declarations: [RegistrationdetailsComponent, ProfiledetailsComponent, PreviewdetailsComponent  ],
   imports: [
     CommonModule,
     AppMaterialModule,
@@ -18,6 +19,7 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    FlexLayoutModule,
 
   ],
   exports: [

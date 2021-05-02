@@ -28,6 +28,11 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/mat
 import { Education } from 'src/app/model/Education';
 import { AngularFileUploaderComponent } from 'src/app/shared/AngularFileUploader/angular-file-uploader.component';
 import { Payment } from 'src/app/model/Payment';
+import { NotificationService } from 'src/app/shared/notification/notification.service';
+import {MatDialog } from '@angular/material/dialog';
+import {MatDialogConfig} from '@angular/material/dialog';
+import { ProfilesummaryComponent } from 'src/app/profilesummary/profilesummary.component';
+import { PreviewdetailsComponent } from '../previewdetails/previewdetails.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -92,6 +97,10 @@ export class ProfiledetailsComponent  {
   PaymentDetailsArray = new FormArray([]);
   dataSourcePaymentDetails;
 
+  //** Declaration **/
+  enableDeclarationChkBox:boolean;
+
+  enableDeclarationSubmitBtn:boolean;
 
 //******    variable  declaration ******
   isLinear = false;  // for mat-tepper navigation property
@@ -167,13 +176,16 @@ export class ProfiledetailsComponent  {
 
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
-    public registrationdetailsSrv: RegistrationdetailsService,  public router: Router) {
+    public registrationdetailsSrv: RegistrationdetailsService,public notifyService : NotificationService,
+    private dialog: MatDialog,public router: Router) {
 
    }
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
     this.doctypeEWS = "EWS";
+    this.enableDeclarationChkBox=false;
+    this.enableDeclarationSubmitBtn =false;
      //**Education Details  **/
     this.EducationArray.push(this.createGroup({ qualificationtype: "", institution: "", university: "",yearofpass:2000,registrationno:"",cgpa:0,percentage:0 }));
     this.dataSource = this.EducationArray.controls;
@@ -194,6 +206,9 @@ export class ProfiledetailsComponent  {
 
     //**Address Details  **/
     this.addressDetailsForm.get('addresscheckbox').setValue(false);
+
+    //** Declaration **/
+    this.formDeclarationGroup.get('declarationcheckbox').setValue(false);
 
     this.personalDetailsForm.controls['annualincome'].setValue(1);
     this.personalDetailsForm.controls['community'].setValue('N/A');
@@ -341,13 +356,41 @@ export class ProfiledetailsComponent  {
 
   });
 
+  public formDeclarationGroup  = this.fb.group({
+   declarationcheckbox: ['', [Validators.required]]
+  });
+
 //******    Forms declaration  ends ******
 
 
 
 
 //******    Events method declaration ******
+
+//*** Declaration ***/
+public openPreview()
+{
+this.enableDeclarationChkBox = true;
+this.openDialog();
+}
+openDialog() {
+  const dialogConfig = new MatDialogConfig();
+
+  //dialogConfig.disableClose = true;
+  dialogConfig.autoFocus = true;
+
+  dialogConfig.data = {
+      id: 1,
+
+  };
+
+  this.dialog.open(PreviewdetailsComponent, dialogConfig);
+}
+
+
 //****  Payment Details *****/
+
+
 public createGroupPaymentDetails(data: any) {
 
   data = data || {  transactionid: "", bank:"", applfees : 250};
@@ -376,11 +419,14 @@ POSTPayment()
     }else{
       this.payment.applfees= c.get('applfees').value;
     }
+
     this.payment.profileid= this.logintUserProfileId;
     this.registrationdetailsSrv.addPayment(this.payment).subscribe((data) => {
+      this.notifyService.showSuccess("Payment Transaction "+this.payment.transactionid+" added Succesfully", "Payment Details")
       console.log('present POST paymentid = ' + data.paymentid);
     },
     (err: HttpErrorResponse) => {
+      this.notifyService.showError("Payment Error", "Payment Details")
       console.log("Error status = "+ err.statusText);
      console.log("Error occured payment insert = "+ err.message);
     });
@@ -509,9 +555,11 @@ POSTEducation()
 
     this.education.profileid= this.logintUserProfileId;
     this.registrationdetailsSrv.addEducation(this.education).subscribe((data) => {
+      this.notifyService.showSuccess(" Added Succesfully", " Education Qualification");
       console.log('present POST educaid = ' + data.educaid);
     },
     (err: HttpErrorResponse) => {
+      this.notifyService.showSuccess("Error while adding details", " Education Qualification");
       console.log("Error status = "+ err.statusText);
      console.log("Error occured Education insert = "+ err.message);
     });
@@ -529,6 +577,7 @@ addAddress()
   this.present_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
   this.present_address.profileid= this.logintUserProfileId;
   this.registrationdetailsSrv.addAddress(this.present_address).subscribe((data) => {
+    this.notifyService.showSuccess(" Added Succesfully", "Address Details");
     console.log('present POST addid= ' + data.addid);
     if(this.addressDetailsForm.get('addresscheckbox').value === false){
       console.log('+++++');
@@ -541,9 +590,11 @@ addAddress()
       this.permanent_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
       this.permanent_address.profileid= this.logintUserProfileId;
       this.registrationdetailsSrv.addAddress(this.permanent_address).subscribe((data) => {
+        this.notifyService.showSuccess(" Added Succesfully", "Address Details");
         console.log('permanent POST addid= ' + data.addid);
       },
       (err: HttpErrorResponse) => {
+        this.notifyService.showError("Error while adding Permanent address details", "Address Details");
         console.log("Error status = "+ err.statusText);
        console.log("Error occured Address insert = "+ err.message);
       });
@@ -551,6 +602,7 @@ addAddress()
 
   },
   (err: HttpErrorResponse) => {
+    this.notifyService.showError("Error while Present address add details", "Address Details");
     console.log("Error status = "+ err.statusText);
    console.log("Error occured Address insert = "+ err.message);
   });
@@ -575,11 +627,13 @@ updatePerson() {
   this.person.creamylayer= this.personalDetailsForm.get('creamylayer').value;
   this.person.profileid=this.logintUserProfileId;
   this.registrationdetailsSrv.updatePerson(this.person).subscribe((data) => {
+    this.notifyService.showSuccess(" Added Succesfully", "Personal Details");
     console.log('PUT profileid= ' + data.profileid);
 
    //this.router.navigate(['/login']);
   },
   (err: HttpErrorResponse) => {
+    this.notifyService.showError("Error while add details", "Personal Details");
     console.log("Error status = "+ err.statusText);
    console.log("Error occured update personal details = "+ err.message);
 
@@ -679,7 +733,10 @@ public isClickedAddressNext():void
     $event.target.value=$event.target.value.trim();
   }
 
-
+  onEnableDeclaration()
+  {
+    this.enableDeclarationSubmitBtn = true;
+  }
  /* onChangeAnnualIncome(annualIncomeValue)
   {
     this.personalDetailsForm.controls['annualincome'].setValue(this.currencyPipe.transform(annualIncomeValue,'INR'));
@@ -773,6 +830,8 @@ public isClickedAddressNext():void
     });
   }
   }
+
+
 
 //******    Formcontrol access from HTML declaration ******
 

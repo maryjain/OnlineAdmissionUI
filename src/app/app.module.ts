@@ -18,7 +18,7 @@ import { RegisterService } from './register/service/register.service';
 import { LoginService } from './login/service/login.service';
 import { RegistrationdetailsModule } from './registrationdetails/registrationdetails.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -37,11 +37,12 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     HttpClientModule,
     RegistrationdetailsModule,
     PdfViewerModule,
-
+    ToastrModule.forRoot(),
 
   ],
   providers: [ValidationService, UtilityService, RegisterService, LoginService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ProfilesummaryComponent]
 })
 export class AppModule { }
