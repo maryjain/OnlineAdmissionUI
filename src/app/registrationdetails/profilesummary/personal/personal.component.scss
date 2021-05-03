@@ -4,6 +4,17 @@ mat-card-header
   color:white;
   padding :15px;
   border-radius: 5px;
+
+}
+mat-card-content{
+  background-color:#E8F5E9;
+  margin:2em;
+  padding:15px;
+}
+
+.centrecss
+{
   display: flex;
   justify-content: center;
+  align-items: stretch;;
 }

@@ -8,10 +8,13 @@ import {AppMaterialModule} from '../app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PreviewdetailsComponent } from './previewdetails/previewdetails.component';
-
+import {ProfilesummaryComponent} from './profilesummary/profilesummary.component';
+import { PersonalComponent } from './profilesummary/personal/personal.component';
+import { AddressComponent } from './profilesummary/address/address.component';
+import { EducationqualificationComponent } from './profilesummary/educationqualification/educationqualification.component';
 
 @NgModule({
-  declarations: [RegistrationdetailsComponent, ProfiledetailsComponent, PreviewdetailsComponent  ],
+  declarations: [RegistrationdetailsComponent, ProfiledetailsComponent, PreviewdetailsComponent,ProfilesummaryComponent, PersonalComponent, AddressComponent, EducationqualificationComponent  ],
   imports: [
     CommonModule,
     AppMaterialModule,
@@ -29,7 +32,9 @@ import { PreviewdetailsComponent } from './previewdetails/previewdetails.compone
     ReactiveFormsModule,
     AppMaterialModule,
     SharedModule,
-
+    ProfiledetailsComponent,
+    PreviewdetailsComponent,
+    ProfilesummaryComponent,
   ]
 })
 export class RegistrationdetailsModule { }

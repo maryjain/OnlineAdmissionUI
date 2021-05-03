@@ -31,7 +31,7 @@ import { Payment } from 'src/app/model/Payment';
 import { NotificationService } from 'src/app/shared/notification/notification.service';
 import {MatDialog } from '@angular/material/dialog';
 import {MatDialogConfig} from '@angular/material/dialog';
-import { ProfilesummaryComponent } from 'src/app/profilesummary/profilesummary.component';
+import { ProfilesummaryComponent } from 'src/app/registrationdetails/profilesummary/profilesummary.component';
 import { PreviewdetailsComponent } from '../previewdetails/previewdetails.component';
 
 export const MY_FORMATS = {

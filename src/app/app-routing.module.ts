@@ -7,9 +7,10 @@ import { RegisterhomeComponent } from './register/registerhome.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationdetailsComponent } from './registrationdetails/registrationdetails.component';
 import { ProfiledetailsComponent } from './registrationdetails/profiledetails/profiledetails.component';
-
-
-import { ProfilesummaryComponent } from './profilesummary/profilesummary.component';
+import { ProfilesummaryComponent } from './registrationdetails/profilesummary/profilesummary.component';
+import { PersonalComponent } from './registrationdetails/profilesummary/personal/personal.component';
+import { EducationqualificationComponent } from './registrationdetails/profilesummary/educationqualification/educationqualification.component';
+import { AddressComponent } from './registrationdetails/profilesummary/address/address.component';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
@@ -17,8 +18,13 @@ const routes: Routes = [
           { path: 'registrationdetails', component: RegistrationdetailsComponent, children: [
             { path: '', redirectTo: 'profiledetails', pathMatch: 'full' },
             { path: 'profiledetails', component:  ProfiledetailsComponent },
-            { path: 'profilesummary', component: ProfilesummaryComponent }
-
+            { path: 'profilesummary', component: ProfilesummaryComponent,
+            children: [
+              { path: 'personal', component: PersonalComponent },
+              { path: 'educationqualification', component: EducationqualificationComponent },
+              { path: 'address', component: AddressComponent },
+            ]
+          }
         ] },
         { path: '**', component: PagenotfoundComponent }
   ];

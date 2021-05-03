@@ -10,7 +10,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { HomeModule } from './home/home.module';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
-import {ProfilesummaryComponent} from './profilesummary/profilesummary.component'
+
 import {ValidationService} from './shared/validate/validation.service';
 import {UtilityService} from './shared/utility/utility.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -24,7 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
   declarations: [
     AppComponent,
     PagenotfoundComponent,
-    ProfilesummaryComponent
+
   ],
   imports: [
     BrowserModule,
@@ -43,6 +43,6 @@ import { ToastrModule } from 'ngx-toastr';
   providers: [ValidationService, UtilityService, RegisterService, LoginService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],
   bootstrap: [AppComponent],
-  entryComponents: [ProfilesummaryComponent]
+ /// entryComponents: [ProfilesummaryComponent]
 })
 export class AppModule { }
