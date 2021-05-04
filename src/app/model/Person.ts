@@ -21,6 +21,8 @@ export class Person {
   creamylayer:boolean;
   applfees:number;
   physicalychallenged:boolean;
+  stage:string;
+  applstatus:string;
 
 
   constructor(fullname: string, dob: Date, emailid: string, mobileno: bigint, passwordplain: string ) {

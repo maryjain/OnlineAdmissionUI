@@ -10,7 +10,7 @@ import {errorMessages,
     registrationFormMessage} from '../helpers/CustomMessges';
 import {ValidationService} from '../shared/validate/validation.service';
 import {UtilityService} from '../shared/utility/utility.service';
-import {RegisterService} from './service/register.service';
+import {RegisterService} from '../register/service/register.service';
 import {Person} from '../model/Person';
 import { interval, Observable, Subscription, timer } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers:[ValidationService, UtilityService],
+  providers:[ValidationService, UtilityService,RegisterService],
 })
 export class RegisterComponent implements OnInit , OnDestroy{
 
@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
 
   constructor(private fb: FormBuilder, public validatesrv: ValidationService, public utilitysrv: UtilityService,
-    public registersrv: RegisterService, private router: Router) {
+              public registersrv: RegisterService, private router: Router) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 50, 0, 1);
     this.maxDate = new Date(currentYear - 14, 11, 31);

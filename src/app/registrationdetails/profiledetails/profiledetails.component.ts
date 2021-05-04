@@ -33,6 +33,7 @@ import {MatDialog } from '@angular/material/dialog';
 import {MatDialogConfig} from '@angular/material/dialog';
 import { ProfilesummaryComponent } from 'src/app/registrationdetails/profilesummary/profilesummary.component';
 import { PreviewdetailsComponent } from '../previewdetails/previewdetails.component';
+import { SessionstorageService } from 'src/app/shared/session/sessionstorage.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -67,7 +68,7 @@ const ELEMENT_DATA: EDUCATION[] = [
   selector: 'app-profiledetails',
   templateUrl: './profiledetails.component.html',
   styleUrls: ['./profiledetails.component.scss'],
-  providers: [UtilityService, RegistrationdetailsService,
+  providers: [UtilityService, RegistrationdetailsService, SessionstorageService,
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
@@ -177,7 +178,7 @@ export class ProfiledetailsComponent  {
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
     public registrationdetailsSrv: RegistrationdetailsService,public notifyService : NotificationService,
-    private dialog: MatDialog,public router: Router) {
+    private dialog: MatDialog,public router: Router,public sessionStorage: SessionstorageService) {
 
    }
 
@@ -228,8 +229,10 @@ export class ProfiledetailsComponent  {
     this.permanent_address = new Address('', '', '', null,null,false,null);
 
     this.religionText="";
-    this.logintUserProfileId = 2100000004;
-    this.fileuploadConfig.uploadAPI.url+=this.logintUserProfileId;
+    this.logintUserProfileId = sessionStorage.getItem('profileid');
+    console.log("______*****_____ logintUserProfileId="+ this.logintUserProfileId);
+
+    this.fileuploadConfig.uploadAPI.url+= this.logintUserProfileId;
     console.log("______*****______this.fileuploadConfig.uploadAPI.url ="+this.fileuploadConfig.uploadAPI.url);
 
 
@@ -577,32 +580,30 @@ addAddress()
   this.present_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
   this.present_address.profileid= this.logintUserProfileId;
   this.registrationdetailsSrv.addAddress(this.present_address).subscribe((data) => {
-    this.notifyService.showSuccess(" Added Succesfully", "Address Details");
+    this.notifyService.showSuccess(" Added Succesfully", "Present Address Details");
     console.log('present POST addid= ' + data.addid);
-    if(this.addressDetailsForm.get('addresscheckbox').value === false){
-      console.log('+++++');
-      this.permanent_address = new Address('', '', '', null,null,false,null);
-      this.permanent_address.addressline1= this.addressDetailsForm.get('permanent_addressline1').value;
-      this.permanent_address.addressline2= this.addressDetailsForm.get('permanent_addressline2').value;
-      this.permanent_address.districtcode= this.addressDetailsForm.get('permanent_districtcode').value;
-      this.permanent_address.pincode= this.addressDetailsForm.get('permanent_pincode').value;
-      this.permanent_address.addresstype= 'Permanent';
-      this.permanent_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
-      this.permanent_address.profileid= this.logintUserProfileId;
-      this.registrationdetailsSrv.addAddress(this.permanent_address).subscribe((data) => {
-        this.notifyService.showSuccess(" Added Succesfully", "Address Details");
-        console.log('permanent POST addid= ' + data.addid);
+    this.permanent_address = new Address('', '', '', null,null,false,null);
+    this.permanent_address.addressline1= this.addressDetailsForm.get('permanent_addressline1').value;
+    this.permanent_address.addressline2= this.addressDetailsForm.get('permanent_addressline2').value;
+    this.permanent_address.districtcode= this.addressDetailsForm.get('permanent_districtcode').value;
+    this.permanent_address.pincode= this.addressDetailsForm.get('permanent_pincode').value;
+    this.permanent_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
+    this.permanent_address.addresstype= 'Permanent';
+    this.permanent_address.profileid= this.logintUserProfileId;
+    this.registrationdetailsSrv.addAddress(this.permanent_address).subscribe((data) => {
+    this.notifyService.showSuccess(" Added Succesfully", "Permanent Address Details");
+    console.log('permanent POST addid= ' + data.addid);
       },
       (err: HttpErrorResponse) => {
-        this.notifyService.showError("Error while adding Permanent address details", "Address Details");
+        this.notifyService.showError("Error while adding Permanent address details", "Permanent Address Details");
         console.log("Error status = "+ err.statusText);
        console.log("Error occured Address insert = "+ err.message);
       });
-    }
+
 
   },
   (err: HttpErrorResponse) => {
-    this.notifyService.showError("Error while Present address add details", "Address Details");
+    this.notifyService.showError("Error while Present address add details", "Present Address Details");
     console.log("Error status = "+ err.statusText);
    console.log("Error occured Address insert = "+ err.message);
   });

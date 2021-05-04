@@ -9,12 +9,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./registrationdetails.component.scss']
 })
 export class RegistrationdetailsComponent implements OnInit {
+  profileid:any;
+  fullname:any;
   constructor(private router: Router){}
   ngOnInit(): void {
     this.map.set('Profile Summary', './profilesummary');
     this.map.set('Profile Details', './profiledetails');
     this.map.set('View Status', '');
-
+    this.profileid=sessionStorage.getItem('profileid');
+    this.fullname=sessionStorage.getItem('fullname');
   }
   public map: Map<string, string> = new Map<string, string>();
 

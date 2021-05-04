@@ -17,7 +17,8 @@ export class LoginService {
 
  login(person: Person): Observable<any> {
   const body = JSON.stringify(person);
-  console.log("Json Body : "+body);
+  console.log("Json Body login  : "+body);
+  console.log("Json Headers  : "+this.headers);
   return this.http.post<Person>(this.apiUrl+"/login", body,{'headers': this.headers});
 }
 

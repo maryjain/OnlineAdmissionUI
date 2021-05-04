@@ -9,15 +9,18 @@ import { Observable } from 'rxjs';
 import { UtilityService } from '../shared/utility/utility.service';
 import { LoginService } from './service/login.service';
 import { NgStyle } from '@angular/common';
-
+import { SessionStorageModel } from 'src/app/model/SessionStorageModel';
+import { SessionstorageService } from '../shared/session/sessionstorage.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [UtilityService, LoginService, SessionstorageService]
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, public utilitysrv: UtilityService, public loginsrv: LoginService, private router: Router) { }
+  constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
+              public loginsrv: LoginService, private router: Router,public s_storage: SessionstorageService) { }
 
   sample: any;
   errors = errorMessages;
@@ -58,27 +61,36 @@ public hintEmailArr = [ hintEmailMessages.email1,
 
   ngOnInit(): void {
     this.isvalidCaptchaEntered = false;
+
   }
 
 
   profileLogin() {
+    console.log('Inside profileLogin ');
     this.captcha_validation();
     this.person = new Person('', null,
     this.loginForm.get('emailid').value, null,
     this.loginForm.get('passwordplain').value);
 
     this.loginsrv.login(this.person).subscribe((res) => {
+      console.log('POST login res = ' + res);
       console.log('POST login status= ' + res.data);
+      console.log('POST login id= ' + res.id);
+      console.log('POST login fullname= ' + res.fullname);
       if(res.data === "true"){
+        sessionStorage.setItem('profileid', res.id);
+        sessionStorage.setItem('fullname', res.fullname);
         this.loginsrv.setisloggedIn(true);
         this.router.navigate(['/registrationdetails']);
       }
       else{
         this.loginsrv.setisloggedIn(false);
+        sessionStorage.clear();
       }
     },
       (err) => {
         this.loginsrv.setisloggedIn(false);
+        sessionStorage.clear();
         if (err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){
         this.errorlist =  err.error['message'];
         let key: string;
@@ -138,11 +150,11 @@ public hintEmailArr = [ hintEmailMessages.email1,
 
     if (this.inputCaptcha === ans){
       this.isvalidCaptchaEntered = true;
-      console.log("true");
+      console.log(" capcha "+ this.isvalidCaptchaEntered);
       this.captchaStatus = errorMessages.success;
 
   }else{
-      console.log("false");
+      console.log("capcha false");
       this.captchaStatus = errorMessages.failure;
   }
  }

@@ -37,4 +37,7 @@ import { EducationqualificationComponent } from './profilesummary/educationquali
     ProfilesummaryComponent,
   ]
 })
-export class RegistrationdetailsModule { }
+export class RegistrationdetailsModule {
+
+
+ }

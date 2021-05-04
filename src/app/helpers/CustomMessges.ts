@@ -111,3 +111,13 @@ export const hintPhoneMessages: { [key: string]: string } = {
 export const registrationFormMessage: { [key: string]: string } = {
   saveWarnMessage: 'Data is saved only when Submit button is clicked'
  };
+
+ /* export const personStage: { [key: string]: string } = {
+  PersonalDetails: 'PersonalDetails',
+  AddressDetails: 'AddressDetails',
+  EducationDetails: 'EducationDetails',
+  UploadDocuments: 'UploadDocuments',
+  PaymentDetails: 'PaymentDetails',
+  Declaration: 'Declaration'
+ };
+*/
