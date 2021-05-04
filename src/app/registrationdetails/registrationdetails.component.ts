@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class RegistrationdetailsComponent implements OnInit {
   profileid:any;
   fullname:any;
+  loggedIn:boolean;
   constructor(private router: Router){}
   ngOnInit(): void {
     this.map.set('Profile Summary', './profilesummary');
@@ -18,6 +19,17 @@ export class RegistrationdetailsComponent implements OnInit {
     this.map.set('View Status', '');
     this.profileid=sessionStorage.getItem('profileid');
     this.fullname=sessionStorage.getItem('fullname');
+    console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));
+    if(sessionStorage.getItem('loggedIn')=== 'true')
+    {
+      console.log('***********++++ ');
+      this.loggedIn = true;
+    }
+    else{
+      this.loggedIn = false;
+    }
+
+    console.log('** this.loggedIn'+ this.loggedIn);
   }
   public map: Map<string, string> = new Map<string, string>();
 
@@ -25,7 +37,13 @@ export class RegistrationdetailsComponent implements OnInit {
     return Array.from(map.keys());
   }
 
+
+  public logoutUser():void
+  {
+    sessionStorage.clear();
   }
+
+}
 
 
 

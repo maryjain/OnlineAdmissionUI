@@ -18,26 +18,19 @@
         </button>
       </mat-menu>
       </div>
-    <div>
-      <a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/register">
-      <span class="material-icons" > person_add</span>Register</a>
-    </div>
-    <div>
-      <a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/login">
-      <span class="material-icons" >login</span>Login User</a>
-    </div>
-    <div>
-      <a mat-button *ngIf="!loginsrv.getisloggedIn()"  routerLink="/loginadmin">
-      <span class="material-icons" >login</span>Login Admin</a>
-    </div>
-    <div  class="flex-grow-1" *ngIf="loginsrv.getisloggedIn()">
-    <mat-icon>home</mat-icon>
-    <span>Home</span>
-    </div>
       <div>
-        <a mat-button *ngIf="loginsrv.getisloggedIn()"  routerLink="">
-        <span class="material-icons" *ngIf="loginsrv.getisloggedIn()">logout</span>Log Out</a>
+        <a mat-button  routerLink="/register">
+        <span class="material-icons" > person_add</span>Register</a>
       </div>
+      <div>
+        <a mat-button   routerLink="/login">
+        <span class="material-icons" >login</span>Login User</a>
+      </div>
+      <div>
+        <a mat-button   routerLink="/loginadmin">
+        <span class="material-icons" >login</span>Login Admin</a>
+      </div>
+
   </div>
 <div>
 <router-outlet></router-outlet>

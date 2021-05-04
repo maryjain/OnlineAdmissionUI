@@ -12,9 +12,7 @@ mat-header-cell{
   justify-content: center;
 }
 
-.mat-column-institution,.mat-column-university,
-.mat-column-yearofpass,.mat-column-cgpa,.mat-column-percentage,.mat-column-qualificationtype
-{
+ .mat-column-transactionid,.mat-column-bank,.mat-column-applfees,.mat-column-updateddate{
 border-right: 2px solid #E0E0E0;
 //border-bottom: 2px solid #E0E0E0;
 //align-self: stretch;
@@ -24,8 +22,7 @@ font-weight: bold;
 
 
 
-.mat-column-institution,.mat-column-university,
-.mat-column-yearofpass,.mat-column-cgpa,.mat-column-percentage,.mat-column-qualificationtype
+.mat-column-transactionid,.mat-column-bank,.mat-column-applfees,.mat-column-updateddate
 {
   display: inline-block;
   vertical-align: middle;

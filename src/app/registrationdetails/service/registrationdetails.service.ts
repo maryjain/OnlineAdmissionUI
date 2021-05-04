@@ -46,6 +46,17 @@ export class RegistrationdetailsService {
     return  this.http.get<any>(this.profileMasterapiUrl +  '/religion/'+code+"/community", {responseType: 'json'});
   }
 
+  getPersonDetails(id): Observable<any>{
+    console.log(" this.apiUrl ="+this.apiUrl);
+    return  this.http.get<any>(this.apiUrl +  '/'+id, {responseType: 'json'});
+  }
+
+  getAddressDetails(id): Observable<any>{
+    console.log(" this.apiUrl ="+this.apiUrl);
+    return  this.http.get<any>(this.apiUrl +  '/'+id+'/addresses', {responseType: 'json'});
+  }
+
+
 
   updatePerson(person: Person): Observable<Person> {
     const body = JSON.stringify(person);
@@ -70,9 +81,13 @@ export class RegistrationdetailsService {
   addPayment(payment: Payment): Observable<Payment> {
     const body = JSON.stringify(payment);
     console.log("Json Body payment : "+body);
-    return this.http.post<Payment>(this.apiUrl+'/payment/'+payment.profileid, body,{'headers': this.headers});
+    return this.http.post<Payment>(this.apiUrl+'/'+payment.profileid+'/payment', body,{'headers': this.headers});
   }
 
+  getPayment(id): Observable<Payment> {
+    console.log("****  get payment : ");
+    return this.http.get<any>(this.apiUrl+'/'+id+'/payment', {responseType: 'json'});
+  }
 
   getProfileByID(profileid: bigint):  Observable<any> {
     return  this.http.get<any>(this.apiUrl + '/' + profileid, {responseType: 'json'});

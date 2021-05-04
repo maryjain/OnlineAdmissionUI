@@ -1,59 +1,58 @@
 
-    <div class="container">
+    <div class="container centercss">
       <br>
       <br>
       <br>
-      <mat-card>
+      <mat-card >
         <mat-card-content class="d-inline-flex ">
           <form [formGroup]="personalDetailsForm">
                     <div class="form-group row">
-                        <label for="full_name" class="col-md-6 col-form-label text-md-left">Full Name</label>
-                        <div class="col-md-6">
+                        <label  class="col-md-4 col-form-label text-md-left">Full Name</label>
+                        <div class="col-md-8">
                         <div class="flex-left">
-                            <input type="text" id="full_name" class="form-control" name="full-name">
+                            <input  class="form-control " matInput type="text"  formControlName="fullname" readonly>
                         </div>
                       </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="email_address" class="col-md-6 col-form-label text-md-left">E-Mail Address</label>
-                        <div class="col-md-6">
-                            <input type="text" id="email_address" class="form-control" name="email-address">
+                        <label  class="col-md-4 col-form-label text-md-left">Date of Birth</label>
+                        <div class="col-md-8">
+                          <input  class="form-control" matInput type="text"  formControlName="dob" readonly>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="user_name" class="col-md-6 col-form-label text-md-left">User Name</label>
-                        <div class="col-md-6">
-                            <input type="text" id="user_name" class="form-control" name="username">
+                        <label for="user_name" class="col-md-4 col-form-label text-md-left">Email id</label>
+                        <div class="col-md-8">
+                          <input  class="form-control" matInput type="text"  formControlName="emailid" readonly >
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="phone_number" class="col-md-6 col-form-label text-md-left">Phone Number</label>
-                        <div class="col-md-6">
-                            <input type="text" id="phone_number" class="form-control">
+                        <label  class="col-md-4 col-form-label text-md-left">Mobile no</label>
+                        <div class="col-md-8">
+                          <input  class="form-control" matInput type="text"  formControlName="mobileno" readonly>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="present_address" class="col-md-6 col-form-label text-md-left">Present Address</label>
-                        <div class="col-md-6">
-                            <input type="text" id="present_address" class="form-control">
+                        <label  class="col-md-4 col-form-label text-md-left">Gender</label>
+                        <div class="col-md-8">
+                          <input  class="form-control" matInput type="text"  formControlName="gender" readonly>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="permanent_address" class="col-md-6 col-form-label text-md-left">Permanent Address</label>
-                        <div class="col-md-6">
-                            <input type="text" id="permanent_address" class="form-control" name="permanent-address">
+                        <label  class="col-md-4 col-form-label text-md-left">Nationality</label>
+                        <div class="col-md-8">
+                          <input  class="form-control" matInput type="text"  formControlName="nationality" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="nid_number" class="col-md-6 col-form-label text-md-left"><abbr
-                                    title="National Id Card">NID</abbr> Number</label>
-                        <div class="col-md-6">
-                            <input type="text" id="nid_number" class="form-control" name="nid-number">
+                        <label  class="col-md-4 col-form-label text-md-left">State</label>
+                        <div class="col-md-8">
+                          <input  class="form-control" matInput type="text"  formControlName="state" readonly>
                         </div>
                     </div>
                   </form>
@@ -61,55 +60,47 @@
       <mat-card-content class="d-inline-flex ">
         <form [formGroup]="personalDetailsForm">
                   <div class="form-group row">
-                      <label for="full_name" class="col-md-6 col-form-label text-md-left">Full Name</label>
-                      <div class="col-md-6">
+                      <label  class="col-md-4 col-form-label text-md-left">Father's Name</label>
+                      <div class="col-md-8">
                       <div class="flex-left">
-                          <input type="text" id="full_name" class="form-control" name="full-name">
+                        <input  class="form-control" matInput type="text"  formControlName="fathername" readonly>
                       </div>
                     </div>
                   </div>
 
                   <div class="form-group row">
-                      <label for="email_address" class="col-md-6 col-form-label text-md-left">E-Mail Address</label>
-                      <div class="col-md-6">
-                          <input type="text" id="email_address" class="form-control" name="email-address">
+                      <label  class="col-md-4 col-form-label text-md-left">Mother's Name</label>
+                      <div class="col-md-8">
+                        <input  class="form-control" matInput type="text"  formControlName="mothername" readonly >
                       </div>
                   </div>
 
                   <div class="form-group row">
-                      <label for="user_name" class="col-md-6 col-form-label text-md-left">User Name</label>
-                      <div class="col-md-6">
-                          <input type="text" id="user_name" class="form-control" name="username">
+                      <label  class="col-md-4 col-form-label text-md-left">Guardian Name</label>
+                      <div class="col-md-8">
+                        <input  class="form-control" matInput type="text"  formControlName="guardianname" readonly>
                       </div>
                   </div>
 
                   <div class="form-group row">
-                      <label for="phone_number" class="col-md-6 col-form-label text-md-left">Phone Number</label>
-                      <div class="col-md-6">
-                          <input type="text" id="phone_number" class="form-control">
+                      <label class="col-md-4 col-form-label text-md-left">Guardian Mobileno</label>
+                      <div class="col-md-8">
+                        <input  class="form-control" matInput type="text"  formControlName="guardianmobileno" readonly>
                       </div>
                   </div>
 
                   <div class="form-group row">
-                      <label for="present_address" class="col-md-6 col-form-label text-md-left">Present Address</label>
-                      <div class="col-md-6">
-                          <input type="text" id="present_address" class="form-control">
-                      </div>
-                  </div>
-
-                  <div class="form-group row">
-                      <label for="permanent_address" class="col-md-6 col-form-label text-md-left">Permanent Address</label>
-                      <div class="col-md-6">
-                          <input type="text" id="permanent_address" class="form-control" name="permanent-address">
+                      <label  class="col-md-4 col-form-label text-md-left">Annual Income</label>
+                      <div class="col-md-8">
+                        <input  class="form-control" matInput type="text"  formControlName="annualincome" readonly >
                       </div>
                   </div>
                   <div class="form-group row">
-                      <label for="nid_number" class="col-md-6 col-form-label text-md-left"><abbr
-                                  title="National Id Card">NID</abbr> Number</label>
-                      <div class="col-md-6">
-                          <input type="text" id="nid_number" class="form-control" name="nid-number">
-                      </div>
-                  </div>
+                    <label  class="col-md-4 col-form-label text-md-left">Creamy Layer</label>
+                    <div class="col-md-8">
+                      <input  class="form-control" matInput type="text"  formControlName="creamylayer" readonly>
+                    </div>
+                </div>
                 </form>
     </mat-card-content>
       </mat-card>

@@ -20,7 +20,7 @@ import { SessionstorageService } from '../shared/session/sessionstorage.service'
 export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
-              public loginsrv: LoginService, private router: Router,public s_storage: SessionstorageService) { }
+              public loginsrv: LoginService, private router: Router) { }
 
   sample: any;
   errors = errorMessages;
@@ -80,16 +80,19 @@ public hintEmailArr = [ hintEmailMessages.email1,
       if(res.data === "true"){
         sessionStorage.setItem('profileid', res.id);
         sessionStorage.setItem('fullname', res.fullname);
+        sessionStorage.setItem('loggedIn','true');
         this.loginsrv.setisloggedIn(true);
         this.router.navigate(['/registrationdetails']);
       }
       else{
-        this.loginsrv.setisloggedIn(false);
-        sessionStorage.clear();
+       // this.loginsrv.setisloggedIn(false);
+       sessionStorage.setItem('loggedIn','false');
+       sessionStorage.clear();
       }
     },
       (err) => {
-        this.loginsrv.setisloggedIn(false);
+        //this.loginsrv.setisloggedIn(false);
+        sessionStorage.setItem('loggedIn','false');
         sessionStorage.clear();
         if (err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){
         this.errorlist =  err.error['message'];

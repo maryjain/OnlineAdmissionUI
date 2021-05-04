@@ -124,7 +124,7 @@ export class ProfiledetailsComponent  {
   jsonCommunity = [];
   jsonState = [];
   jsonDistrict= [];
-  jsonQualification= [{key:1,value:'10th'},{key:2,value:'12th'},{key:3,value:'Degree'},{key:4,value:'PG'},{key:5,value:'PHD'},{key:6,value:'Certification'},{key:7,value:'Others'}];
+  jsonQualification= [{key:1,value:'10th'},{key:2,value:'12th'},{key:3,value:'Degree'},{key:4,value:'PG'},{key:5,value:'PHD'},{key:6,value:'Certification'},{key:7,value:'Others'},{key:8,value:'Photo'},{key:9,value:'Sign'}];
   stateTextSelected:any;
   isnextPersonalButton:boolean;
   isnextAddressButton:boolean;
@@ -425,7 +425,7 @@ POSTPayment()
 
     this.payment.profileid= this.logintUserProfileId;
     this.registrationdetailsSrv.addPayment(this.payment).subscribe((data) => {
-      this.notifyService.showSuccess("Payment Transaction "+this.payment.transactionid+" added Succesfully", "Payment Details")
+      this.notifyService.showSuccess("Payment Transaction "+this.payment.transactionid+" Added Succesfully", "Payment Details")
       console.log('present POST paymentid = ' + data.paymentid);
     },
     (err: HttpErrorResponse) => {

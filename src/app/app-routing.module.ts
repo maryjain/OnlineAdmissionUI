@@ -11,6 +11,7 @@ import { ProfilesummaryComponent } from './registrationdetails/profilesummary/pr
 import { PersonalComponent } from './registrationdetails/profilesummary/personal/personal.component';
 import { EducationqualificationComponent } from './registrationdetails/profilesummary/educationqualification/educationqualification.component';
 import { AddressComponent } from './registrationdetails/profilesummary/address/address.component';
+import { PaymentComponent } from './registrationdetails/profilesummary/payment/payment.component';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
               { path: 'personal', component: PersonalComponent },
               { path: 'educationqualification', component: EducationqualificationComponent },
               { path: 'address', component: AddressComponent },
+              { path: 'payment', component: PaymentComponent },
             ]
           }
         ] },

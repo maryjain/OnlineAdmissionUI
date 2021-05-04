@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
   constructor(public loginsrv: LoginService) { }
 
   ngOnInit() {
-
+    console.log("______*****_____++++++_______ sessionStorage.getItem('loggedIn') ="+sessionStorage.getItem('loggedIn'));
   }
 
   onResize(event) {
