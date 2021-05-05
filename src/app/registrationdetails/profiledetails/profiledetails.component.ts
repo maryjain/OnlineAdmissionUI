@@ -32,7 +32,7 @@ import { NotificationService } from 'src/app/shared/notification/notification.se
 import {MatDialog } from '@angular/material/dialog';
 import {MatDialogConfig} from '@angular/material/dialog';
 import { ProfilesummaryComponent } from 'src/app/registrationdetails/profilesummary/profilesummary.component';
-import { PreviewdetailsComponent } from '../previewdetails/previewdetails.component';
+import { PreviewdetailsComponent } from '../../previewdetails/previewdetails.component';
 import { SessionstorageService } from 'src/app/shared/session/sessionstorage.service';
 
 export const MY_FORMATS = {
@@ -373,6 +373,7 @@ export class ProfiledetailsComponent  {
 //*** Declaration ***/
 public openPreview()
 {
+
 this.enableDeclarationChkBox = true;
 this.openDialog();
 }

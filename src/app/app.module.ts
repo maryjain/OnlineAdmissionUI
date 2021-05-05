@@ -20,12 +20,18 @@ import { RegistrationdetailsModule } from './registrationdetails/registrationdet
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ToastrModule } from 'ngx-toastr';
 import { SessionstorageService } from './shared/session/sessionstorage.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { PreviewdetailsComponent } from './previewdetails/previewdetails.component';
+import { AddresspreviewComponent } from './previewdetails/addresspreview/addresspreview.component';
+import { PersonalpreviewComponent } from './previewdetails/personalpreview/personalpreview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PreviewdetailsComponent,
     PagenotfoundComponent,
-
+    PersonalpreviewComponent,
+    AddresspreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -39,11 +45,13 @@ import { SessionstorageService } from './shared/session/sessionstorage.service';
     RegistrationdetailsModule,
     PdfViewerModule,
     ToastrModule.forRoot(),
-
   ],
-  providers: [ValidationService, UtilityService, RegisterService, LoginService, SessionstorageService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  providers: [ValidationService, UtilityService, RegisterService, LoginService, SessionstorageService,{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],
   bootstrap: [AppComponent],
+  entryComponents: [
+    PreviewdetailsComponent
+  ],
  /// entryComponents: [ProfilesummaryComponent]
 })
 export class AppModule { }

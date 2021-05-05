@@ -12,13 +12,17 @@ import { PersonalComponent } from './registrationdetails/profilesummary/personal
 import { EducationqualificationComponent } from './registrationdetails/profilesummary/educationqualification/educationqualification.component';
 import { AddressComponent } from './registrationdetails/profilesummary/address/address.component';
 import { PaymentComponent } from './registrationdetails/profilesummary/payment/payment.component';
+import { PreviewdetailsComponent } from './previewdetails/previewdetails.component';
+import { AddresspreviewComponent } from './previewdetails/addresspreview/addresspreview.component';
+import { PersonalpreviewComponent } from './previewdetails/personalpreview/personalpreview.component';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
           { path: 'login', component: LoginComponent },
           { path: 'registrationdetails', component: RegistrationdetailsComponent, children: [
-            { path: '', redirectTo: 'profiledetails', pathMatch: 'full' },
-            { path: 'profiledetails', component:  ProfiledetailsComponent },
+            { path: 'profiledetails', component:  ProfiledetailsComponent, children: [
+
+            ]},
             { path: 'profilesummary', component: ProfilesummaryComponent,
             children: [
               { path: 'personal', component: PersonalComponent },
@@ -26,8 +30,15 @@ const routes: Routes = [
               { path: 'address', component: AddressComponent },
               { path: 'payment', component: PaymentComponent },
             ]
-          }
+          },
+
         ] },
+        { path: 'previewdetails', component: PreviewdetailsComponent },
+
+        { path: 'personalpreview', component: PersonalpreviewComponent },
+        // { path: 'educationqualification', component: EducationqualificationComponent },
+         { path: 'addresspreview', component: AddresspreviewComponent },
+         //{ path: 'payment', component: PaymentComponent },
         { path: '**', component: PagenotfoundComponent }
   ];
 

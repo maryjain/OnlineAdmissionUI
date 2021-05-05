@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RegistrationdetailsComponent } from './registrationdetails.component';
 import { AppRoutingModule } from '../app-routing.module';
@@ -7,15 +7,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AppMaterialModule} from '../app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { PreviewdetailsComponent } from './previewdetails/previewdetails.component';
 import {ProfilesummaryComponent} from './profilesummary/profilesummary.component';
 import { PersonalComponent } from './profilesummary/personal/personal.component';
 import { AddressComponent } from './profilesummary/address/address.component';
 import { EducationqualificationComponent } from './profilesummary/educationqualification/educationqualification.component';
 import { PaymentComponent } from './profilesummary/payment/payment.component';
 
+
 @NgModule({
-  declarations: [RegistrationdetailsComponent, ProfiledetailsComponent, PreviewdetailsComponent,ProfilesummaryComponent, PersonalComponent, AddressComponent, EducationqualificationComponent, PaymentComponent  ],
+  declarations: [RegistrationdetailsComponent, ProfiledetailsComponent,ProfilesummaryComponent, PersonalComponent, AddressComponent, EducationqualificationComponent, PaymentComponent  ],
   imports: [
     CommonModule,
     AppMaterialModule,
@@ -34,9 +34,10 @@ import { PaymentComponent } from './profilesummary/payment/payment.component';
     AppMaterialModule,
     SharedModule,
     ProfiledetailsComponent,
-    PreviewdetailsComponent,
     ProfilesummaryComponent,
-  ]
+  ],
+
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class RegistrationdetailsModule {
 

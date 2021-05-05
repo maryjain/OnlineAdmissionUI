@@ -1,0 +1,76 @@
+
+    <div class="container centercss">
+      <br>
+      <br>
+      <br>
+      <mat-card >
+        <mat-card-content class="d-inline-flex ">
+          <form [formGroup]="addressDetailsForm">
+            <div class="form-group row">
+              <label for="user_name" class="col-md-4 col-form-label text-md-left"><b>Address Type</b></label>
+              <div class="col-md-8">
+                <input  class="form-control" matInput type="text"  formControlName="present_addresstype" readonly >
+              </div>
+             </div>
+                    <div class="form-group row">
+                        <label  class="col-md-4 col-form-label text-md-left">Addressline1</label>
+                        <div class="col-md-8">
+                        <div class="flex-left">
+                            <input  class="form-control " matInput type="text"  formControlName="present_addressline1" readonly>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label  class="col-md-4 col-form-label text-md-left">Addressline2</label>
+                        <div class="col-md-8">
+                          <input  class="form-control" matInput type="text"  formControlName="present_addressline2" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label  class="col-md-4 col-form-label text-md-left">Pincode</label>
+                        <div class="col-md-8">
+                          <input  class="form-control" matInput type="text"  formControlName="present_pincode" readonly>
+                        </div>
+                    </div>
+
+                  </form>
+      </mat-card-content>
+      <mat-card-content class="d-inline-flex ">
+        <form [formGroup]="addressDetailsForm">
+          <div class="form-group row">
+            <label for="user_name" class="col-md-4 col-form-label text-md-left"><b>Address Type</b></label>
+            <div class="col-md-8">
+              <input  class="form-control" matInput type="text"  formControlName="permanent_addresstype" readonly >
+            </div>
+           </div>
+                  <div class="form-group row">
+                      <label  class="col-md-4 col-form-label text-md-left">Addressline1</label>
+                      <div class="col-md-8">
+                      <div class="flex-left">
+                          <input  class="form-control " matInput type="text"  formControlName="permanent_addressline1" readonly>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label  class="col-md-4 col-form-label text-md-left">Addressline2</label>
+                      <div class="col-md-8">
+                        <input  class="form-control" matInput type="text"  formControlName="permanent_addressline2" readonly>
+                      </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label  class="col-md-4 col-form-label text-md-left">Pincode</label>
+                      <div class="col-md-8">
+                        <input  class="form-control" matInput type="text"  formControlName="permanent_pincode" readonly>
+                      </div>
+                  </div>
+                </form>
+    </mat-card-content>
+      </mat-card>
+      </div>
+
+
+
