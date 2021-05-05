@@ -87,9 +87,9 @@ mat-header-cell{
   flex-direction: column;
   justify-content: center;
 }
- .mat-column-qualificationtype,.mat-column-documenttype,
- .mat-column-institution,.mat-column-university,.mat-column-yearofpass,
- .mat-column-registrationno,.mat-column-cgpa,.mat-column-percentage,.mat-column-documentname,
+ .mat-column-documenttype,.mat-column-documentname,
+ .mat-column-institution,.mat-column-university,.mat-column-yearofpass,.mat-column-qualificationtype,
+ .mat-column-registrationno,.mat-column-cgpa,.mat-column-percentage,
  .mat-column-transactionid,.mat-column-bank,.mat-column-applfees{
 border-right: 2px solid #E0E0E0;
 //border-bottom: 2px solid #E0E0E0;

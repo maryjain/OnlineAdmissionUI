@@ -78,16 +78,25 @@ export class RegistrationdetailsService {
     return this.http.post<Education>(this.apiUrl+'/'+education.profileid+'/educationqualifications', body,{'headers': this.headers});
   }
 
+
+  getEducation(id): Observable<Payment[]> {
+    console.log("****  get Education qualifications  ");
+    return this.http.get<any>(this.apiUrl+'/'+id+'/educationqualifications', {responseType: 'json'});
+  }
+
   addPayment(payment: Payment): Observable<Payment> {
     const body = JSON.stringify(payment);
     console.log("Json Body payment : "+body);
     return this.http.post<Payment>(this.apiUrl+'/'+payment.profileid+'/payment', body,{'headers': this.headers});
   }
 
+
+
   getPayment(id): Observable<Payment> {
-    console.log("****  get payment : ");
+    console.log("****  get payment  ");
     return this.http.get<any>(this.apiUrl+'/'+id+'/payment', {responseType: 'json'});
   }
+
 
   getProfileByID(profileid: bigint):  Observable<any> {
     return  this.http.get<any>(this.apiUrl + '/' + profileid, {responseType: 'json'});

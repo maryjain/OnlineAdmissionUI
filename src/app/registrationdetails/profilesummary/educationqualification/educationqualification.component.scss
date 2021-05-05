@@ -12,28 +12,41 @@ mat-header-cell{
   justify-content: center;
 }
 
-.mat-column-institution,.mat-column-university,
+.mat-column-institution,.mat-column-university,.mat-column-registrationno,
 .mat-column-yearofpass,.mat-column-cgpa,.mat-column-percentage,.mat-column-qualificationtype
 {
 border-right: 2px solid #E0E0E0;
-//border-bottom: 2px solid #E0E0E0;
-//align-self: stretch;
+border-bottom: 2px solid #E0E0E0;
+align-self: stretch;
 text-align: center;
 font-weight: bold;
 }
 
 
+.mat-table__wrapper .mat-table {
+  min-width: auto !important;
+  width: 100% !important;
+}
 
-.mat-column-institution,.mat-column-university,
+.mat-header-row {
+  width: 100%;
+}
+
+.mat-row {
+  width: 100%;
+}
+.mat-column-institution,.mat-column-university,.mat-column-registrationno,
 .mat-column-yearofpass,.mat-column-cgpa,.mat-column-percentage,.mat-column-qualificationtype
-{
+ {
+  flex: 0 0 25% !important;
+  min-width: 104px !important;
+  // width adjustment above two lines
   display: inline-block;
   vertical-align: middle;
   line-height: 2.6em;
   white-space: nowrap;
   padding:15px;
 }
-
 
 // ***** Mat table css ends  *****
 //raised shadow

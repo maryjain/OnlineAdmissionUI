@@ -5,38 +5,58 @@
   <br>
   <mat-card >
   <mat-card-content >
-<mat-table  #tablePaymentDetails [dataSource]="dataSourcePaymentDetails" >
-  <!-- transactionid Column -->
-  <ng-container matColumnDef="transactionid">
-    <mat-header-cell *matHeaderCellDef> Transaction Id</mat-header-cell>
+<mat-table  #table [dataSource]="dataSourceEducation" >
+  <!-- qualificationtype Column -->
+  <ng-container matColumnDef="qualificationtype">
+    <mat-header-cell *matHeaderCellDef> Qualification Type</mat-header-cell>
     <mat-cell *matCellDef="let element">
-        {{element.transactionid}}
+        {{element.qualificationtype}}
     </mat-cell>
   </ng-container>
-  <!-- bank name Column -->
-  <ng-container matColumnDef="bank">
-    <mat-header-cell *matHeaderCellDef> Bank Name </mat-header-cell>
+  <!-- institution name Column -->
+  <ng-container matColumnDef="institution">
+    <mat-header-cell *matHeaderCellDef> Institution Name </mat-header-cell>
       <mat-cell *matCellDef="let element">
-       {{element.bank}}
+       {{element.institution}}
   </mat-cell>
   </ng-container>
- <!-- Applfees Column -->
-  <ng-container matColumnDef="applfees">
-    <mat-header-cell *matHeaderCellDef> Application fees&nbsp;</mat-header-cell>
+ <!-- university Column -->
+  <ng-container matColumnDef="university">
+    <mat-header-cell *matHeaderCellDef> University </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.applfees}}
+        {{element.university}}
   </mat-cell>
   </ng-container>
-  <!-- updateddate Column -->
-  <ng-container matColumnDef="updateddate">
-    <mat-header-cell *matHeaderCellDef> Date of Payment</mat-header-cell>
+  <!-- yearofpass Column -->
+  <ng-container matColumnDef="yearofpass">
+    <mat-header-cell *matHeaderCellDef> Year of pass </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.updateddate}}
-
+        {{element.yearofpass}}
   </mat-cell>
   </ng-container>
-  <mat-header-row *matHeaderRowDef="displayedColumnsPaymentDetails"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumnsPaymentDetails"></mat-row>
+  <!-- registrationno Column -->
+  <ng-container matColumnDef="registrationno">
+    <mat-header-cell *matHeaderCellDef> Registration No </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.registrationno}}
+  </mat-cell>
+  </ng-container>
+  <!-- cgpa Column -->
+  <ng-container matColumnDef="cgpa">
+    <mat-header-cell *matHeaderCellDef> CGPA </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.cgpa}}
+  </mat-cell>
+  </ng-container>
+   <!-- percentage Column -->
+   <ng-container matColumnDef="percentage">
+    <mat-header-cell *matHeaderCellDef> Percentage </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.percentage}}
+  </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 </mat-table>
 </mat-card-content>
 </mat-card>

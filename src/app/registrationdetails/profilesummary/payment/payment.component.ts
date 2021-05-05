@@ -14,7 +14,7 @@ export class PaymentComponent implements OnInit {
   //**Payment Details   **/
   displayedColumnsPaymentDetails = ['transactionid', 'bank','applfees','updateddate'];
   @ViewChild('tablePaymentDetails', { static: false }) tablePaymentDetails: MatTable<any>;
-  PaymentDetailsArray = new FormArray([]);
+
   dataSourcePaymentDetails;
   constructor(public registrationdetailsSrv: RegistrationdetailsService) { }
 
