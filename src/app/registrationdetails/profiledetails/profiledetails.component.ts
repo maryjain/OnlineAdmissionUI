@@ -391,6 +391,18 @@ openDialog() {
   this.dialog.open(PreviewdetailsComponent, dialogConfig);
 }
 
+updateDeclaration():void
+{
+  this.registrationdetailsSrv.updateDeclaration(this.logintUserProfileId).subscribe((data) => {
+    this.notifyService.showSuccess(" Application Submitted Succesfully", "Declaration");
+    console.log('Declaration id  = ' + data.profileid);
+  },
+  (err: HttpErrorResponse) => {
+    this.notifyService.showError("Error in submission of Declaration ", "Declaration")
+   console.log("Error status = "+ err.statusText);
+   console.log("Error occured Declaration = "+ err.message);
+  });
+}
 
 //****  Payment Details *****/
 
@@ -563,7 +575,7 @@ POSTEducation()
       console.log('present POST educaid = ' + data.educaid);
     },
     (err: HttpErrorResponse) => {
-      this.notifyService.showSuccess("Error while adding details", " Education Qualification");
+      this.notifyService.showError("Error while adding details", " Education Qualification");
       console.log("Error status = "+ err.statusText);
      console.log("Error occured Education insert = "+ err.message);
     });

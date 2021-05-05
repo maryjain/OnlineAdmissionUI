@@ -15,6 +15,8 @@ import { PaymentComponent } from './registrationdetails/profilesummary/payment/p
 import { PreviewdetailsComponent } from './previewdetails/previewdetails.component';
 import { AddresspreviewComponent } from './previewdetails/addresspreview/addresspreview.component';
 import { PersonalpreviewComponent } from './previewdetails/personalpreview/personalpreview.component';
+import { EducationpreviewComponent } from './previewdetails/educationpreview/educationpreview.component';
+import { PaymentpreviewComponent } from './previewdetails/paymentpreview/paymentpreview.component';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
@@ -36,9 +38,9 @@ const routes: Routes = [
         { path: 'previewdetails', component: PreviewdetailsComponent },
 
         { path: 'personalpreview', component: PersonalpreviewComponent },
-        // { path: 'educationqualification', component: EducationqualificationComponent },
-         { path: 'addresspreview', component: AddresspreviewComponent },
-         //{ path: 'payment', component: PaymentComponent },
+        { path: 'educationpreview', component: EducationpreviewComponent },
+        { path: 'addresspreview', component: AddresspreviewComponent },
+        { path: 'paymentpreview', component: PaymentpreviewComponent },
         { path: '**', component: PagenotfoundComponent }
   ];
 

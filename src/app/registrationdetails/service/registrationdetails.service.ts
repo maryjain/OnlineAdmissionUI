@@ -65,6 +65,12 @@ export class RegistrationdetailsService {
 
   }
 
+  updateDeclaration(id): Observable<any> {
+    console.log("*** updateDeclaration  ");
+    return this.http.put<any>(this.apiUrl+'/details/'+id+'/declaration',{'headers': this.headers});
+
+  }
+
   addAddress(address: Address): Observable<Address> {
     const body = JSON.stringify(address);
     console.log("Json Body : "+body);

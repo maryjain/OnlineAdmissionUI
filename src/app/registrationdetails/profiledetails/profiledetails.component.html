@@ -663,7 +663,7 @@
         <div >
         <button mat-raised-button (click)="openPreview()" color="warn" >Preview</button></div>
         <div >
-        <button mat-raised-button [disabled]=!enableDeclarationSubmitBtn color="accent" type="submit">Submit</button></div>
+        <button mat-raised-button [disabled]=!enableDeclarationSubmitBtn (click)="updateDeclaration()" color="accent" type="submit">Submit</button></div>
     </div>
   </div>
   </mat-step>

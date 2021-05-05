@@ -1,0 +1,43 @@
+<div class="container centercss">
+  <br>
+  <br>
+  <br>
+  <br>
+  <mat-card >
+  <mat-card-content >
+<mat-table  #tablePaymentDetails [dataSource]="dataSourcePaymentDetails" >
+  <!-- transactionid Column -->
+  <ng-container matColumnDef="transactionid">
+    <mat-header-cell *matHeaderCellDef> Transaction Id</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        {{element.transactionid}}
+    </mat-cell>
+  </ng-container>
+  <!-- bank name Column -->
+  <ng-container matColumnDef="bank">
+    <mat-header-cell *matHeaderCellDef> Bank Name </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+       {{element.bank}}
+  </mat-cell>
+  </ng-container>
+ <!-- Applfees Column -->
+  <ng-container matColumnDef="applfees">
+    <mat-header-cell *matHeaderCellDef> Application fees&nbsp;</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.applfees}}
+  </mat-cell>
+  </ng-container>
+  <!-- updateddate Column -->
+  <ng-container matColumnDef="updateddate">
+    <mat-header-cell *matHeaderCellDef> Date of Payment</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.updateddate}}
+
+  </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumnsPaymentDetails"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumnsPaymentDetails"></mat-row>
+</mat-table>
+</mat-card-content>
+</mat-card>
+</div>

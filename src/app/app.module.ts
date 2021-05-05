@@ -24,6 +24,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PreviewdetailsComponent } from './previewdetails/previewdetails.component';
 import { AddresspreviewComponent } from './previewdetails/addresspreview/addresspreview.component';
 import { PersonalpreviewComponent } from './previewdetails/personalpreview/personalpreview.component';
+import { EducationpreviewComponent } from './previewdetails/educationpreview/educationpreview.component';
+import { PaymentpreviewComponent } from './previewdetails/paymentpreview/paymentpreview.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { PersonalpreviewComponent } from './previewdetails/personalpreview/perso
     PreviewdetailsComponent,
     PagenotfoundComponent,
     PersonalpreviewComponent,
-    AddresspreviewComponent
+    AddresspreviewComponent,
+    EducationpreviewComponent,
+    PaymentpreviewComponent
   ],
   imports: [
     BrowserModule,

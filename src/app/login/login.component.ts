@@ -11,6 +11,7 @@ import { LoginService } from './service/login.service';
 import { NgStyle } from '@angular/common';
 import { SessionStorageModel } from 'src/app/model/SessionStorageModel';
 import { SessionstorageService } from '../shared/session/sessionstorage.service';
+import { NotificationService } from '../shared/notification/notification.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +21,7 @@ import { SessionstorageService } from '../shared/session/sessionstorage.service'
 export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
-              public loginsrv: LoginService, private router: Router) { }
+              public loginsrv: LoginService, private router: Router,public notifyService : NotificationService) { }
 
   sample: any;
   errors = errorMessages;
@@ -78,6 +79,7 @@ public hintEmailArr = [ hintEmailMessages.email1,
       console.log('POST login id= ' + res.id);
       console.log('POST login fullname= ' + res.fullname);
       if(res.data === "true"){
+        this.notifyService.showSuccess(" Login Succesfully", "Login");
         sessionStorage.setItem('profileid', res.id);
         sessionStorage.setItem('fullname', res.fullname);
         sessionStorage.setItem('loggedIn','true');
@@ -86,12 +88,14 @@ public hintEmailArr = [ hintEmailMessages.email1,
       }
       else{
        // this.loginsrv.setisloggedIn(false);
+       this.notifyService.showError(" Error while Login", "Login");
        sessionStorage.setItem('loggedIn','false');
        sessionStorage.clear();
       }
     },
       (err) => {
         //this.loginsrv.setisloggedIn(false);
+        this.notifyService.showError(" Error while Login", "Login");
         sessionStorage.setItem('loggedIn','false');
         sessionStorage.clear();
         if (err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){

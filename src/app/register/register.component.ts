@@ -15,6 +15,7 @@ import {Person} from '../model/Person';
 import { interval, Observable, Subscription, timer } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NotificationService } from '../shared/notification/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -98,7 +99,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
 
   constructor(private fb: FormBuilder, public validatesrv: ValidationService, public utilitysrv: UtilityService,
-              public registersrv: RegisterService, private router: Router) {
+              public registersrv: RegisterService, private router: Router, public notifyService: NotificationService,) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 50, 0, 1);
     this.maxDate = new Date(currentYear - 14, 11, 31);
@@ -157,12 +158,14 @@ export class RegisterComponent implements OnInit , OnDestroy{
     this.registrationForm.get('passwordplain').value);
 
     this.registersrv.addPerson(this.person).subscribe((data) => {
+      this.notifyService.showSuccess(" Added Succesfully", "Registration");
       console.log('POST profileid= ' + data.profileid);
       this.person.profileid = data.profileid;
      // this.validatesrv.getlatestProfile(this.person);
      this.router.navigate(['/login']);
     },
       (err) => {
+        this.notifyService.showError(" Error in  Registration", "Registration");
         if(err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){
         this.errorlist =  err.error['message'];
         for (let index in this.errorlist) {
@@ -214,6 +217,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
     this.otpTimer();
     this.registersrv.generateEmailOTP(this.registrationForm.get('emailid').value).subscribe((data => {
       this.genearatedOTP = data;
+      this.notifyService.showSuccess(" OTP  Generated", "Registration");
       console.log('this.genearatedOTP = ' + this.genearatedOTP);
      }));
     }

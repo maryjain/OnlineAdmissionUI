@@ -1,0 +1,64 @@
+<div class="container centercss">
+  <br>
+  <br>
+  <br>
+  <br>
+  <mat-card >
+  <mat-card-content >
+<mat-table  #table [dataSource]="dataSourceEducation" >
+  <!-- qualificationtype Column -->
+  <ng-container matColumnDef="qualificationtype">
+    <mat-header-cell *matHeaderCellDef> Qualification Type</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        {{element.qualificationtype}}
+    </mat-cell>
+  </ng-container>
+  <!-- institution name Column -->
+  <ng-container matColumnDef="institution">
+    <mat-header-cell *matHeaderCellDef> Institution Name </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+       {{element.institution}}
+  </mat-cell>
+  </ng-container>
+ <!-- university Column -->
+  <ng-container matColumnDef="university">
+    <mat-header-cell *matHeaderCellDef> University </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.university}}
+  </mat-cell>
+  </ng-container>
+  <!-- yearofpass Column -->
+  <ng-container matColumnDef="yearofpass">
+    <mat-header-cell *matHeaderCellDef> Year of pass </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.yearofpass}}
+  </mat-cell>
+  </ng-container>
+  <!-- registrationno Column -->
+  <ng-container matColumnDef="registrationno">
+    <mat-header-cell *matHeaderCellDef> Registration No </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.registrationno}}
+  </mat-cell>
+  </ng-container>
+  <!-- cgpa Column -->
+  <ng-container matColumnDef="cgpa">
+    <mat-header-cell *matHeaderCellDef> CGPA </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.cgpa}}
+  </mat-cell>
+  </ng-container>
+   <!-- percentage Column -->
+   <ng-container matColumnDef="percentage">
+    <mat-header-cell *matHeaderCellDef> Percentage </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.percentage}}
+  </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+</mat-card-content>
+</mat-card>
+</div>
+
