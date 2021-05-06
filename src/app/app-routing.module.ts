@@ -17,15 +17,15 @@ import { AddresspreviewComponent } from './previewdetails/addresspreview/address
 import { PersonalpreviewComponent } from './previewdetails/personalpreview/personalpreview.component';
 import { EducationpreviewComponent } from './previewdetails/educationpreview/educationpreview.component';
 import { PaymentpreviewComponent } from './previewdetails/paymentpreview/paymentpreview.component';
+import { ViewstatusComponent } from './registrationdetails/viewstatus/viewstatus.component';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
           { path: 'login', component: LoginComponent },
           { path: 'registrationdetails', component: RegistrationdetailsComponent, children: [
-            { path: 'profiledetails', component:  ProfiledetailsComponent, children: [
-
-            ]},
-            { path: 'profilesummary', component: ProfilesummaryComponent,
+          { path: 'profiledetails', component:  ProfiledetailsComponent},
+          { path: 'viewstatus', component:  ViewstatusComponent},
+          { path: 'profilesummary', component: ProfilesummaryComponent,
             children: [
               { path: 'personal', component: PersonalComponent },
               { path: 'educationqualification', component: EducationqualificationComponent },

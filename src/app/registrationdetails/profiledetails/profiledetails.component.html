@@ -661,7 +661,7 @@
       <div >
         <button mat-raised-button color="primary" matStepperPrevious>Back</button></div>
         <div >
-        <button mat-raised-button (click)="openPreview()" color="warn" >Preview</button></div>
+        <button mat-raised-button (click)="openPreview()" [disabled]=!enablePreviewButton color="warn" >Preview</button></div>
         <div >
         <button mat-raised-button [disabled]=!enableDeclarationSubmitBtn (click)="updateDeclaration()" color="accent" type="submit">Submit</button></div>
     </div>

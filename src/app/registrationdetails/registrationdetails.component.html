@@ -17,7 +17,7 @@
 	<mat-sidenav #sidenav  class="example-sidenav navlist" mode="side" opened="true" >
     <mat-nav-list >
       <ng-container *ngFor="let item of getKeys(map) | keyvalue">
-       <a mat-list-item [routerLink]=map.get(item.value) class="router-link-active"> {{item.value}} </a>
+       <a mat-list-item [routerLink]=map.get(item.value) (click) ="onsidenavClick(map.get(item.value))" class="router-link-active"> {{item.value}} </a>
        <mat-divider></mat-divider>
       </ng-container>
     </mat-nav-list>

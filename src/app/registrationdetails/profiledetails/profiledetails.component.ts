@@ -10,7 +10,7 @@ import {errorMessages,
     hintPhoneMessages, hintAnnualIncomeMessages,
     registrationFormMessage} from '../../helpers/CustomMessges';
 import { RegistrationdetailsService } from '../service/registrationdetails.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Person } from 'src/app/model/Person';
 import { Router } from '@angular/router';
 
@@ -34,6 +34,9 @@ import {MatDialogConfig} from '@angular/material/dialog';
 import { ProfilesummaryComponent } from 'src/app/registrationdetails/profilesummary/profilesummary.component';
 import { PreviewdetailsComponent } from '../../previewdetails/previewdetails.component';
 import { SessionstorageService } from 'src/app/shared/session/sessionstorage.service';
+import { catchError } from 'rxjs/internal/operators/catchError';
+import { throwError } from 'rxjs/internal/observable/throwError';
+import { tap } from 'rxjs/internal/operators/tap';
 
 export const MY_FORMATS = {
   parse: {
@@ -100,7 +103,7 @@ export class ProfiledetailsComponent  {
 
   //** Declaration **/
   enableDeclarationChkBox:boolean;
-
+  enablePreviewButton:boolean;
   enableDeclarationSubmitBtn:boolean;
 
 //******    variable  declaration ******
@@ -178,15 +181,17 @@ export class ProfiledetailsComponent  {
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
     public registrationdetailsSrv: RegistrationdetailsService,public notifyService : NotificationService,
-    private dialog: MatDialog,public router: Router,public sessionStorage: SessionstorageService) {
+    private dialog: MatDialog,public router: Router,public sessionStorage: SessionstorageService,private http: HttpClient) {
 
    }
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
+
     this.doctypeEWS = "EWS";
     this.enableDeclarationChkBox=false;
     this.enableDeclarationSubmitBtn =false;
+    this.enablePreviewButton=true;
      //**Education Details  **/
     this.EducationArray.push(this.createGroup({ qualificationtype: "", institution: "", university: "",yearofpass:2000,registrationno:"",cgpa:0,percentage:0 }));
     this.dataSource = this.EducationArray.controls;
@@ -396,6 +401,9 @@ updateDeclaration():void
   this.registrationdetailsSrv.updateDeclaration(this.logintUserProfileId).subscribe((data) => {
     this.notifyService.showSuccess(" Application Submitted Succesfully", "Declaration");
     console.log('Declaration id  = ' + data.profileid);
+    this.enableDeclarationChkBox=false;
+    this.enableDeclarationSubmitBtn=false;
+    this.enablePreviewButton=false;
   },
   (err: HttpErrorResponse) => {
     this.notifyService.showError("Error in submission of Declaration ", "Declaration")

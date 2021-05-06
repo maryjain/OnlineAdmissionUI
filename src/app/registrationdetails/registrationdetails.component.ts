@@ -14,11 +14,11 @@ export class RegistrationdetailsComponent implements OnInit {
   loggedIn:boolean;
   constructor(private router: Router){}
   ngOnInit(): void {
-    this.map.set('Profile Summary', './profilesummary');
-    this.map.set('Profile Details', './profiledetails');
-    this.map.set('View Status', '');
-    this.profileid=sessionStorage.getItem('profileid');
-    this.fullname=sessionStorage.getItem('fullname');
+    this.map.set('Profile Summary', 'profilesummary');
+    this.map.set('Profile Details', 'profiledetails');
+    this.map.set('View Status', 'viewstatus');
+    this.profileid = sessionStorage.getItem('profileid');
+    this.fullname = sessionStorage.getItem('fullname');
     console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));
     if(sessionStorage.getItem('loggedIn')=== 'true')
     {
@@ -37,6 +37,10 @@ export class RegistrationdetailsComponent implements OnInit {
     return Array.from(map.keys());
   }
 
+  onsidenavClick(item:any)
+  {
+    this.router.navigate(['/registrationdetails/'+item]);
+  }
 
   public logoutUser():void
   {

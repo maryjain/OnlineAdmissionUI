@@ -12,10 +12,11 @@ import { PersonalComponent } from './profilesummary/personal/personal.component'
 import { AddressComponent } from './profilesummary/address/address.component';
 import { EducationqualificationComponent } from './profilesummary/educationqualification/educationqualification.component';
 import { PaymentComponent } from './profilesummary/payment/payment.component';
+import { ViewstatusComponent } from './viewstatus/viewstatus.component';
 
 
 @NgModule({
-  declarations: [RegistrationdetailsComponent, ProfiledetailsComponent,ProfilesummaryComponent, PersonalComponent, AddressComponent, EducationqualificationComponent, PaymentComponent  ],
+  declarations: [RegistrationdetailsComponent, ProfiledetailsComponent,ProfilesummaryComponent, PersonalComponent, AddressComponent, EducationqualificationComponent, PaymentComponent, ViewstatusComponent  ],
   imports: [
     CommonModule,
     AppMaterialModule,

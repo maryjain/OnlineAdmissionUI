@@ -1,0 +1,38 @@
+<div class="container centercss">
+  <br>
+  <br>
+  <br>
+  <br>
+  <mat-card >
+    <mat-card-header >
+      <mat-card-title>View Status</mat-card-title>
+    </mat-card-header>
+  <mat-card-content >
+<mat-table  #tableViewStatusDetails [dataSource]="dataSourceViewStatusDetails" >
+  <!-- profileid Column -->
+  <ng-container matColumnDef="profileid">
+    <mat-header-cell *matHeaderCellDef> Profile Id</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        {{element.profileid}}
+    </mat-cell>
+  </ng-container>
+  <!-- status  Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+       {{element.status}}
+  </mat-cell>
+  </ng-container>
+   <!-- reason  Column -->
+   <ng-container matColumnDef="reason">
+    <mat-header-cell *matHeaderCellDef> Reason </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+       {{element.reason}}
+  </mat-cell>
+  </ng-container>
+   <mat-header-row *matHeaderRowDef="displayedColumnsViewStatusDetails"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumnsViewStatusDetails"></mat-row>
+</mat-table>
+</mat-card-content>
+</mat-card>
+</div>

@@ -23,6 +23,7 @@ export class Person {
   physicalychallenged:boolean;
   stage:string;
   applstatus:string;
+  status:string;
 
 
   constructor(fullname: string, dob: Date, emailid: string, mobileno: bigint, passwordplain: string ) {
