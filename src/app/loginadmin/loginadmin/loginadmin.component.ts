@@ -34,22 +34,6 @@ captcha: string;
 inputCaptcha: number;
 isvalidCaptchaEntered: boolean;
 
-public hintPasswordArr = [ hintPasswordMessages.password1,
-hintPasswordMessages.password2,
-hintPasswordMessages.password3,
-hintPasswordMessages.password4,
-hintPasswordMessages.password5,
-hintPasswordMessages.password6 ];
-public hintPasswordDisplay = this.hintPasswordArr.join('\r\n');
-
-public hintFullNameArr = [ hintFullNameMessages.fullname1,
-  hintFullNameMessages.fullname2,
-  hintFullNameMessages.fullname3,
-  hintFullNameMessages.fullname4
-  ];
-public hintFullNamedDisplay = this.hintFullNameArr.join('\r\n');
-
-
 public loginForm = this.fb.group({
 deptusername : ['', [Validators.required, Validators.pattern(customregExps.userName)]],
 passwordplain: ['', Validators.compose([Validators.required, Validators.pattern(customregExps.password)])],
@@ -67,8 +51,7 @@ profileLogin() {
 console.log('Inside admin Login ');
 this.captcha_validation();
 this.user = new Departmentuser(
-this.loginForm.get('deptusername').value, null,
-this.loginForm.get('passwordplain').value);
+this.loginForm.get('deptusername').value, this.loginForm.get('passwordplain').value);
 
 this.loginsrv.login(this.user).subscribe((res) => {
 console.log('POST login admin res = ' + res);
@@ -79,9 +62,10 @@ if(res.data === "true"){
 this.notifyService.showSuccess(res.deptusername+" Login Succesfully", "Admin Login");
 sessionStorage.setItem('deptuserid', res.id);
 sessionStorage.setItem('deptusername', res.deptusername);
+sessionStorage.setItem('deptname', res.deptname);
 sessionStorage.setItem('loggedIn','true');
 this.loginsrv.setisloggedIn(true);
-this.router.navigate(['/adminhome']);
+this.router.navigate(['/adminhome/homepage']);
 }
 else{
 // this.loginsrv.setisloggedIn(false);

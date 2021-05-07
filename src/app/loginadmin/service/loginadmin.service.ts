@@ -21,7 +21,7 @@ export class LoginadminService {
   const body = JSON.stringify(user);
   console.log("Json Body login  : "+body);
   console.log("Json Headers  : "+this.headers);
-  return this.http.post<Departmentuser>(this.apiUrl+"/"+this.deptid, body,{'headers': this.headers});
+  return this.http.post<Departmentuser>(this.apiUrl+"/login", body,{'headers': this.headers});
 }
 
 setisloggedIn(value: boolean): void

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { AdminhomeService } from './service/adminhome.service';
 
 @Component({
   selector: 'app-adminhome',
@@ -8,19 +11,24 @@ import { Router } from '@angular/router';
 })
 export class AdminhomeComponent implements OnInit {
 
-  profileid:any;
-  fullname:any;
+  deptuserid:any;
+  deptusername:any;
+  deptname:any;
   loggedIn:boolean;
+
   constructor(private router: Router){}
   ngOnInit(): void {
+    this.map.set('Application Count', 'homepage');
     this.map.set('Review Applications', 'reviewapplications');
-    this.map.set('Reset Password', 'profiledetails');
-    this.profileid = sessionStorage.getItem('profileid');
-    this.fullname = sessionStorage.getItem('fullname');
+    this.map.set('Reset Password', '');
+    this.deptuserid = sessionStorage.getItem('deptuserid');
+    this.deptusername = sessionStorage.getItem('deptusername');
+    this.deptname = sessionStorage.getItem('deptname');
     console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));
+
     if(sessionStorage.getItem('loggedIn')=== 'true')
     {
-      console.log('***********++++ ');
+      console.log('***********++++admin home true ');
       this.loggedIn = true;
     }
     else{
@@ -37,7 +45,7 @@ export class AdminhomeComponent implements OnInit {
 
   onsidenavClick(item:any)
   {
-    this.router.navigate(['/registrationdetails/'+item]);
+    this.router.navigate(['/adminhome/'+item]);
   }
 
   public logoutUser():void

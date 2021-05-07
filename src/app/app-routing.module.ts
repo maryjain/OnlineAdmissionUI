@@ -20,6 +20,8 @@ import { PaymentpreviewComponent } from './previewdetails/paymentpreview/payment
 import { ViewstatusComponent } from './registrationdetails/viewstatus/viewstatus.component';
 import { AdminhomeComponent } from './adminhome/adminhome.component';
 import { ReviewapplicationsComponent } from './adminhome/reviewapplications/reviewapplications.component';
+import { LoginadminComponent } from './loginadmin/loginadmin/loginadmin.component';
+import { HomepageComponent } from './adminhome/homepage/homepage.component';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
@@ -37,10 +39,11 @@ const routes: Routes = [
           },
 
         ] },
-
+        { path: 'loginadmin', component: LoginadminComponent },
         { path: 'adminhome', component: AdminhomeComponent,
         children: [
-          { path: 'reviewapplications', component: ReviewapplicationsComponent }
+          { path: 'reviewapplications', component: ReviewapplicationsComponent },
+          { path: 'homepage', component: HomepageComponent },
         ]
         },
 

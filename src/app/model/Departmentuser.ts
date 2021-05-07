@@ -4,9 +4,9 @@ export class Departmentuser {
   emailid: string;
   passwordplain: string;
 
-  constructor(deptusername: string, emailid: string,  passwordplain: string ) {
+  constructor(deptusername: string,  passwordplain: string ) {
     this.deptusername = deptusername;
-    this.emailid = emailid;
+
     this.passwordplain = passwordplain;
 
   }

@@ -1,0 +1,28 @@
+<div class="container centercss">
+  <br>
+  <br>
+  <br>
+  <br>
+  <mat-card >
+  <mat-card-content >
+<mat-table  #tableViewStatusDetails [dataSource]="dataSourceViewStatusDetails" >
+  <!-- status Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Application Status </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        {{element.status}}
+    </mat-cell>
+  </ng-container>
+  <!-- count  Column -->
+  <ng-container matColumnDef="count">
+    <mat-header-cell *matHeaderCellDef> Count </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+       {{element.count}}
+  </mat-cell>
+  </ng-container>
+   <mat-header-row *matHeaderRowDef="displayedColumnsViewStatusDetails"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumnsViewStatusDetails"></mat-row>
+</mat-table>
+</mat-card-content>
+</mat-card>
+</div>

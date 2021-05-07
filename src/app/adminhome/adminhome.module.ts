@@ -7,10 +7,11 @@ import {AppMaterialModule} from '../app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReviewapplicationsComponent } from './reviewapplications/reviewapplications.component';
+import { HomepageComponent } from './homepage/homepage.component';
 
 
 @NgModule({
-  declarations: [AdminhomeComponent, ReviewapplicationsComponent],
+  declarations: [AdminhomeComponent, ReviewapplicationsComponent, HomepageComponent],
   imports: [
     CommonModule,
     AppMaterialModule,

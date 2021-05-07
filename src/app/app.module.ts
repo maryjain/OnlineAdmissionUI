@@ -20,14 +20,12 @@ import { RegistrationdetailsModule } from './registrationdetails/registrationdet
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ToastrModule } from 'ngx-toastr';
 import { SessionstorageService } from './shared/session/sessionstorage.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PreviewdetailsComponent } from './previewdetails/previewdetails.component';
 import { AddresspreviewComponent } from './previewdetails/addresspreview/addresspreview.component';
 import { PersonalpreviewComponent } from './previewdetails/personalpreview/personalpreview.component';
 import { EducationpreviewComponent } from './previewdetails/educationpreview/educationpreview.component';
 import { PaymentpreviewComponent } from './previewdetails/paymentpreview/paymentpreview.component';
-import { AdminhomeModule } from './adminhome/adminhome.module';
-import { LoginadminComponent } from './loginadmin/loginadmin/loginadmin.component';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +36,7 @@ import { LoginadminComponent } from './loginadmin/loginadmin/loginadmin.componen
     AddresspreviewComponent,
     EducationpreviewComponent,
     PaymentpreviewComponent,
-    LoginadminComponent
+
   ],
   imports: [
     BrowserModule,
@@ -52,7 +50,7 @@ import { LoginadminComponent } from './loginadmin/loginadmin/loginadmin.componen
     RegistrationdetailsModule,
     PdfViewerModule,
     ToastrModule.forRoot(),
-    AdminhomeModule,
+
   ],
   providers: [ValidationService, UtilityService, RegisterService, LoginService, SessionstorageService,{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],

@@ -25,7 +25,7 @@
           </div>
          <mat-form-field class="example-full-width">
           <span matPrefix><mat-icon>person</mat-icon>&nbsp;</span>
-          <input type="email" matInput formControlName="deptusername" placeholder="aaa" >
+          <input type="email" matInput formControlName="deptusername" placeholder="" >
           <mat-error *ngIf ="loginForm.touched && deptusername.hasError('pattern') && !deptusername.hasError('required')">
             {{errors.userName}}
           </mat-error>
@@ -91,6 +91,6 @@
     </div>
     </div>
   </div>
-      <p>{{loginForm.value|json}}</p>
+
       <p>{{loginForm.valid}}</p>
       <p>{{sample}}</p>
