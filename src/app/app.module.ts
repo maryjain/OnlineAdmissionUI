@@ -26,6 +26,8 @@ import { AddresspreviewComponent } from './previewdetails/addresspreview/address
 import { PersonalpreviewComponent } from './previewdetails/personalpreview/personalpreview.component';
 import { EducationpreviewComponent } from './previewdetails/educationpreview/educationpreview.component';
 import { PaymentpreviewComponent } from './previewdetails/paymentpreview/paymentpreview.component';
+import { AdminhomeModule } from './adminhome/adminhome.module';
+import { LoginadminComponent } from './loginadmin/loginadmin/loginadmin.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { PaymentpreviewComponent } from './previewdetails/paymentpreview/payment
     PersonalpreviewComponent,
     AddresspreviewComponent,
     EducationpreviewComponent,
-    PaymentpreviewComponent
+    PaymentpreviewComponent,
+    LoginadminComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import { PaymentpreviewComponent } from './previewdetails/paymentpreview/payment
     RegistrationdetailsModule,
     PdfViewerModule,
     ToastrModule.forRoot(),
+    AdminhomeModule,
   ],
   providers: [ValidationService, UtilityService, RegisterService, LoginService, SessionstorageService,{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],

@@ -12,13 +12,16 @@ export const customregExps: { [key: string]: RegExp } = {
   cgpa: /^[0-9]\.\d{1,2}$/,
   percentage: /^[0-9]{1,2}\.\d{1,2}$/,
   registrationno: /^[a-zA-Z0-9][a-zA-Z0-9 ]{1,98}$/,
-  transactionid:/^((?!.*\-\-)(?!.*\_\_)(?!.*\/\/)(?!.*\ \ )[a-zA-Z0-9][a-zA-Z0-9/_\- ]{1,299})$/
+  transactionid:/^((?!.*\-\-)(?!.*\_\_)(?!.*\/\/)(?!.*\ \ )[a-zA-Z0-9][a-zA-Z0-9/_\- ]{1,299})$/,
+  userName: /^[a-zA-Z][a-zA-Z0-9 ]{1,199}$/,
+
 };
 
 /**
 * Collection of reusable error messages
 */
 export const errorMessages: { [key: string]: string } = {
+  userName: 'Please enter valid User name',
   fullName: 'Please enter valid Full name',
   email: 'Please enter valid email address',
   password: 'Please enter valid password',
@@ -52,6 +55,7 @@ export const errorMessages: { [key: string]: string } = {
   transactionidRequired: 'Transaction id is required',
   bankRequired: 'Bank Name is required',
   applFeesRequired: 'Application fees is required',
+  userNameRequired: 'Username is required',
   addressline: 'Please enter valid Address Line',
   transactionid: 'Please enter valid Transaction id',
   bank: 'Please enter valid Bank Name',

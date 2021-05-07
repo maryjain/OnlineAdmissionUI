@@ -1,5 +1,5 @@
-<mat-horizontal-stepper [linear]="isLinear" #stepper labelPosition="bottom">
-  <mat-step [stepControl]="personalDetailsForm" label="Personal Details" >
+<mat-horizontal-stepper [linear]="isLinear" #stepper  labelPosition="bottom">
+  <mat-step [stepControl]="personalDetailsForm" label="Personal Details" [editable]="!isFinalsubmit" >
     <mat-card  >
       <mat-card-header>
         <mat-card-title>Personal Details</mat-card-title>
@@ -198,7 +198,7 @@
       </mat-card>
   </mat-step>
 
-  <mat-step [stepControl]="addressDetailsForm" label="Address Details" >
+  <mat-step [stepControl]="addressDetailsForm" label="Address Details" [editable]="!isFinalsubmit">
       <mat-card >
       <mat-card-content>
         <form [formGroup]="addressDetailsForm" >
@@ -352,7 +352,7 @@
         </mat-card>
        </mat-step>
 
-  <mat-step [stepControl]="formEducationDetailsGroup" label="Education Details" >
+  <mat-step [stepControl]="formEducationDetailsGroup" label="Education Details" [editable]="!isFinalsubmit">
     <br>
       <div class="row"> <div class="col2"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
       <div class="col8"><h4 class="smallInfo">Please enter details from 10th standard onwards</h4></div>
@@ -506,7 +506,7 @@
             <button mat-raised-button color="primary" (click)="isClickeEducationNext()" matStepperNext>Next</button>
   </mat-step>
 
-  <mat-step [stepControl]="formUploadDocumemtsGroup" label="Upload Documents" >
+  <mat-step [stepControl]="formUploadDocumemtsGroup" label="Upload Documents" [editable]="!isFinalsubmit" >
             <br>
             <div  class="container">
               <div class="row"> <div class="col2"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
@@ -560,7 +560,7 @@
               <button mat-raised-button color="primary" matStepperNext>Next</button>
              </div>
   </mat-step>
-  <mat-step [stepControl]="formPaymentGroup" label="Payment Details" >
+  <mat-step [stepControl]="formPaymentGroup" label="Payment Details" [editable]="!isFinalsubmit" >
       <br>
 
               <div class="container " >
@@ -629,7 +629,7 @@
             </div>
 
           </mat-step>
-  <mat-step [stepControl]="formDeclarationGroup" label="Declaration" >
+  <mat-step [stepControl]="formDeclarationGroup" label="Declaration" [editable]="!isFinalsubmit">
     <ng-template matStepLabel>Declaration</ng-template>
     <div class="container " >
       <div class="row"> <div class="col4"><i class="fa fa-info-circle  info-icon"></i> &nbsp;</div>
@@ -659,7 +659,7 @@
     <br>
     <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
       <div >
-        <button mat-raised-button color="primary" matStepperPrevious>Back</button></div>
+        <button mat-raised-button color="primary" [disabled]=!enableBackBtn matStepperPrevious>Back</button></div>
         <div >
         <button mat-raised-button (click)="openPreview()" [disabled]=!enablePreviewButton color="warn" >Preview</button></div>
         <div >

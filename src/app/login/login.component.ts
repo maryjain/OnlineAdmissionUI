@@ -8,20 +8,17 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UtilityService } from '../shared/utility/utility.service';
 import { LoginService } from './service/login.service';
-import { NgStyle } from '@angular/common';
-import { SessionStorageModel } from 'src/app/model/SessionStorageModel';
-import { SessionstorageService } from '../shared/session/sessionstorage.service';
 import { NotificationService } from '../shared/notification/notification.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [UtilityService, LoginService, SessionstorageService]
+  providers: [UtilityService, LoginService]
 })
 export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
-              public loginsrv: LoginService, private router: Router,public notifyService : NotificationService) { }
+              public loginsrv: LoginService, private router: Router, public notifyService: NotificationService) { }
 
   sample: any;
   errors = errorMessages;

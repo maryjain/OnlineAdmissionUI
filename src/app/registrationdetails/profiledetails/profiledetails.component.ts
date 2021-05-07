@@ -82,6 +82,8 @@ const ELEMENT_DATA: EDUCATION[] = [
   ],
 })
 export class ProfiledetailsComponent  {
+  isFinalsubmit:boolean;
+  enableBackBtn:boolean;
   //**Education Details  **/
   minDate: Date;
   maxDate: Date;
@@ -187,7 +189,8 @@ export class ProfiledetailsComponent  {
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
-
+    this.enableBackBtn = true;
+    this.isFinalsubmit=false;
     this.doctypeEWS = "EWS";
     this.enableDeclarationChkBox=false;
     this.enableDeclarationSubmitBtn =false;
@@ -401,9 +404,11 @@ updateDeclaration():void
   this.registrationdetailsSrv.updateDeclaration(this.logintUserProfileId).subscribe((data) => {
     this.notifyService.showSuccess(" Application Submitted Succesfully", "Declaration");
     console.log('Declaration id  = ' + data.profileid);
+    this.isFinalsubmit=true;
     this.enableDeclarationChkBox=false;
     this.enableDeclarationSubmitBtn=false;
     this.enablePreviewButton=false;
+    this.enableBackBtn = false;
   },
   (err: HttpErrorResponse) => {
     this.notifyService.showError("Error in submission of Declaration ", "Declaration")

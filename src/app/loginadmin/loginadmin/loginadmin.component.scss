@@ -1,0 +1,57 @@
+
+.example-full-width
+{
+  width: 100%;
+}
+
+.mat-form-field {
+  margin-left: 4px;
+}
+
+mat-card-header
+{
+  background-color:#00838F;
+  color:white;
+  padding :10px;
+  border-radius: 5px;
+
+}
+
+mat-error{
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+.customcss
+{
+  background-color:#E8F5E9;
+}
+.centrecss
+{
+  display: flex;
+  justify-content: center;
+  align-items: stretch;;
+}
+
+.captcha_gen {
+  background-color: #d3ebd3;
+  height: 40px;
+  border: #6b6e6b;
+  font-size: 20px;
+  font-style: italic;
+  text-align: center;
+  text-shadow: -4px 1px 1px #6e6c6c;
+  font-weight: bold;
+  background-image: linear-gradient(45deg, #98CD8D 16.67%, #F6F0CF 16.67%, #F6F0CF 33.33%, #e6bdbd 33.33%, #e6bdbd 50%, #98CD8D 50%, #98CD8D 66.67%, #F6F0CF 66.67%, #F6F0CF 83.33%, #e6bdbd 83.33%, #e6bdbd 100%);
+  background-size: 84.85px 84.85px;
+
+}
+
+a{
+  float:right;
+  font-size:11px;
+}
+

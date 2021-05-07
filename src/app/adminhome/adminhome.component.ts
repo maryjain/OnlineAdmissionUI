@@ -1,22 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-registrationdetails',
-  templateUrl: './registrationdetails.component.html',
-  styleUrls: ['./registrationdetails.component.scss']
+  selector: 'app-adminhome',
+  templateUrl: './adminhome.component.html',
+  styleUrls: ['./adminhome.component.scss']
 })
-export class RegistrationdetailsComponent implements OnInit {
+export class AdminhomeComponent implements OnInit {
+
   profileid:any;
   fullname:any;
   loggedIn:boolean;
   constructor(private router: Router){}
   ngOnInit(): void {
-    this.map.set('Profile Summary', 'profilesummary');
-    this.map.set('Register Profile Details', 'profiledetails');
-    this.map.set('View Status', 'viewstatus');
+    this.map.set('Review Applications', 'reviewapplications');
+    this.map.set('Reset Password', 'profiledetails');
     this.profileid = sessionStorage.getItem('profileid');
     this.fullname = sessionStorage.getItem('fullname');
     console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));

@@ -1,0 +1,33 @@
+
+<div class="d-flex customHeader">
+  <div class="flex-grow-1">
+  <h3>Welcome {{fullname}}</h3>
+  </div>
+
+  <div >
+  <h4><i>Registration No: {{profileid}}</i> &nbsp;&nbsp;&nbsp;&nbsp;</h4>
+  </div>
+  <div>
+    <a mat-button *ngIf="loggedIn" (click)="logoutUser()" routerLink="">
+    <span class="material-icons" *ngIf="loggedIn">logout</span>Log Out</a>
+  </div>
+  </div>
+
+  <mat-sidenav-container class="example-container" >
+    <mat-sidenav #sidenav  class="example-sidenav navlist" mode="side" opened="true" >
+      <mat-nav-list >
+        <ng-container *ngFor="let item of getKeys(map) | keyvalue">
+         <a mat-list-item [routerLink]=map.get(item.value) (click) ="onsidenavClick(map.get(item.value))" class="router-link-active"> {{item.value}} </a>
+         <mat-divider></mat-divider>
+        </ng-container>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div >
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+    </mat-sidenav-container>
+
+
+

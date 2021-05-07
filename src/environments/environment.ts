@@ -7,11 +7,14 @@ export const environment = {
   production: false,
   profileapiUrl: 'http://192.168.29.5/api/persons',
   commonapiUrl:"http://192.168.29.5:81/api/",
-  profileMasterapiUrl:"http://192.168.29.5/api/profilemanagement"
+  profileMasterapiUrl:"http://192.168.29.5/api/profilemanagement",
+  adminapiUrl:"http://192.168.29.5/api/department/admin"
 
 /* profileapiUrl: 'http://10.162.14.145/api/persons',
  commonapiUrl:"http://10.162.14.145:81/api/",
- profileMasterapiUrl:"http://10.162.14.145/api/profilemanagement"
+ profileMasterapiUrl:"http://10.162.14.145/api/profilemanagement",
+ adminapiUrl:"http://10.162.14.145/api/department/admin"
+
  */
 };
 

@@ -18,6 +18,8 @@ import { PersonalpreviewComponent } from './previewdetails/personalpreview/perso
 import { EducationpreviewComponent } from './previewdetails/educationpreview/educationpreview.component';
 import { PaymentpreviewComponent } from './previewdetails/paymentpreview/paymentpreview.component';
 import { ViewstatusComponent } from './registrationdetails/viewstatus/viewstatus.component';
+import { AdminhomeComponent } from './adminhome/adminhome.component';
+import { ReviewapplicationsComponent } from './adminhome/reviewapplications/reviewapplications.component';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
@@ -35,8 +37,14 @@ const routes: Routes = [
           },
 
         ] },
-        { path: 'previewdetails', component: PreviewdetailsComponent },
 
+        { path: 'adminhome', component: AdminhomeComponent,
+        children: [
+          { path: 'reviewapplications', component: ReviewapplicationsComponent }
+        ]
+        },
+
+        { path: 'previewdetails', component: PreviewdetailsComponent },
         { path: 'personalpreview', component: PersonalpreviewComponent },
         { path: 'educationpreview', component: EducationpreviewComponent },
         { path: 'addresspreview', component: AddresspreviewComponent },
