@@ -11,7 +11,7 @@ import { AdminhomeService } from '../service/adminhome.service';
 })
 export class HomepageComponent implements OnInit {
   displayedColumnsViewStatusDetails = ['status', 'count'];
-  @ViewChild('tableViewStatusDetails', { static: false }) tableViewStatusDetails: MatTable<any>;
+  @ViewChild('tableViewStatusDetails', { static: true }) tableViewStatusDetails: MatTable<any>;
 
   dataSourceViewStatusDetails;
   constructor(private router: Router,public adminhomeSrv: AdminhomeService) { }

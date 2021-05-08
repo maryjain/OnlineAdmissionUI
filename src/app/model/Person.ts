@@ -24,6 +24,7 @@ export class Person {
   stage:string;
   applstatus:string;
   status:string;
+  reason:string;
 
 
   constructor(fullname: string, dob: Date, emailid: string, mobileno: bigint, passwordplain: string ) {

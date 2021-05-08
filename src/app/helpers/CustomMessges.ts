@@ -55,6 +55,8 @@ export const errorMessages: { [key: string]: string } = {
   transactionidRequired: 'Transaction id is required',
   bankRequired: 'Bank Name is required',
   applFeesRequired: 'Application fees is required',
+  statusRequired: 'Status is required',
+  reasonRequired: 'Reason is required',
   userNameRequired: 'Username is required',
   addressline: 'Please enter valid Address Line',
   transactionid: 'Please enter valid Transaction id',

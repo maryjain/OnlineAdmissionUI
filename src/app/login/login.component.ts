@@ -80,6 +80,7 @@ public hintEmailArr = [ hintEmailMessages.email1,
         sessionStorage.setItem('profileid', res.id);
         sessionStorage.setItem('fullname', res.fullname);
         sessionStorage.setItem('loggedIn','true');
+        sessionStorage.setItem('finalsubmit','false');
         this.loginsrv.setisloggedIn(true);
         this.router.navigate(['/registrationdetails']);
       }

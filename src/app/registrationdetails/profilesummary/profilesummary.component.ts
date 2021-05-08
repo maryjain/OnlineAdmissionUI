@@ -11,6 +11,7 @@ export class ProfilesummaryComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 

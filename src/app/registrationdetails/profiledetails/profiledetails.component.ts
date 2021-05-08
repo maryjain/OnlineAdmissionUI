@@ -129,7 +129,7 @@ export class ProfiledetailsComponent  {
   jsonCommunity = [];
   jsonState = [];
   jsonDistrict= [];
-  jsonQualification= [{key:1,value:'10th'},{key:2,value:'12th'},{key:3,value:'Degree'},{key:4,value:'PG'},{key:5,value:'PHD'},{key:6,value:'Certification'},{key:7,value:'Others'},{key:8,value:'Photo'},{key:9,value:'Sign'}];
+  jsonQualification = [{key:1,value:'10th'},{key:2,value:'12th'},{key:3,value:'Degree'},{key:4,value:'PG'},{key:5,value:'PHD'},{key:6,value:'Certification'},{key:7,value:'Others'},{key:8,value:'Photo'},{key:9,value:'Sign'}];
   stateTextSelected:any;
   isnextPersonalButton:boolean;
   isnextAddressButton:boolean;
@@ -191,6 +191,7 @@ export class ProfiledetailsComponent  {
   ngOnInit(): void {
     this.enableBackBtn = true;
     this.isFinalsubmit=false;
+   // sessionStorage.setItem('finalsubmit', 'false');
     this.doctypeEWS = "EWS";
     this.enableDeclarationChkBox=false;
     this.enableDeclarationSubmitBtn =false;
@@ -405,10 +406,18 @@ updateDeclaration():void
     this.notifyService.showSuccess(" Application Submitted Succesfully", "Declaration");
     console.log('Declaration id  = ' + data.profileid);
     this.isFinalsubmit=true;
+    sessionStorage.setItem('finalsubmit', 'true');
     this.enableDeclarationChkBox=false;
-    this.enableDeclarationSubmitBtn=false;
+    //this.enableDeclarationSubmitBtn=false;
     this.enablePreviewButton=false;
     this.enableBackBtn = false;
+    this.router.navigate(['/registrationdetails/profilesummary'])
+  .then(() => {
+    window.location.reload();
+  });
+
+   // this.router.navigate(['/registrationdetails/profilesummary']);
+
   },
   (err: HttpErrorResponse) => {
     this.notifyService.showError("Error in submission of Declaration ", "Declaration")

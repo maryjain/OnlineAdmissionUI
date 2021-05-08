@@ -85,7 +85,7 @@ export class RegistrationdetailsService {
   }
 
 
-  getEducation(id): Observable<Payment[]> {
+  getEducation(id): Observable<Education[]> {
     console.log("****  get Education qualifications  ");
     return this.http.get<any>(this.apiUrl+'/'+id+'/educationqualifications', {responseType: 'json'});
   }

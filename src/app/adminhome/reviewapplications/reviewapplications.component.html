@@ -1,1 +1,72 @@
-<p>reviewapplications works!</p>
+<div class="container centercss">
+  <br>
+  <br>
+  <br>
+  <br>
+  <mat-card >
+  <mat-card-content >
+<mat-table  #table [dataSource]="dataSourceReviewApplicationDetails" >
+
+  <!-- profileid Column -->
+  <ng-container matColumnDef="profileid">
+    <mat-header-cell *matHeaderCellDef> Profile Id</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <mat-form-field floatLabel="never">
+        <input matInput type="text" placeholder="" value={{element.profileid}} readonly>
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <!-- fullname name Column -->
+  <ng-container matColumnDef="fullname">
+    <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field floatLabel="never">
+          <input matInput type="text" placeholder="" value={{element.fullname}}  readonly>
+        </mat-form-field>
+  </mat-cell>
+  </ng-container>
+ <!-- emailid Column -->
+  <ng-container matColumnDef="emailid">
+    <mat-header-cell *matHeaderCellDef> Email Id </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field floatLabel="never">
+          <input matInput type="text" placeholder="" value={{element.emailid}} readonly >
+        </mat-form-field>
+  </mat-cell>
+  </ng-container>
+
+  <!-- status Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field class="example-full-width" floatLabel="never" appearance="none" >
+          <mat-select placeholder="Select"  value={{element.status}} >
+            <mat-option *ngFor="let item of this.jsonReviewStatus;let i = index" [value]="item.value">
+              {{item.value}}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+  </mat-cell>
+  </ng-container>
+  <!-- reason Column -->
+  <ng-container matColumnDef="reason">
+    <mat-header-cell *matHeaderCellDef> Reason </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field floatLabel="never">
+          <input matInput type="text" placeholder="" value={{element.reason}} >
+        </mat-form-field>
+  </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumnsReviewApplicationDetails"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumnsReviewApplicationDetails"></mat-row>
+
+</mat-table>
+<mat-paginator #paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]">
+</mat-paginator>
+</mat-card-content>
+</mat-card>
+</div>
+
+

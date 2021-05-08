@@ -1,3 +1,5 @@
+
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from '../app-routing.module';
@@ -28,6 +30,8 @@ import { HomepageComponent } from './homepage/homepage.component';
     ReactiveFormsModule,
     AppMaterialModule,
     SharedModule,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+
 })
 export class AdminhomeModule { }

@@ -20,6 +20,8 @@ export class RegistrationdetailsComponent implements OnInit {
     this.profileid = sessionStorage.getItem('profileid');
     this.fullname = sessionStorage.getItem('fullname');
     console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));
+
+    console.log('***********%%% final submit '+ sessionStorage.getItem('finalsubmit'));
     if(sessionStorage.getItem('loggedIn')=== 'true')
     {
       console.log('***********++++ ');
@@ -39,7 +41,11 @@ export class RegistrationdetailsComponent implements OnInit {
 
   onsidenavClick(item:any)
   {
+    console.log('** %% item ' +item);
+    console.log('***********%%% final submit '+ sessionStorage.getItem('finalsubmit'));
     this.router.navigate(['/registrationdetails/'+item]);
+
+
   }
 
   public logoutUser():void
