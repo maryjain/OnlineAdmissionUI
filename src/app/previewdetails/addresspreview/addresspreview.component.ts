@@ -9,10 +9,12 @@ import { RegistrationdetailsService } from 'src/app/registrationdetails/service/
   styleUrls: ['./addresspreview.component.scss']
 })
 export class AddresspreviewComponent implements OnInit {
-  profileid = sessionStorage.getItem('profileid');
+  profileid:any;
+  //profileid = sessionStorage.getItem('profileid');
   constructor(private fb: FormBuilder,public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
+    this.profileid =history.state.data;
     this.registrationdetailsSrv.getAddressDetails(this.profileid).subscribe((res ) => {
       let json = res;
       for (var type in json[0]) {

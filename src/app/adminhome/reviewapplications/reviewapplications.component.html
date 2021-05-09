@@ -11,7 +11,7 @@
   <ng-container matColumnDef="profileid">
     <mat-header-cell *matHeaderCellDef> Profile Id</mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <mat-form-field floatLabel="never">
+      <mat-form-field floatLabel="never" appearance="none">
         <input matInput   class="form-control" type="text" placeholder="" [formControl]="element.get('profileid')" readonly  >
       </mat-form-field>
     </mat-cell>
@@ -20,7 +20,7 @@
   <ng-container matColumnDef="fullname">
     <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <mat-form-field floatLabel="never">
+        <mat-form-field floatLabel="never" appearance="none">
           <input matInput type="text" class="form-control" placeholder="" [formControl]="element.get('fullname')"  readonly >
       </mat-form-field>
   </mat-cell>
@@ -29,8 +29,8 @@
   <ng-container matColumnDef="emailid">
     <mat-header-cell *matHeaderCellDef> Email Id </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <mat-form-field floatLabel="never">
-          <input matInput type="text" placeholder="" value={{element.emailid}} readonly >
+        <mat-form-field floatLabel="never" appearance="none">
+          <input matInput type="text" class="form-control" placeholder="" [formControl]="element.get('emailid')"  readonly >
         </mat-form-field>
   </mat-cell>
   </ng-container>
@@ -39,13 +39,12 @@
   <ng-container matColumnDef="status">
     <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <mat-form-field class="example-full-width" floatLabel="never" appearance="none" >
-          <mat-select placeholder="Select"  value={{element.status}} >
+        <mat-form-field class="example-full-width" floatLabel="never"  >
+          <mat-select placeholder="Select"  [formControl]="element.get('status')" >
             <mat-option *ngFor="let item of this.jsonReviewStatus;let i = index" [value]="item.value">
               {{item.value}}
             </mat-option>
           </mat-select>
-
         </mat-form-field>
   </mat-cell>
   </ng-container>
@@ -54,11 +53,29 @@
     <mat-header-cell *matHeaderCellDef> Reason </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <mat-form-field floatLabel="never">
-          <input matInput type="text" placeholder="" value={{element.reason}} >
+          <textarea [formControl]="element.get('reason')"  class="form-control"
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5">
+      </textarea>
         </mat-form-field>
   </mat-cell>
   </ng-container>
-
+    <!-- preview Column -->
+    <ng-container matColumnDef="preview">
+      <mat-header-cell *matHeaderCellDef> Preview </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-button mat-raised-button color="accent" >Preview</button>
+        </mat-cell>
+    </ng-container>
+<!-- submit Column -->
+<ng-container matColumnDef="submit">
+  <mat-header-cell *matHeaderCellDef>Submit </mat-header-cell>
+    <mat-cell *matCellDef="let i = index;">
+      <button mat-button mat-raised-button color="warn" (click)="postPersonReivew(i)">Submit</button>
+    </mat-cell>
+</ng-container>
   <mat-header-row *matHeaderRowDef="displayedColumnsReviewApplicationDetails"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumnsReviewApplicationDetails"></mat-row>
 

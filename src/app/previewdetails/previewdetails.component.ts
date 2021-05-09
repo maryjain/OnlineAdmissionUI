@@ -10,10 +10,15 @@ import { Router } from '@angular/router';
 })
 export class PreviewdetailsComponent implements OnInit {
 showtabs:boolean;
-  constructor(public router: Router, public dialogRef: MatDialogRef<PreviewdetailsComponent>, @Inject(MAT_DIALOG_DATA) data) { }
+profileid:any;
+  constructor(public router: Router, public dialogRef: MatDialogRef<PreviewdetailsComponent>, @Inject(MAT_DIALOG_DATA) data) {
+
+  this.profileid=data.id;
+  console.log("__________________Dialog ____________= "+this.profileid);
+  }
 
   ngOnInit(): void {
-    this.router.navigate(['/personalpreview']);
+    this.router.navigate(['/personalpreview'] , {state: {data: this.profileid}});
     this.showtabs=false;
   }
 

@@ -393,7 +393,7 @@ openDialog() {
   dialogConfig.autoFocus = true;
 
   dialogConfig.data = {
-      id: 1,
+      id: this.logintUserProfileId,
 
   };
 

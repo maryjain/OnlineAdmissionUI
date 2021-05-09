@@ -12,7 +12,7 @@ mat-header-cell{
   justify-content: center;
 }
 
-.mat-column-profileid,.mat-column-fullname,.mat-column-emailid,.mat-column-preview,.mat-column-status,.mat-column-reason
+.mat-column-profileid,.mat-column-fullname,.mat-column-emailid,.mat-column-preview,.mat-column-status,.mat-column-reason,.mat-column-submit
 {
 border-right: 2px solid #03A9F4;
 border-bottom: 2px solid #03A9F4;
@@ -38,18 +38,27 @@ border-left: 2px solid #03A9F4;
   width: 100%;
 }
 
-.mat-column-profileid,.mat-column-fullname,.mat-column-emailid,.mat-column-preview,.mat-column-status,.mat-column-reason
+.mat-column-profileid,.mat-column-fullname,.mat-column-emailid,.mat-column-reason,
  {
   //flex: 0 0 25% !important;
-  min-width: 200px !important;
+  min-width: 150px !important;
   // width adjustment above two lines
   display: inline-block;
   vertical-align: middle;
   line-height: 2.6em;
   white-space: nowrap;
-  padding:15px;
+  padding: 10px;
 }
 
+.mat-column-preview,.mat-column-submit,.mat-column-status,
+{
+max-width: 120px !important;
+display: inline-block;
+vertical-align: middle;
+line-height: 2.6em;
+white-space: nowrap;
+padding:10px;
+}
 // ***** Mat table css ends  *****
 //raised shadow
 .blog-shadow-dreamy {

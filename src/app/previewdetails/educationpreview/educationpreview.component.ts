@@ -9,7 +9,8 @@ import { RegistrationdetailsService } from 'src/app/registrationdetails/service/
   styleUrls: ['./educationpreview.component.scss']
 })
 export class EducationpreviewComponent implements OnInit {
-  profileid = sessionStorage.getItem('profileid');
+  profileid:any;
+ // profileid = sessionStorage.getItem('profileid');
   displayedColumns = ['qualificationtype', 'institution', 'university', 'yearofpass', 'registrationno','cgpa','percentage'];
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
   //EducationArray = new FormArray([]);
@@ -17,6 +18,7 @@ export class EducationpreviewComponent implements OnInit {
   constructor(public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
+    this.profileid =history.state.data;
     this.registrationdetailsSrv.getEducation(this.profileid).subscribe((res ) => {
       console.log(" json Education ="+res[0]);
       this.dataSourceEducation = new MatTableDataSource(res);

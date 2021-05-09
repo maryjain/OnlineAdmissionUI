@@ -21,7 +21,7 @@ export class ReviewapplicationsComponent implements OnInit {
   jsonReviewStatus = [{key:1,value:'Registered'},{key:2,value:'Paid'},{key:3,value:'Completed'},{key:4,value:'Approve'},{key:5,value:'Reject'}];
   person: Person;
   //** ReviewApplicationDetails Table   **/
-  displayedColumnsReviewApplicationDetails = ['profileid', 'fullname','emailid','status','reason'];
+  displayedColumnsReviewApplicationDetails = ['profileid', 'fullname','emailid','status','reason','preview','submit'];
   @ViewChild('tableReviewApplicationDetails', { static: false }) tableReviewApplicationDetails: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSourceReviewApplicationDetails;
@@ -36,20 +36,16 @@ export class ReviewapplicationsComponent implements OnInit {
     this.adminhomeSrv.getAllApplications().subscribe((res ) => {
       for (const c of res) {
       console.log(" Review Application Details = "+c.profileid +" status ="+c.status);
-      //let data={'profileid': c.profileid,'fullname': c.fullname,'emailid': c.emailid,'preview':'','status': c.status,'reason': c.reason};
-     // this.personArray.push(this.createGroup({ profileid: c.profileid, fullname: c.fullname, emailid: c.emailid, status:c.status, reason:c.reason}));
-     // this.personalDetailsForm.controls['profileid'].setValue(c.profileid);
-      let formgroup = this.createGroup({ profileid: "", fullname: "", emailid: "",status:2000,reason:"" });
+      let formgroup = this.createGroup({ profileid: "", fullname: "", emailid: "",status:"",reason:"" });
       formgroup.controls['profileid'].setValue(c.profileid);
       formgroup.controls['fullname'].setValue(c.fullname);
-
+      formgroup.controls['emailid'].setValue(c.emailid);
+      formgroup.controls['status'].setValue(c.status);
+      formgroup.controls['reason'].setValue(c.reason);
       this.personArray.push(formgroup);
-      //this.personArray.push(this.personalDetailsForm);
-     //this.jsonreviewdata.push(data);
       }
 
       this.dataSourceReviewApplicationDetails=  new MatTableDataSource(this.personArray.controls);
-      //this.dataSourceReviewApplicationDetails = new MatTableDataSource(this.jsonreviewdata);
       this.dataSourceReviewApplicationDetails.paginator = this.paginator;
     },
     (err: HttpErrorResponse) => {

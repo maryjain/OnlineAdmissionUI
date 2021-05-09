@@ -9,8 +9,8 @@ import { RegistrationdetailsService } from 'src/app/registrationdetails/service/
   styleUrls: ['./paymentpreview.component.scss']
 })
 export class PaymentpreviewComponent implements OnInit {
-
-  profileid = sessionStorage.getItem('profileid');
+   profileid:any;
+  //profileid = sessionStorage.getItem('profileid');
   //**Payment Details   **/
   displayedColumnsPaymentDetails = ['transactionid', 'bank','applfees','updateddate'];
   @ViewChild('tablePaymentDetails', { static: false }) tablePaymentDetails: MatTable<any>;
@@ -19,6 +19,7 @@ export class PaymentpreviewComponent implements OnInit {
   constructor(public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
+    this.profileid =history.state.data;
     this.registrationdetailsSrv.getPayment(this.profileid).subscribe((res ) => {
       let json = [];
       let dobValue = moment(res.updateddate).format('DD-MM-yyyy');

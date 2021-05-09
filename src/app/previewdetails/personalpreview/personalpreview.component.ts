@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RegistrationdetailsService } from 'src/app/registrationdetails/service/registrationdetails.service';
 import * as moment from 'moment';
@@ -9,12 +9,15 @@ import * as moment from 'moment';
   styleUrls: ['./personalpreview.component.scss']
 })
 export class PersonalpreviewComponent implements OnInit {
-  profileid = sessionStorage.getItem('profileid');
+   profileid:any;
+  //profileid = sessionStorage.getItem('profileid');
+
 
   constructor(private fb: FormBuilder, public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
-
+    this.profileid =history.state.data;
+    console.log("parent state "+this.profileid);
     this.registrationdetailsSrv.getPersonDetails(this.profileid).subscribe((res ) => {
       let json = res;
       for (var type in json) {
