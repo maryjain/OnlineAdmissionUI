@@ -65,8 +65,8 @@
     <!-- preview Column -->
     <ng-container matColumnDef="preview">
       <mat-header-cell *matHeaderCellDef> Preview </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button mat-button mat-raised-button color="accent" >Preview</button>
+        <mat-cell *matCellDef="let i = index;">
+          <button mat-button mat-raised-button color="accent" (click)="showPersonReview(i)" >Preview</button>
         </mat-cell>
     </ng-container>
 <!-- submit Column -->

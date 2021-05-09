@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Address } from 'src/app/model/Address';
+import { Documentupload } from 'src/app/model/Documentupload';
 import { Education } from 'src/app/model/Education';
 import { Payment } from 'src/app/model/Payment';
 import { Person } from 'src/app/model/Person';
@@ -109,5 +110,9 @@ export class RegistrationdetailsService {
 
    }
 
+   getAllDocumentByprofileId(profileid:any): Observable<Documentupload[]> {
+    console.log(" *************** Get all Applications ***********");
+    return this.http.get<Documentupload[]>(this.apiUrl+'/upload/'+profileid, {responseType: 'json'});
+  }
 
 }

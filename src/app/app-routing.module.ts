@@ -22,6 +22,7 @@ import { AdminhomeComponent } from './adminhome/adminhome.component';
 import { ReviewapplicationsComponent } from './adminhome/reviewapplications/reviewapplications.component';
 import { LoginadminComponent } from './loginadmin/loginadmin/loginadmin.component';
 import { HomepageComponent } from './adminhome/homepage/homepage.component';
+import { DocumentspreviewComponent } from './previewdetails/documentspreview/documentspreview.component';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
@@ -52,6 +53,7 @@ const routes: Routes = [
         { path: 'educationpreview', component: EducationpreviewComponent },
         { path: 'addresspreview', component: AddresspreviewComponent },
         { path: 'paymentpreview', component: PaymentpreviewComponent },
+        { path: 'documentspreview', component: DocumentspreviewComponent },
         { path: '**', component: PagenotfoundComponent }
   ];
 

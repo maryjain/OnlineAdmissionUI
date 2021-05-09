@@ -8,8 +8,8 @@
     </a>
     <a mat-tab-link routerLink="./addresspreview" [state]="{ data: profileid}"  routerLinkActive #address1Tab="routerLinkActive" [active]="address1Tab.isActive">Address</a>
     <a mat-tab-link routerLink="./educationpreview" [state]="{ data: profileid}" routerLinkActive #educationqualification1Tab="routerLinkActive" [active]="educationqualification1Tab.isActive">Education Qualification</a>
-    <a mat-tab-link routerLink="./paymentpreview"[state]="{ data: profileid}" routerLinkActive #payment1Tab="routerLinkActive" [active]="payment1Tab.isActive">Payment Details</a>
-
+    <a mat-tab-link routerLink="./paymentpreview" [state]="{ data: profileid}" routerLinkActive #payment1Tab="routerLinkActive" [active]="payment1Tab.isActive">Payment Details</a>
+    <a mat-tab-link routerLink="./documentspreview" [state]="{ data: profileid}" routerLinkActive #documentspreviewTab="routerLinkActive" [active]="documentspreviewTab.isActive">Documents Details</a>
   </nav>
 
   <router-outlet></router-outlet>

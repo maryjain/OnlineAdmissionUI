@@ -77,6 +77,7 @@ public hintEmailArr = [ hintEmailMessages.email1,
       console.log('POST login fullname= ' + res.fullname);
       if(res.data === "true"){
         this.notifyService.showSuccess(" Login Succesfully", "Login");
+        sessionStorage.setItem('user', 'user');
         sessionStorage.setItem('profileid', res.id);
         sessionStorage.setItem('fullname', res.fullname);
         sessionStorage.setItem('loggedIn','true');

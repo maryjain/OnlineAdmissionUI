@@ -12,7 +12,7 @@ import {errorMessages,
 import { RegistrationdetailsService } from '../service/registrationdetails.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Person } from 'src/app/model/Person';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AngularFileUploaderConfig } from '../../shared/AngularFileUploader/angular-file-uploader.types';
 import { MatRadioChange } from '@angular/material/radio';
@@ -82,6 +82,8 @@ const ELEMENT_DATA: EDUCATION[] = [
   ],
 })
 export class ProfiledetailsComponent  {
+  stepperIndex:any;
+  stepper: MatStepper;
   isFinalsubmit:boolean;
   enableBackBtn:boolean;
   //**Education Details  **/
@@ -182,13 +184,15 @@ export class ProfiledetailsComponent  {
 
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
-    public registrationdetailsSrv: RegistrationdetailsService,public notifyService : NotificationService,
+    public registrationdetailsSrv: RegistrationdetailsService,public notifyService : NotificationService,private route: ActivatedRoute,
     private dialog: MatDialog,public router: Router,public sessionStorage: SessionstorageService,private http: HttpClient) {
 
    }
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
+
+
     this.enableBackBtn = true;
     this.isFinalsubmit=false;
    // sessionStorage.setItem('finalsubmit', 'false');
@@ -219,6 +223,15 @@ export class ProfiledetailsComponent  {
 
     //** Declaration **/
     this.formDeclarationGroup.get('declarationcheckbox').setValue(false);
+
+  //Preview clicked
+    if(this.route.snapshot.paramMap.get('data') ==='5'){
+
+      this.stepperIndex=this.route.snapshot.paramMap.get('data');
+      this.enableDeclarationChkBox=true;
+      }
+    console.log("******%%%%%%%%"+this.stepperIndex+"  %%%%%%%**********");
+
 
     this.personalDetailsForm.controls['annualincome'].setValue(1);
     this.personalDetailsForm.controls['community'].setValue('N/A');
@@ -403,7 +416,7 @@ openDialog() {
 updateDeclaration():void
 {
   this.registrationdetailsSrv.updateDeclaration(this.logintUserProfileId).subscribe((data) => {
-    this.notifyService.showSuccess(" Application Submitted Succesfully", "Declaration");
+
     console.log('Declaration id  = ' + data.profileid);
     this.isFinalsubmit=true;
     sessionStorage.setItem('finalsubmit', 'true');
@@ -413,7 +426,10 @@ updateDeclaration():void
     this.enableBackBtn = false;
     this.router.navigate(['/registrationdetails/profilesummary'])
   .then(() => {
-    window.location.reload();
+    setTimeout(()=>window.location.reload(), 5000);
+    this.notifyService.showSuccess(" Application Submitted Succesfully", "Declaration");
+
+
   });
 
    // this.router.navigate(['/registrationdetails/profilesummary']);

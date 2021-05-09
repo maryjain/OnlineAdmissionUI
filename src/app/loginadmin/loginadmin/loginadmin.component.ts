@@ -60,6 +60,7 @@ console.log('POST login admin id= ' + res.id);
 console.log('POST login deptusername= ' + res.deptusername);
 if(res.data === "true"){
 this.notifyService.showSuccess(res.deptusername+" Login Succesfully", "Admin Login");
+sessionStorage.setItem('user', 'admin');
 sessionStorage.setItem('deptuserid', res.id);
 sessionStorage.setItem('deptusername', res.deptusername);
 sessionStorage.setItem('deptname', res.deptname);

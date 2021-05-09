@@ -28,7 +28,23 @@ profileid:any;
   }
 
   onConfirmClick(): void {
-    this.router.navigate(['/registrationdetails/profiledetails']);
+    if(sessionStorage.getItem('user')==='user')
+    {
+      this.router.navigate(['/registrationdetails/profiledetails', {data: 5 }])
+      .then(() => {
+        setTimeout(()=> 10, 5000);
+
+     });
+
+    }
+    else if (sessionStorage.getItem('user')==='admin'){
+      this.router.navigate(['/adminhome/homepage'])
+      .then(() => {
+        setTimeout(()=>window.location.reload(), 5000);
+     });
+
+    }
+
     this.dialogRef.close(true);
   }
 

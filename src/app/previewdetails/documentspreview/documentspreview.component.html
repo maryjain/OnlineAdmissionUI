@@ -1,0 +1,52 @@
+<div class="container centercss">
+  <br>
+  <br>
+  <br>
+  <br>
+  <mat-card >
+  <mat-card-content >
+<mat-table  #tableDocumentsDetails [dataSource]="dataSourceDocumentsDetails" >
+  <!-- documenttype Column -->
+  <ng-container matColumnDef="documenttype">
+    <mat-header-cell *matHeaderCellDef> Document</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <mat-form-field floatLabel="never" appearance="none">
+        <input matInput   class="form-control" type="text" placeholder="" [formControl]="element.get('documenttype')" readonly  >
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <!-- bank name Column -->
+  <ng-container matColumnDef="documentformat">
+    <mat-header-cell *matHeaderCellDef> Document format </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field floatLabel="never" appearance="none">
+          <input matInput   class="form-control" type="text" placeholder="" [formControl]="element.get('documentformat')" readonly  >
+        </mat-form-field>
+  </mat-cell>
+  </ng-container>
+
+  <!-- updateddate Column -->
+  <ng-container matColumnDef="updateddate">
+    <mat-header-cell *matHeaderCellDef> Date of Document Upload</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field floatLabel="never" appearance="none">
+          <input matInput   class="form-control" type="text" placeholder="" [formControl]="element.get('updateddate')" readonly  >
+        </mat-form-field>
+      </mat-cell>
+  </ng-container>
+
+  <!-- updateddate Column -->
+  <ng-container matColumnDef="converteddata">
+    <mat-header-cell *matHeaderCellDef> Document Content</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <img [src]="element.get('converteddata').value" height="80" width="80">
+
+  </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumnsDocumentstDetails"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumnsDocumentstDetails"></mat-row>
+</mat-table>
+</mat-card-content>
+</mat-card>
+</div>
+

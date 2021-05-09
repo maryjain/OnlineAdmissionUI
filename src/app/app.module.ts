@@ -25,6 +25,7 @@ import { AddresspreviewComponent } from './previewdetails/addresspreview/address
 import { PersonalpreviewComponent } from './previewdetails/personalpreview/personalpreview.component';
 import { EducationpreviewComponent } from './previewdetails/educationpreview/educationpreview.component';
 import { PaymentpreviewComponent } from './previewdetails/paymentpreview/paymentpreview.component';
+import { DocumentspreviewComponent } from './previewdetails/documentspreview/documentspreview.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { PaymentpreviewComponent } from './previewdetails/paymentpreview/payment
     AddresspreviewComponent,
     EducationpreviewComponent,
     PaymentpreviewComponent,
+    DocumentspreviewComponent,
 
   ],
   imports: [

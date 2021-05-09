@@ -20,7 +20,7 @@ export class AdminhomeComponent implements OnInit {
   ngOnInit(): void {
     this.map.set('Application Count', 'homepage');
     this.map.set('Review Applications', 'reviewapplications');
-    this.map.set('Reset Password', '');
+
     this.deptuserid = sessionStorage.getItem('deptuserid');
     this.deptusername = sessionStorage.getItem('deptusername');
     this.deptname = sessionStorage.getItem('deptname');

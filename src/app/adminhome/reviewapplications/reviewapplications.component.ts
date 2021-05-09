@@ -8,6 +8,8 @@ import { Person } from 'src/app/model/Person';
 import { NotificationService } from 'src/app/shared/notification/notification.service';
 import { AdminhomeService } from '../service/adminhome.service';
 import {errorMessages} from '../../helpers/CustomMessges';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { PreviewdetailsComponent } from 'src/app/previewdetails/previewdetails.component';
 @Component({
   selector: 'app-reviewapplications',
   templateUrl: './reviewapplications.component.html',
@@ -16,7 +18,7 @@ import {errorMessages} from '../../helpers/CustomMessges';
 export class ReviewapplicationsComponent implements OnInit {
   deptuserid: any;
   errors = errorMessages;
-  jsonreviewdata=[];
+
   personArray = new FormArray([]);
   jsonReviewStatus = [{key:1,value:'Registered'},{key:2,value:'Paid'},{key:3,value:'Completed'},{key:4,value:'Approve'},{key:5,value:'Reject'}];
   person: Person;
@@ -27,10 +29,10 @@ export class ReviewapplicationsComponent implements OnInit {
   dataSourceReviewApplicationDetails;
 
   constructor(private router: Router,private fb: FormBuilder,public adminhomeSrv: AdminhomeService,
-              public notifyService: NotificationService ) { }
+              public notifyService: NotificationService , private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.jsonreviewdata=[];
+
     this.personArray =new FormArray([]);
     this.deptuserid = sessionStorage.getItem('deptuserid');
     this.adminhomeSrv.getAllApplications().subscribe((res ) => {
@@ -86,6 +88,28 @@ postPersonReivew(row:number)
 
 }
 
+showPersonReview(row:number)
+{
+  let c: AbstractControl;
+  c = this.personArray.controls[row];
+  const previewProfileid=  c.get('profileid').value;
+  this.openDialog(previewProfileid);
+}
+
+
+openDialog(previewProfileid:any) {
+  const dialogConfig = new MatDialogConfig();
+
+  //dialogConfig.disableClose = true;
+  dialogConfig.autoFocus = true;
+
+  dialogConfig.data = {
+      id: previewProfileid,
+
+  };
+
+  this.dialog.open(PreviewdetailsComponent, dialogConfig);
+}
 
 
 public personalDetailsForm= this.fb.group({
