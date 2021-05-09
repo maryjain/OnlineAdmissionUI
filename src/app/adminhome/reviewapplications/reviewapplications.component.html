@@ -12,7 +12,7 @@
     <mat-header-cell *matHeaderCellDef> Profile Id</mat-header-cell>
     <mat-cell *matCellDef="let element">
       <mat-form-field floatLabel="never">
-        <input matInput type="text" placeholder="" value={{element.profileid}} readonly>
+        <input matInput   class="form-control" type="text" placeholder="" [formControl]="element.get('profileid')" readonly  >
       </mat-form-field>
     </mat-cell>
   </ng-container>
@@ -21,8 +21,8 @@
     <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <mat-form-field floatLabel="never">
-          <input matInput type="text" placeholder="" value={{element.fullname}}  readonly>
-        </mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="" [formControl]="element.get('fullname')"  readonly >
+      </mat-form-field>
   </mat-cell>
   </ng-container>
  <!-- emailid Column -->

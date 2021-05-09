@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -36,15 +36,20 @@ export class ReviewapplicationsComponent implements OnInit {
     this.adminhomeSrv.getAllApplications().subscribe((res ) => {
       for (const c of res) {
       console.log(" Review Application Details = "+c.profileid +" status ="+c.status);
-      let data={'profileid': c.profileid,'fullname': c.fullname,'emailid': c.emailid,'preview':'','status': c.status,'reason': c.reason};
-    //this.personArray.push(this.createGroup({ profileid: c.profileid+'', fullname: c.fullname, emailid: c.emailid, status:c.status, reason:c.reason}));
+      //let data={'profileid': c.profileid,'fullname': c.fullname,'emailid': c.emailid,'preview':'','status': c.status,'reason': c.reason};
+     // this.personArray.push(this.createGroup({ profileid: c.profileid, fullname: c.fullname, emailid: c.emailid, status:c.status, reason:c.reason}));
+     // this.personalDetailsForm.controls['profileid'].setValue(c.profileid);
+      let formgroup = this.createGroup({ profileid: "", fullname: "", emailid: "",status:2000,reason:"" });
+      formgroup.controls['profileid'].setValue(c.profileid);
+      formgroup.controls['fullname'].setValue(c.fullname);
 
-   // this.personArray.push(this.createGroup({ profileid: "21008", fullname: "test", emailid: "",status:2000,reason:"" }));
-     this.jsonreviewdata.push(data);
+      this.personArray.push(formgroup);
+      //this.personArray.push(this.personalDetailsForm);
+     //this.jsonreviewdata.push(data);
       }
 
-      //this.dataSourceReviewApplicationDetails=  new MatTableDataSource(this.personArray.controls);
-      this.dataSourceReviewApplicationDetails = new MatTableDataSource(this.jsonreviewdata);
+      this.dataSourceReviewApplicationDetails=  new MatTableDataSource(this.personArray.controls);
+      //this.dataSourceReviewApplicationDetails = new MatTableDataSource(this.jsonreviewdata);
       this.dataSourceReviewApplicationDetails.paginator = this.paginator;
     },
     (err: HttpErrorResponse) => {
@@ -88,6 +93,10 @@ postPersonReivew(row:number)
 
 
 public personalDetailsForm= this.fb.group({
-
+  profileid: [''],
+  fullname: [''],
+  emailid: [''],
+  status: ['', [Validators.required]],
+  reason: [''],
 });
 }
