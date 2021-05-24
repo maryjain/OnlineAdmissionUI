@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RegistrationdetailsService } from 'src/app/registrationdetails/service/registrationdetails.service';
 import * as moment from 'moment';
+import { SpinnerService } from 'src/app/spinner.service';
 @Component({
   selector: 'app-personalpreview',
   templateUrl: './personalpreview.component.html',
@@ -10,12 +11,21 @@ import * as moment from 'moment';
 })
 export class PersonalpreviewComponent implements OnInit {
    profileid:any;
+   isLoading = false;
   //profileid = sessionStorage.getItem('profileid');
 
 
-  constructor(private fb: FormBuilder, public registrationdetailsSrv: RegistrationdetailsService) { }
+  constructor(private fb: FormBuilder, public registrationdetailsSrv: RegistrationdetailsService, public spinnerService: SpinnerService)
+   {
+     this.spinnerService
+    .onLoadingChanged
+    .subscribe(l => this.isLoading = l);
+    console.log(" ++++++++++%%%%%%%+++++ ******* this.isLoading ="+  this.isLoading);
+
+   }
 
   ngOnInit(): void {
+    this.isLoading = false;
     this.profileid =history.state.data;
     console.log("parent state "+this.profileid);
     this.registrationdetailsSrv.getPersonDetails(this.profileid).subscribe((res ) => {

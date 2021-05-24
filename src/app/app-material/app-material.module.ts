@@ -22,6 +22,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [],
   imports: [
@@ -48,7 +49,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatSelectModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatButtonModule,
@@ -74,7 +76,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatSelectModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class AppMaterialModule { }

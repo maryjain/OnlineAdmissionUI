@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 })
 export class PreviewdetailsComponent implements OnInit {
+
 showtabs:boolean;
 profileid:any;
   constructor(public router: Router, public dialogRef: MatDialogRef<PreviewdetailsComponent>, @Inject(MAT_DIALOG_DATA) data) {
@@ -18,6 +19,7 @@ profileid:any;
   }
 
   ngOnInit(): void {
+
     this.router.navigate(['/personalpreview']);
     this.showtabs=false;
   }
@@ -32,7 +34,7 @@ profileid:any;
     {
       this.router.navigate(['/registrationdetails/profiledetails', {data: 5 }])
       .then(() => {
-        setTimeout(()=> 10, 5000);
+        setTimeout(()=> 10, 2000);
 
      });
 

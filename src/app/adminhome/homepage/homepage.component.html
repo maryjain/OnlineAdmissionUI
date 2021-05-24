@@ -1,11 +1,12 @@
 <div class="container centercss">
   <br>
   <br>
+  <loading *ngIf="isLoading">{{ isLoading }}</loading>
   <br>
   <br>
-  <mat-card >
+  <mat-card *ngIf="!isLoading">
   <mat-card-content >
-<mat-table  #tableViewStatusDetails [dataSource]="dataSourceViewStatusDetails" >
+<mat-table  #tableViewStatusDetails [dataSource]="dataSourceViewStatusDetails"  >
   <!-- status Column -->
   <ng-container matColumnDef="status">
     <mat-header-cell *matHeaderCellDef> Application Status </mat-header-cell>

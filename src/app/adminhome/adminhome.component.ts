@@ -10,7 +10,7 @@ import { AdminhomeService } from './service/adminhome.service';
   styleUrls: ['./adminhome.component.scss']
 })
 export class AdminhomeComponent implements OnInit {
-
+  isLoading = false;
   deptuserid:any;
   deptusername:any;
   deptname:any;
@@ -18,6 +18,7 @@ export class AdminhomeComponent implements OnInit {
 
   constructor(private router: Router){}
   ngOnInit(): void {
+    //this.isLoading = false;
     this.map.set('Application Count', 'homepage');
     this.map.set('Review Applications', 'reviewapplications');
 
@@ -43,8 +44,12 @@ export class AdminhomeComponent implements OnInit {
     return Array.from(map.keys());
   }
 
+
+
+
   onsidenavClick(item:any)
   {
+   // this.load();
     this.router.navigate(['/adminhome/'+item]);
   }
 

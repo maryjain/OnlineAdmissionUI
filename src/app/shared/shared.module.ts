@@ -15,12 +15,16 @@ import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 import { PercentageDirective } from './directive/Percentage/percentage.directive';
 import { CGPADirective } from './directive/CGPA/cgpa.directive';
 
+import { LoadingComponent } from './loading/loading.component';
+
+
 
 @NgModule({
   declarations: [MarkAsteriskDirective, AppBlockCopyPasteDirective, AlphabetOnlyDirective, MoneyOnlyDirective,
     AngularFileUploaderComponent,
     PercentageDirective,
-    CGPADirective
+    CGPADirective,
+    LoadingComponent
     ],
   providers: [CurrencyPipe,PdfViewerComponent
 
@@ -31,7 +35,9 @@ import { CGPADirective } from './directive/CGPA/cgpa.directive';
     AppMaterialModule,
     FooterModule,
     HeaderModule,
-    PdfViewerModule
+    PdfViewerModule,
+
+
   ],
   exports:
   [
@@ -48,6 +54,8 @@ import { CGPADirective } from './directive/CGPA/cgpa.directive';
     CGPADirective,
     AngularFileUploaderComponent,
     PdfViewerModule,
+    LoadingComponent
+
 
   ]
 

@@ -26,6 +26,9 @@ import { PersonalpreviewComponent } from './previewdetails/personalpreview/perso
 import { EducationpreviewComponent } from './previewdetails/educationpreview/educationpreview.component';
 import { PaymentpreviewComponent } from './previewdetails/paymentpreview/paymentpreview.component';
 import { DocumentspreviewComponent } from './previewdetails/documentspreview/documentspreview.component';
+import { SpinnerService } from './spinner.service';
+import { InterceptorService } from './interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 @NgModule({
@@ -54,7 +57,12 @@ import { DocumentspreviewComponent } from './previewdetails/documentspreview/doc
     ToastrModule.forRoot(),
 
   ],
-  providers: [ValidationService, UtilityService, RegisterService, LoginService, SessionstorageService,{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  providers: [ValidationService, UtilityService, RegisterService, LoginService, SessionstorageService, SpinnerService, {
+    provide: HTTP_INTERCEPTORS,
+    useFactory: (service: SpinnerService) => new InterceptorService(service),
+    multi: true,
+    deps: [SpinnerService]
+  }, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],
   bootstrap: [AppComponent],
   entryComponents: [
