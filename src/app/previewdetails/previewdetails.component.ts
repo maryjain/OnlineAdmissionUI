@@ -18,7 +18,7 @@ profileid:any;
   }
 
   ngOnInit(): void {
-    this.router.navigate(['/personalpreview'] , {state: {data: this.profileid}});
+    this.router.navigate(['/personalpreview']);
     this.showtabs=false;
   }
 
@@ -38,9 +38,9 @@ profileid:any;
 
     }
     else if (sessionStorage.getItem('user')==='admin'){
-      this.router.navigate(['/adminhome/homepage'])
+      this.router.navigate(['/adminhome/reviewapplications'])
       .then(() => {
-        setTimeout(()=>window.location.reload(), 5000);
+       setTimeout(()=>8, 2000);
      });
 
     }

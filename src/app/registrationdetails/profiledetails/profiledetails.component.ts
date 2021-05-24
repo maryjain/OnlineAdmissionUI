@@ -130,9 +130,14 @@ export class ProfiledetailsComponent  {
   jsonReligion = [];
   jsonCommunity = [];
   jsonState = [];
-  jsonDistrict= [];
+  jsonPresentDistrict= [];
+  jsonPermanentDistrict= [];
   jsonQualification = [{key:1,value:'10th'},{key:2,value:'12th'},{key:3,value:'Degree'},{key:4,value:'PG'},{key:5,value:'PHD'},{key:6,value:'Certification'},{key:7,value:'Others'},{key:8,value:'Photo'},{key:9,value:'Sign'}];
   stateTextSelected:any;
+  religionText: string;
+  presentstateText: string;
+  presentstateCode: number;
+  permanentstateText: string;
   isnextPersonalButton:boolean;
   isnextAddressButton:boolean;
   isSelectOptionPersonalInvalid: boolean;
@@ -142,7 +147,7 @@ export class ProfiledetailsComponent  {
   isSelectOptionEducationInvalid:boolean;
   isShowCommunity:boolean;
   errors = errorMessages;
-  religionText: string;
+
   isEWSvisible:boolean;
   onChange = (year: Date) => { };
   onTouched = () => { };
@@ -247,10 +252,13 @@ export class ProfiledetailsComponent  {
     // create object to be pass as json in rest api PUT,POST call
 
     this.person = new Person('', null, '', null, '');
-    this.present_address = new Address('', '', '', null,null,false,null);
-    this.permanent_address = new Address('', '', '', null,null,false,null);
+    this.present_address = new Address('', '', '', '','',null,false,null);
+    this.permanent_address = new Address('', '', '', '','',null,false,null);
 
     this.religionText="";
+    this.presentstateText= "";
+    this.permanentstateText= "";
+    this.presentstateCode =0;
     this.logintUserProfileId = sessionStorage.getItem('profileid');
     console.log("______*****_____ logintUserProfileId="+ this.logintUserProfileId);
 
@@ -360,9 +368,11 @@ export class ProfiledetailsComponent  {
     permanent_addressline2: ['', [Validators.required,Validators.pattern(customregExps.addressline)]],
    // permanent_addresstype: ['', [Validators.required]],
     permanent_pincode: ['', [Validators.required, Validators.pattern(customregExps.pincode)]],
+    permanent_state: ['', [Validators.required]],
     permanent_districtcode: ['', [Validators.required]],
     present_addressline1: ['', [Validators.required,Validators.pattern(customregExps.addressline)]],
     present_addressline2: ['', [Validators.required,Validators.pattern(customregExps.addressline)]],
+    present_state: ['', [Validators.required]],
   //  present_addresstype: ['', [Validators.required]],
     present_pincode: ['', [Validators.required, Validators.pattern(customregExps.pincode)]],
     present_districtcode: ['', [Validators.required]],
@@ -622,10 +632,11 @@ POSTEducation()
 
 addAddress()
 {
-  this.present_address = new Address('', '', '', null,null,false,null);
+  this.present_address = new Address('', '', '', '','',null,false,null);
   this.present_address.addressline1= this.addressDetailsForm.get('present_addressline1').value;
   this.present_address.addressline2= this.addressDetailsForm.get('present_addressline2').value;
-  this.present_address.districtcode= this.addressDetailsForm.get('present_districtcode').value;
+  this.present_address.state= this.presentstateText;
+  this.present_address.district= this.addressDetailsForm.get('present_districtcode').value;
   this.present_address.pincode= this.addressDetailsForm.get('present_pincode').value;
   this.present_address.addresstype= 'Present';
   this.present_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
@@ -633,10 +644,11 @@ addAddress()
   this.registrationdetailsSrv.addAddress(this.present_address).subscribe((data) => {
     this.notifyService.showSuccess(" Added Succesfully", "Present Address Details");
     console.log('present POST addid= ' + data.addid);
-    this.permanent_address = new Address('', '', '', null,null,false,null);
+    this.permanent_address = new Address('', '', '', '','',null,false,null);
     this.permanent_address.addressline1= this.addressDetailsForm.get('permanent_addressline1').value;
     this.permanent_address.addressline2= this.addressDetailsForm.get('permanent_addressline2').value;
-    this.permanent_address.districtcode= this.addressDetailsForm.get('permanent_districtcode').value;
+    this.permanent_address.state= this.permanentstateText;
+    this.permanent_address.district= this.addressDetailsForm.get('permanent_districtcode').value;
     this.permanent_address.pincode= this.addressDetailsForm.get('permanent_pincode').value;
     this.permanent_address.sameaddress=this.addressDetailsForm.get('addresscheckbox').value;
     this.permanent_address.addresstype= 'Permanent';
@@ -804,7 +816,25 @@ public isClickedAddressNext():void
     if(this.addressDetailsForm.get('addresscheckbox').value === true){
       this.addressDetailsForm.controls['permanent_addressline1'].setValue(this.addressDetailsForm.get('present_addressline1').value);
       this.addressDetailsForm.controls['permanent_addressline2'].setValue(this.addressDetailsForm.get('present_addressline2').value);
-      //this.addressDetailsForm.controls['permanent_addresstype'].setValue(this.addressDetailsForm.get('present_addresstype').value);
+      this.addressDetailsForm.controls['permanent_state'].setValue(this.presentstateCode);
+      this.jsonPermanentDistrict=[];
+      this.registrationdetailsSrv.getDistrictByState(this.presentstateCode).subscribe((res ) => {
+        let json = res;
+        for (var type in json) {
+          let item = {key:"",value:""};
+          item.key = type;
+          item.value = json[type];
+          this.jsonPermanentDistrict.push(item);
+      }
+        console.log('this.jsonPresentDistrict = ' + this.jsonPermanentDistrict);
+       },
+      (err: HttpErrorResponse) => {
+        console.log("Error status = "+ err.statusText);
+       console.log("Error occured district = "+ err.message);
+      });
+
+
+      this.permanentstateText =this.presentstateText;
       this.addressDetailsForm.controls['permanent_districtcode'].setValue(this.addressDetailsForm.get('present_districtcode').value);
       this.addressDetailsForm.controls['permanent_pincode'].setValue(this.addressDetailsForm.get('present_pincode').value);
     }
@@ -835,24 +865,50 @@ public isClickedAddressNext():void
   }
 
 
-  onChangeState($event):void
+  onChangeState($event,type:string):void
   {
+    this.jsonPresentDistrict=[];
+    this.jsonPermanentDistrict=[];
       // Kerala statecode =1
+      if(type === 'Domicile'){
     this.stateTextSelected = $event.target.options[$event.target.options.selectedIndex].text;
-    this.registrationdetailsSrv.getDistrictByState(this.personalDetailsForm.get('state').value).subscribe((res ) => {
+      }
+      else if(type === 'Present'){
+      this.presentstateText= $event.target.options[$event.target.options.selectedIndex].text;
+      this.presentstateCode=this.addressDetailsForm.get('present_state').value;
+      console.log("++++++++++++++ presentstateCode ="+this.presentstateCode);
+      this.registrationdetailsSrv.getDistrictByState(this.addressDetailsForm.get('present_state').value).subscribe((res ) => {
       let json = res;
       for (var type in json) {
         let item = {key:"",value:""};
         item.key = type;
         item.value = json[type];
-        this.jsonDistrict.push(item);
+        this.jsonPresentDistrict.push(item);
     }
-      console.log('this.jsonDistrict = ' + this.jsonDistrict);
+      console.log('this.jsonPresentDistrict = ' + this.jsonPresentDistrict);
+     },
+    (err: HttpErrorResponse) => {
+      console.log("Error status = "+ err.statusText);
+     console.log("Error occured district Present = "+ err.message);
+    });
+  }
+  else if(type === 'Permanent'){
+    this.permanentstateText= $event.target.options[$event.target.options.selectedIndex].text;
+    this.registrationdetailsSrv.getDistrictByState(this.addressDetailsForm.get('permanent_state').value).subscribe((res ) => {
+      let json = res;
+      for (var type in json) {
+        let item = {key:"",value:""};
+        item.key = type;
+        item.value = json[type];
+        this.jsonPermanentDistrict.push(item);
+    }
+      console.log('this.jsonPresentDistrict = ' + this.jsonPermanentDistrict);
      },
     (err: HttpErrorResponse) => {
       console.log("Error status = "+ err.statusText);
      console.log("Error occured district = "+ err.message);
     });
+  }
   }
  // Community is present for Hindu( 1 ) and Christain( 3 ) as per database value
   public  onChangeReligion($event){
@@ -905,6 +961,7 @@ public isClickedAddressNext():void
   get present_addressline2() { return this.addressDetailsForm.get('present_addressline2'); }
   get present_addresstype() { return this.addressDetailsForm.get('present_addresstype'); }
   get present_districtcode() { return this.addressDetailsForm.get('present_districtcode'); }
+  get present_state() { return this.addressDetailsForm.get('present_state'); }
   get present_pincode() { return this.addressDetailsForm.get('present_pincode'); }
 
   //Permanent Address  details
@@ -912,6 +969,7 @@ public isClickedAddressNext():void
   get permanent_addressline2() { return this.addressDetailsForm.get('permanent_addressline2'); }
   get permanent_addresstype() { return this.addressDetailsForm.get('permanent_addresstype'); }
   get permanent_districtcode() { return this.addressDetailsForm.get('permanent_districtcode'); }
+  get permanent_state() { return this.addressDetailsForm.get('permanent_state'); }
   get permanent_pincode() { return this.addressDetailsForm.get('permanent_pincode'); }
 
 

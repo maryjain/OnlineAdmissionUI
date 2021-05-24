@@ -31,7 +31,19 @@ font-weight: bold;
   padding:15px;
 }
 
+.mat-column-converteddata
+{
+  min-width: 500px;
+}
 
+.mat-column-documenttype,.mat-column-documentformat
+{
+  max-width: 100px;
+}
+.mat-column-updateddate,
+{
+  max-width: 140px;
+}
 // ***** Mat table css ends  *****
 //raised shadow
 .blog-shadow-dreamy {

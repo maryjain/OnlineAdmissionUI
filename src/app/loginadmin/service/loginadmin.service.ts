@@ -10,10 +10,12 @@ export class LoginadminService {
   constructor(private http: HttpClient) { this.isloggedIn = false; }
 
   apiUrl = `${environment.adminapiUrl}`;
+  //clientUrl = `${environment.clientUrl}`;
   isloggedIn: boolean;
   deptid: number;
   public headers = new HttpHeaders().set('Accept', 'application/json')
   .set('content-type', 'application/json');
+
 
 
  login(user: Departmentuser): Observable<any> {

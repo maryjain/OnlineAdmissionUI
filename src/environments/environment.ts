@@ -5,10 +5,13 @@
 
 export const environment = {
   production: false,
-  profileapiUrl: 'http://192.168.29.5/api/persons',
-  commonapiUrl:"http://192.168.29.5:81/api/",
-  profileMasterapiUrl:"http://192.168.29.5/api/profilemanagement",
-  adminapiUrl:"http://192.168.29.5/api/department/admin"
+  profileapiUrl: 'http://192.168.29.5:8082/api/persons',
+  commonapiUrl:'http://192.168.29.5:8082/api/',
+  profileMasterapiUrl:'http://192.168.29.5:8082/api/profilemanagement',
+  adminapiUrl:'http://192.168.29.5:8082/api/department/admin',
+
+
+  //clientUrl:'http://192.168.29.5:4200'
 
 /* profileapiUrl: 'http://10.162.14.145/api/persons',
  commonapiUrl:"http://10.162.14.145:81/api/",

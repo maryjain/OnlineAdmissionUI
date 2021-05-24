@@ -109,6 +109,8 @@ openDialog(previewProfileid:any) {
   };
 
   this.dialog.open(PreviewdetailsComponent, dialogConfig);
+ // .afterClosed()
+  //.subscribe(() => window.opener.location.reload());
 }
 
 

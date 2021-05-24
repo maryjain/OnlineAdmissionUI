@@ -108,7 +108,7 @@
           <div fxLayout="row" fxLayoutAlign="start">
             <div fxFlex="75"><label ast-required>State of Domicile</label></div>
           </div>
-            <select class="custom-select" formControlName="state" (change)="onChangeState($event)">
+            <select class="custom-select" formControlName="state" (change)="onChangeState($event,'Domicile')">
                <option value="">Select</option>
                 <option *ngFor="let item of this.jsonState;let i = index" value="{{item.key}}" [selected]="i == 0">
                   {{item.value}}
@@ -241,12 +241,28 @@
           </mat-form-field>
           </div>
           <div class="form-group example-form">
+            <div fxLayout="row" fxLayoutAlign="start">
+              <div fxFlex="75"><label ast-required>State</label></div>
+            </div>
+              <select class="custom-select" formControlName="present_state" (change)="onChangeState($event,'Present')">
+                 <option value="">Select</option>
+                  <option *ngFor="let item of this.jsonState;let i = index" value="{{item.key}}" [selected]="i == 0">
+                    {{item.value}}
+                  </option>
+                </select>
+            <small>
+            <mat-error  *ngIf ="((present_state.touched || isnextAddressButton) && present_state.hasError('required'))">
+              {{errors.stateRequired}}
+            </mat-error>
+            </small>
+           </div>
+          <div class="form-group example-form">
           <div fxLayout="row" fxLayoutAlign="start">
             <div fxFlex="75"><label ast-required>District</label></div>
           </div>
             <select class="custom-select" formControlName="present_districtcode">
                <option value="">Select</option>
-                <option *ngFor="let item of this.jsonDistrict;let i = index" value="{{item.key}}" [selected]="i == 0">
+                <option *ngFor="let item of this.jsonPresentDistrict;let i = index" value="{{item.value}}" [selected]="i == 0">
                   {{item.value}}
                 </option>
               </select>
@@ -256,6 +272,7 @@
           </mat-error>
           </small>
          </div>
+
          <div class="form-group example-form">
           <div fxLayout="row" fxLayoutAlign="start">
             <div fxFlex="75"><label ast-required>Pincode</label></div>
@@ -311,12 +328,28 @@
               </mat-form-field>
               </div>
               <div class="form-group example-form">
+                <div fxLayout="row" fxLayoutAlign="start">
+                  <div fxFlex="75"><label ast-required>State</label></div>
+                </div>
+                  <select class="custom-select" formControlName="permanent_state" (change)="onChangeState($event,'Permanent')">
+                     <option value="">Select</option>
+                      <option *ngFor="let item of this.jsonState;let i = index" value="{{item.key}}" [selected]="i == 0">
+                        {{item.value}}
+                      </option>
+                    </select>
+                <small>
+                <mat-error  *ngIf ="((permanent_state.touched || isnextAddressButton) && permanent_state.hasError('required'))">
+                  {{errors.stateRequired}}
+                </mat-error>
+                </small>
+               </div>
+              <div class="form-group example-form">
               <div fxLayout="row" fxLayoutAlign="start">
                 <div fxFlex="75"><label ast-required>District</label></div>
               </div>
                 <select class="custom-select" formControlName="permanent_districtcode">
                    <option value="">Select</option>
-                    <option *ngFor="let item of this.jsonDistrict;let i = index" value="{{item.key}}" [selected]="i == 0">
+                    <option *ngFor="let item of this.jsonPermanentDistrict;let i = index" value="{{item.value}}" [selected]="i == 0">
                       {{item.value}}
                     </option>
                   </select>
@@ -326,6 +359,7 @@
               </mat-error>
               </small>
              </div>
+
              <div class="form-group example-form">
               <div fxLayout="row" fxLayoutAlign="start">
                 <div fxFlex="75"><label ast-required>Pincode</label></div>

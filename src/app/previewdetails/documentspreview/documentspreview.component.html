@@ -17,7 +17,7 @@
   </ng-container>
   <!-- bank name Column -->
   <ng-container matColumnDef="documentformat">
-    <mat-header-cell *matHeaderCellDef> Document format </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> Format </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <mat-form-field floatLabel="never" appearance="none">
           <input matInput   class="form-control" type="text" placeholder="" [formControl]="element.get('documentformat')" readonly  >
@@ -27,7 +27,7 @@
 
   <!-- updateddate Column -->
   <ng-container matColumnDef="updateddate">
-    <mat-header-cell *matHeaderCellDef> Date of Document Upload</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> Date of Upload</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <mat-form-field floatLabel="never" appearance="none">
           <input matInput   class="form-control" type="text" placeholder="" [formControl]="element.get('updateddate')" readonly  >
@@ -39,7 +39,7 @@
   <ng-container matColumnDef="converteddata">
     <mat-header-cell *matHeaderCellDef> Document Content</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <img [src]="element.get('converteddata').value" height="80" width="80">
+        <img [src]="element.get('converteddata').value" height="550" width="500">
 
   </mat-cell>
   </ng-container>
