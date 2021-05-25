@@ -46,6 +46,7 @@ export const errorMessages: { [key: string]: string } = {
   pincodeRequired: 'Pincode is required',
   districtRequired: 'District is required',
   qualificationtypeRequired: 'Qualification Type is required',
+  documenttypeRequired: 'Document Type is required',
   institutionRequired: 'Institution is required',
   universityRequired: 'University is required',
   yearofpassRequired: 'Year of Pass required',

@@ -867,13 +867,14 @@ public isClickedAddressNext():void
 
   onChangeState($event,type:string):void
   {
-    this.jsonPresentDistrict=[];
-    this.jsonPermanentDistrict=[];
+
+
       // Kerala statecode =1
       if(type === 'Domicile'){
     this.stateTextSelected = $event.target.options[$event.target.options.selectedIndex].text;
       }
       else if(type === 'Present'){
+        this.jsonPresentDistrict=[];
       this.presentstateText= $event.target.options[$event.target.options.selectedIndex].text;
       this.presentstateCode=this.addressDetailsForm.get('present_state').value;
       console.log("++++++++++++++ presentstateCode ="+this.presentstateCode);
@@ -893,6 +894,7 @@ public isClickedAddressNext():void
     });
   }
   else if(type === 'Permanent'){
+    this.jsonPermanentDistrict=[];
     this.permanentstateText= $event.target.options[$event.target.options.selectedIndex].text;
     this.registrationdetailsSrv.getDistrictByState(this.addressDetailsForm.get('permanent_state').value).subscribe((res ) => {
       let json = res;
