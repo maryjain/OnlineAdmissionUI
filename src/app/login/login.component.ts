@@ -75,11 +75,13 @@ public hintEmailArr = [ hintEmailMessages.email1,
       console.log('POST login status= ' + res.data);
       console.log('POST login id= ' + res.id);
       console.log('POST login fullname= ' + res.fullname);
+      console.log('POST login status= ' + res.status);
       if(res.data === "true"){
         this.notifyService.showSuccess(" Login Succesfully", "Login");
         sessionStorage.setItem('user', 'user');
         sessionStorage.setItem('profileid', res.id);
         sessionStorage.setItem('fullname', res.fullname);
+        sessionStorage.setItem('status', res.status);
         sessionStorage.setItem('loggedIn','true');
         sessionStorage.setItem('finalsubmit','false');
         this.loginsrv.setisloggedIn(true);
@@ -142,7 +144,8 @@ public hintEmailArr = [ hintEmailMessages.email1,
   {
     this.isvalidCaptchaEntered = false;
     this.captchaStatus = "";
-    if (this.captcha.trim() !== ""){
+
+    if (this.captcha !== undefined && this.captcha !== null && this.captcha.trim() !== ""){
     let arr = this.captcha.split(' ');
     this.inputCaptcha = parseInt(this.loginForm.get('enteredCaptcha').value, 10);
     let ans = 0;

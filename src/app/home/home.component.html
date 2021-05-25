@@ -12,9 +12,26 @@
           <mat-icon>event</mat-icon>
           <span>Latest Events</span>
         </button>
-        <button mat-menu-item disabled>
+        <button mat-menu-item [matMenuTriggerFor]="contact" >
           <mat-icon>contact_page</mat-icon>
           <span>Contact Us</span>
+        </button>
+      </mat-menu>
+
+      <mat-menu #contact="matMenu" >
+        <button mat-menu-item>
+        <span> <span class="material-icons">
+          phone
+          </span> 0470-2002-511
+        </span>
+        </button>
+        <button mat-menu-item >
+          <span>
+            <span class="material-icons">
+              contact_mail
+              </span>
+              onlinecourseadmission@gmail.com
+            </span>
         </button>
       </mat-menu>
       </div>

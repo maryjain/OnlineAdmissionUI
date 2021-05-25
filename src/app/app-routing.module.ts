@@ -40,7 +40,7 @@ const routes: Routes = [
             ]
           },
 
-        ] },
+        ] , canActivate: [AuthGuard]},
         { path: 'loginadmin', component: LoginadminComponent },
         { path: 'adminhome', component: AdminhomeComponent,
         children: [
@@ -50,12 +50,12 @@ const routes: Routes = [
         ], canActivate: [AuthGuard]
         },
 
-        { path: 'previewdetails/:id', component: PreviewdetailsComponent },
-        { path: 'personalpreview/:id', component: PersonalpreviewComponent },
-        { path: 'educationpreview', component: EducationpreviewComponent },
-        { path: 'addresspreview', component: AddresspreviewComponent },
-        { path: 'paymentpreview', component: PaymentpreviewComponent },
-        { path: 'documentspreview', component: DocumentspreviewComponent },
+        { path: 'previewdetails/:id', component: PreviewdetailsComponent, canActivate: [AuthGuard] },
+        { path: 'personalpreview/:id', component: PersonalpreviewComponent , canActivate: [AuthGuard]},
+        { path: 'educationpreview', component: EducationpreviewComponent , canActivate: [AuthGuard]},
+        { path: 'addresspreview', component: AddresspreviewComponent , canActivate: [AuthGuard]},
+        { path: 'paymentpreview', component: PaymentpreviewComponent , canActivate: [AuthGuard]},
+        { path: 'documentspreview', component: DocumentspreviewComponent , canActivate: [AuthGuard]},
         { path: '**', component: PagenotfoundComponent }
   ];
 

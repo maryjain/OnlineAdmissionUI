@@ -27,7 +27,9 @@
    <ng-container matColumnDef="reason">
     <mat-header-cell *matHeaderCellDef> Reason </mat-header-cell>
       <mat-cell *matCellDef="let element">
+        <p>
        {{element.reason}}
+      </p>
   </mat-cell>
   </ng-container>
    <mat-header-row *matHeaderRowDef="displayedColumnsViewStatusDetails"></mat-header-row>

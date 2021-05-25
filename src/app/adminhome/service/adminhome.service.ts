@@ -29,7 +29,7 @@ export class AdminhomeService {
 
 
 
-  updatePersonReivew(person: Person): Observable<Person> {
+  updatePersonReview(person: Person): Observable<Person> {
     const body = JSON.stringify(person);
     console.log("Json Body : "+body);
     return this.http.put<Person>(this.apiUrl+'/applicationreview/'+person.profileid, body,{'headers': this.headers});

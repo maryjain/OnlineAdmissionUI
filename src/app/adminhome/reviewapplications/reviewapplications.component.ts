@@ -12,6 +12,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PreviewdetailsComponent } from 'src/app/previewdetails/previewdetails.component';
 import { RegistrationdetailsService } from 'src/app/registrationdetails/service/registrationdetails.service';
 import {Location} from "@angular/common";
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reviewapplications',
@@ -39,6 +40,7 @@ export class ReviewapplicationsComponent implements OnInit , OnDestroy{
                 this.registersrv.listen().subscribe((m:any)=>{
                 console.log(" m listen"+ m);
                 this.location.replaceState('/adminhome/reviewapplications');
+                delay(2000);
                 window.location.reload();
                 });
 
@@ -81,15 +83,23 @@ export class ReviewapplicationsComponent implements OnInit , OnDestroy{
     });
   }
 
-postPersonReivew(row:number)
+  postPersonReview(currentprofileid:any)
 {
-    let c: AbstractControl;
-    c = this.personArray.controls[row];
+    const previewProfileid=  currentprofileid.value;
     this.person = new Person('', null, '', null,'');
-    this.person.profileid= c.get('profileid').value;
-    this.person.status= c.get('status').value;
-    this.person.reason= c.get('reason').value;
-    this.adminhomeSrv.updatePersonReivew(this.person).subscribe((data) => {
+    let c: AbstractControl;
+    for (let index in this.personArray.controls) {
+      console.log('@@@@@@@@@ ###### inside for loop row = ' + index);
+    c = this.personArray.controls[index];
+    if( c.get('profileid').value == previewProfileid )
+    {
+      console.log('@@@@@@@@@ ###### loop previewProfileid = ' + previewProfileid);
+      this.person.profileid= c.get('profileid').value;
+      this.person.status= c.get('status').value;
+      this.person.reason= c.get('reason').value;
+    }
+    }
+    this.adminhomeSrv.updatePersonReview(this.person).subscribe((data) => {
       this.notifyService.showSuccess(" Added Succesfully", " Application Review");
       console.log('PUT review profileid = ' + data.profileid);
     },
@@ -101,11 +111,10 @@ postPersonReivew(row:number)
 
 }
 
-showPersonReview(row:number)
+showPersonReview(currentprofileid:any)
 {
-  let c: AbstractControl;
-  c = this.personArray.controls[row];
-  const previewProfileid=  c.get('profileid').value;
+  const previewProfileid=  currentprofileid.value;
+  console.log('################%%%%&&&&  review profileid ' + currentprofileid.value);
   this.openDialog(previewProfileid);
 }
 

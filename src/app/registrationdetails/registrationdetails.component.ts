@@ -14,9 +14,17 @@ export class RegistrationdetailsComponent implements OnInit {
   loggedIn:boolean;
   constructor(private router: Router){}
   ngOnInit(): void {
+
+    if(sessionStorage.getItem('status')==='Registered')
+    {
     this.map.set('Profile Summary', 'profilesummary');
     this.map.set('Register Profile Details', 'profiledetails');
     this.map.set('View Status', 'viewstatus');
+    }
+    else{
+    this.map.set('Profile Summary', 'profilesummary');
+    this.map.set('View Status', 'viewstatus');
+    }
     this.profileid = sessionStorage.getItem('profileid');
     this.fullname = sessionStorage.getItem('fullname');
     console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));

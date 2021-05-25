@@ -125,7 +125,7 @@ captcha_validation(): void
 {
 this.isvalidCaptchaEntered = false;
 this.captchaStatus = "";
-if (this.captcha.trim() !== ""){
+if (this.captcha !== undefined && this.captcha !== null && this.captcha.trim() !== ""){
 let arr = this.captcha.split(' ');
 this.inputCaptcha = parseInt(this.loginForm.get('enteredCaptcha').value, 10);
 let ans = 0;

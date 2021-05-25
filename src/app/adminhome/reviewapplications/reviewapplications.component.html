@@ -65,15 +65,15 @@
     <!-- preview Column -->
     <ng-container matColumnDef="preview">
       <mat-header-cell *matHeaderCellDef> Preview </mat-header-cell>
-        <mat-cell *matCellDef="let i = index;">
-          <button mat-button mat-raised-button color="accent" (click)="showPersonReview(i)" >Preview</button>
+        <mat-cell *matCellDef="let i = index;let element">
+          <button mat-button mat-raised-button color="accent" (click)="showPersonReview(element.get('profileid'))" >Preview</button>
         </mat-cell>
     </ng-container>
 <!-- submit Column -->
 <ng-container matColumnDef="submit">
   <mat-header-cell *matHeaderCellDef>Submit </mat-header-cell>
-    <mat-cell *matCellDef="let i = index;">
-      <button mat-button mat-raised-button color="warn" (click)="postPersonReivew(i)">Submit</button>
+    <mat-cell *matCellDef="let i = index;let element">
+      <button mat-button mat-raised-button color="warn" (click)="postPersonReview(element.get('profileid'))">Submit</button>
     </mat-cell>
 </ng-container>
   <mat-header-row *matHeaderRowDef="displayedColumnsReviewApplicationDetails"></mat-header-row>

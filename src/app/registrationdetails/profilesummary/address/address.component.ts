@@ -27,6 +27,17 @@ export class AddressComponent implements OnInit {
          this.addressDetailsForm.controls['present_addressline2'].setValue(json[0][type]);
          console.log('************ '+type+'  = ' + this.addressDetailsForm.get('present_addressline2').value);
        }
+
+       if(type ==='district')
+       {
+         this.addressDetailsForm.controls['present_districtcode'].setValue(json[0][type]);
+         console.log('************ '+type+'  = ' + this.addressDetailsForm.get('present_districtcode').value);
+       }
+       if(type ==='state')
+       {
+         this.addressDetailsForm.controls['present_state'].setValue(json[0][type]);
+         console.log('************ '+type+'  = ' + this.addressDetailsForm.get('present_state').value);
+       }
        if(type ==='pincode')
        {
          this.addressDetailsForm.controls['present_pincode'].setValue(json[0][type]);
@@ -50,6 +61,16 @@ export class AddressComponent implements OnInit {
        {
          this.addressDetailsForm.controls['permanent_addressline2'].setValue(json[1][type]);
          console.log('************ '+type+'  = ' + this.addressDetailsForm.get('permanent_addressline2').value);
+       }
+       if(type ==='district')
+       {
+         this.addressDetailsForm.controls['permanent_districtcode'].setValue(json[1][type]);
+         console.log('************ '+type+'  = ' + this.addressDetailsForm.get('permanent_districtcode').value);
+       }
+       if(type ==='state')
+       {
+         this.addressDetailsForm.controls['permanent_state'].setValue(json[1][type]);
+         console.log('************ '+type+'  = ' + this.addressDetailsForm.get('permanent_state').value);
        }
        if(type ==='pincode')
        {
@@ -76,13 +97,16 @@ export class AddressComponent implements OnInit {
     permanent_addressline1: ['' ],
     permanent_addressline2: ['' ],
     permanent_addresstype: [''],
-    permanent_pincode: [''],
     permanent_districtcode: [''],
+    permanent_state: [''],
+    permanent_pincode: [''],
     present_addressline1: [''],
     present_addressline2: [''],
     present_addresstype: [''],
     present_pincode: [''],
     present_districtcode: [''],
+    present_state: [''],
+
 
   });
 
