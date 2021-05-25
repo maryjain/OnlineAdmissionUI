@@ -18,7 +18,7 @@ export class AdminhomeComponent implements OnInit {
 
   constructor(private router: Router){}
   ngOnInit(): void {
-    //this.isLoading = false;
+    this.isLoading = false;
     this.map.set('Application Count', 'homepage');
     this.map.set('Review Applications', 'reviewapplications');
 
@@ -44,18 +44,24 @@ export class AdminhomeComponent implements OnInit {
     return Array.from(map.keys());
   }
 
-
-
-
   onsidenavClick(item:any)
   {
-   // this.load();
+    this.load();
     this.router.navigate(['/adminhome/'+item]);
   }
 
   public logoutUser():void
   {
     sessionStorage.clear();
+
+    //this.router.navigate(['./loginadmin']);
+
+  }
+
+  // spinner load function
+  load() : void {
+    this.isLoading = true;
+    setTimeout( () => this.isLoading = false, 1000 );
   }
 
 }

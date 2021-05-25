@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Address } from 'src/app/model/Address';
 import { Documentupload } from 'src/app/model/Documentupload';
 import { Education } from 'src/app/model/Education';
@@ -115,4 +115,13 @@ export class RegistrationdetailsService {
     return this.http.get<Documentupload[]>(this.apiUrl+'/upload/'+profileid, {responseType: 'json'});
   }
 
+
+  private _listners = new Subject<any>();
+  listen(): Observable<any>
+  {
+    return this._listners.asObservable();
+  }
+ filters(filterBy: string){
+   this._listners.next(filterBy);
+ }
 }

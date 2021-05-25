@@ -8,7 +8,7 @@
   <h4><i>Department : {{deptname}}</i> &nbsp;&nbsp;&nbsp;&nbsp;</h4>
   </div>
   <div>
-    <a mat-button *ngIf="loggedIn" (click)="logoutUser()" routerLink="">
+    <a mat-button *ngIf="loggedIn" (click)="logoutUser()" routerLink="/loginadmin">
     <span class="material-icons" *ngIf="loggedIn">logout</span>Log Out</a>
   </div>
   </div>
@@ -25,9 +25,10 @@
     <mat-sidenav-content>
 
       <div >
-        <router-outlet>
+        <loading *ngIf="isLoading">{{ isLoading }}</loading>
+        <router-outlet  *ngIf="!isLoading">
 
-      </router-outlet>
+        </router-outlet>
       </div>
     </mat-sidenav-content>
 

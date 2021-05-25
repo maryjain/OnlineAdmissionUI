@@ -22,8 +22,18 @@ export class PaymentpreviewComponent implements OnInit {
     this.profileid =history.state.data;
     this.registrationdetailsSrv.getPayment(this.profileid).subscribe((res ) => {
       let json = [];
-      let dobValue = moment(res.updateddate).format('DD-MM-yyyy');
-      let data={'transactionid': res.transactionid, 'bank': res.bank,'applfees': res.applfees,'updateddate': dobValue};
+      let dobValue = '';
+      let data={};
+      console.log("Payment res  ="+res);
+      if(res!=null ){
+        dobValue= moment(res.updateddate).format('DD-MM-yyyy');
+        data={'transactionid': res.transactionid, 'bank': res.bank,'applfees': res.applfees,'updateddate': dobValue};
+      }
+      else{
+        data={'transactionid': '', 'bank': '','applfees': '','updateddate': ''};
+      }
+
+
       json.push(data);
       console.log(" json payment ="+json[0][0]);
       this.dataSourcePaymentDetails = new MatTableDataSource(json);

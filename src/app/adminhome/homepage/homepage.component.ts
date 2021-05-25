@@ -13,20 +13,17 @@ import { delay } from 'rxjs/internal/operators/delay';
 
 })
 export class HomepageComponent implements OnInit   {
-  isLoading = false;
+
   displayedColumnsViewStatusDetails = ['status', 'count'];
   @ViewChild('tableViewStatusDetails', { static: true }) tableViewStatusDetails: MatTable<any>;
 
   dataSourceViewStatusDetails;
   constructor(private router: Router,public adminhomeSrv: AdminhomeService) {
-
    }
 
-
   ngOnInit(): void {
-     this.isLoading = false;
-    // this.load();
-    this.adminhomeSrv.getApplicationstatus().pipe(delay(2000)).subscribe((res ) => {
+
+    this.adminhomeSrv.getApplicationstatus().subscribe((res ) => {
       this.dataSourceViewStatusDetails = new MatTableDataSource(res);
     },
     (err: HttpErrorResponse) => {
@@ -36,12 +33,4 @@ export class HomepageComponent implements OnInit   {
     });
 
   }
-
-  load() : void {
-    this.isLoading = true;
-    setTimeout( () => this.isLoading = false, 2000 );
-  }
-
-
-
 }

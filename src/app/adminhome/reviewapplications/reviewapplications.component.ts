@@ -1,27 +1,32 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from 'src/app/model/Person';
 import { NotificationService } from 'src/app/shared/notification/notification.service';
 import { AdminhomeService } from '../service/adminhome.service';
 import {errorMessages} from '../../helpers/CustomMessges';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PreviewdetailsComponent } from 'src/app/previewdetails/previewdetails.component';
+import { RegistrationdetailsService } from 'src/app/registrationdetails/service/registrationdetails.service';
+import {Location} from "@angular/common";
+
 @Component({
   selector: 'app-reviewapplications',
   templateUrl: './reviewapplications.component.html',
   styleUrls: ['./reviewapplications.component.scss']
 })
-export class ReviewapplicationsComponent implements OnInit {
+export class ReviewapplicationsComponent implements OnInit , OnDestroy{
+
   deptuserid: any;
   errors = errorMessages;
 
   personArray = new FormArray([]);
   jsonReviewStatus = [{key:1,value:'Registered'},{key:2,value:'Paid'},{key:3,value:'Completed'},{key:4,value:'Approve'},{key:5,value:'Reject'}];
   person: Person;
+
   //** ReviewApplicationDetails Table   **/
   displayedColumnsReviewApplicationDetails = ['profileid', 'fullname','emailid','status','reason','preview','submit'];
   @ViewChild('tableReviewApplicationDetails', { static: false }) tableReviewApplicationDetails: MatTable<any>;
@@ -29,7 +34,15 @@ export class ReviewapplicationsComponent implements OnInit {
   dataSourceReviewApplicationDetails;
 
   constructor(private router: Router,private fb: FormBuilder,public adminhomeSrv: AdminhomeService,
-              public notifyService: NotificationService , private dialog: MatDialog) { }
+              public notifyService: NotificationService , private dialog: MatDialog, private activerouter :ActivatedRoute, public registersrv: RegistrationdetailsService,private location: Location )
+              {
+                this.registersrv.listen().subscribe((m:any)=>{
+                console.log(" m listen"+ m);
+                this.location.replaceState('/adminhome/reviewapplications');
+                window.location.reload();
+                });
+
+              }
 
   ngOnInit(): void {
 
@@ -121,4 +134,9 @@ public personalDetailsForm= this.fb.group({
   status: ['', [Validators.required]],
   reason: [''],
 });
+
+ngOnDestroy() {
+
+}
+
 }

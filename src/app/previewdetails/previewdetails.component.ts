@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {  MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import {Observable, Subject} from 'rxjs';
+import { RegistrationdetailsService } from '../registrationdetails/service/registrationdetails.service';
 @Component({
   selector: 'app-previewdetails',
   templateUrl: './previewdetails.component.html',
@@ -11,8 +13,8 @@ import { Router } from '@angular/router';
 export class PreviewdetailsComponent implements OnInit {
 
 showtabs:boolean;
-profileid:any;
-  constructor(public router: Router, public dialogRef: MatDialogRef<PreviewdetailsComponent>, @Inject(MAT_DIALOG_DATA) data) {
+profileid:number;
+  constructor(public router: Router, public dialogRef: MatDialogRef<PreviewdetailsComponent>, @Inject(MAT_DIALOG_DATA) data, public regsrv: RegistrationdetailsService) {
 
   this.profileid=data.id;
   console.log("__________________Dialog ____________= "+this.profileid);
@@ -20,8 +22,8 @@ profileid:any;
 
   ngOnInit(): void {
 
-    this.router.navigate(['/personalpreview']);
-    this.showtabs=false;
+    this.router.navigate(['/personalpreview',this.profileid]);
+    this.showtabs = false;
   }
 
   showTabsClick():void
@@ -30,6 +32,7 @@ profileid:any;
   }
 
   onConfirmClick(): void {
+
     if(sessionStorage.getItem('user')==='user')
     {
       this.router.navigate(['/registrationdetails/profiledetails', {data: 5 }])
@@ -40,6 +43,7 @@ profileid:any;
 
     }
     else if (sessionStorage.getItem('user')==='admin'){
+
       this.router.navigate(['/adminhome/reviewapplications'])
       .then(() => {
        setTimeout(()=>8, 2000);
@@ -48,6 +52,8 @@ profileid:any;
     }
 
     this.dialogRef.close(true);
+    this.regsrv.filters("Dialog close");
   }
+
 
 }

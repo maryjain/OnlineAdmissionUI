@@ -23,6 +23,7 @@ import { ReviewapplicationsComponent } from './adminhome/reviewapplications/revi
 import { LoginadminComponent } from './loginadmin/loginadmin/loginadmin.component';
 import { HomepageComponent } from './adminhome/homepage/homepage.component';
 import { DocumentspreviewComponent } from './previewdetails/documentspreview/documentspreview.component';
+import { AuthGuard } from './AuthGuard';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
@@ -44,12 +45,13 @@ const routes: Routes = [
         { path: 'adminhome', component: AdminhomeComponent,
         children: [
           { path: 'reviewapplications', component: ReviewapplicationsComponent },
+          { path: 'reviewapplications/:id', component: ReviewapplicationsComponent},
           { path: 'homepage', component: HomepageComponent },
-        ]
+        ], canActivate: [AuthGuard]
         },
 
-        { path: 'previewdetails', component: PreviewdetailsComponent },
-        { path: 'personalpreview', component: PersonalpreviewComponent },
+        { path: 'previewdetails/:id', component: PreviewdetailsComponent },
+        { path: 'personalpreview/:id', component: PersonalpreviewComponent },
         { path: 'educationpreview', component: EducationpreviewComponent },
         { path: 'addresspreview', component: AddresspreviewComponent },
         { path: 'paymentpreview', component: PaymentpreviewComponent },

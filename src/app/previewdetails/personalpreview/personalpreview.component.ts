@@ -1,21 +1,24 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RegistrationdetailsService } from 'src/app/registrationdetails/service/registrationdetails.service';
 import * as moment from 'moment';
 import { SpinnerService } from 'src/app/spinner.service';
+import {ActivatedRoute} from '@angular/router';
+
 @Component({
   selector: 'app-personalpreview',
   templateUrl: './personalpreview.component.html',
   styleUrls: ['./personalpreview.component.scss']
 })
-export class PersonalpreviewComponent implements OnInit {
+export class PersonalpreviewComponent implements OnInit , OnDestroy {
    profileid:any;
    isLoading = false;
+   sub:any;
   //profileid = sessionStorage.getItem('profileid');
 
 
-  constructor(private fb: FormBuilder, public registrationdetailsSrv: RegistrationdetailsService, public spinnerService: SpinnerService)
+  constructor(private fb: FormBuilder, public registrationdetailsSrv: RegistrationdetailsService, public spinnerService: SpinnerService, private router :ActivatedRoute )
    {
      this.spinnerService
     .onLoadingChanged
@@ -26,8 +29,15 @@ export class PersonalpreviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = false;
-    this.profileid =history.state.data;
-    console.log("parent state "+this.profileid);
+     this.profileid =history.state.data;
+   // this.profileid=this.router.snapshot.params;
+
+    this.sub = this.router.params.subscribe(params => {
+    this.profileid = +params['id']; // (+) converts string 'id' to a number
+
+      // In a real app: dispatch action to load the details here.
+   });
+    console.log(" %%%%%%%%%  parent state "+this.profileid);
     this.registrationdetailsSrv.getPersonDetails(this.profileid).subscribe((res ) => {
       let json = res;
       for (var type in json) {
@@ -130,4 +140,12 @@ export class PersonalpreviewComponent implements OnInit {
     annualincome:  [''],
     creamylayer:['']
   });
+
+
+
+
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }
