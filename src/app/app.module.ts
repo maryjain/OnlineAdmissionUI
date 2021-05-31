@@ -29,7 +29,7 @@ import { DocumentspreviewComponent } from './previewdetails/documentspreview/doc
 import { SpinnerService } from './spinner.service';
 import { InterceptorService } from './interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthGuard } from './AuthGuard';
+//import { AuthGuard } from './AuthGuard';
 
 
 @NgModule({
@@ -58,7 +58,8 @@ import { AuthGuard } from './AuthGuard';
     ToastrModule.forRoot(),
 
   ],
-  providers: [AuthGuard, ValidationService, UtilityService, RegisterService, LoginService, SessionstorageService, SpinnerService, {
+  providers: [ ValidationService, UtilityService, RegisterService, LoginService, SessionstorageService, SpinnerService,//AuthGuard,
+     {
     provide: HTTP_INTERCEPTORS,
     useFactory: (service: SpinnerService) => new InterceptorService(service),
     multi: true,

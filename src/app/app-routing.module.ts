@@ -23,11 +23,13 @@ import { ReviewapplicationsComponent } from './adminhome/reviewapplications/revi
 import { LoginadminComponent } from './loginadmin/loginadmin/loginadmin.component';
 import { HomepageComponent } from './adminhome/homepage/homepage.component';
 import { DocumentspreviewComponent } from './previewdetails/documentspreview/documentspreview.component';
-import { AuthGuard } from './AuthGuard';
+import { AuthcodereaderComponent } from './shared/authcodereader/authcodereader.component';
+//import { AuthGuard } from './AuthGuard';
 const routes: Routes = [
           { path: '', redirectTo: 'register', pathMatch:'full' },
           { path: 'register', component: RegisterhomeComponent },
           { path: 'login', component: LoginComponent },
+          { path: 'authcodereader', component: AuthcodereaderComponent },
           { path: 'registrationdetails', component: RegistrationdetailsComponent, children: [
           { path: 'profiledetails', component:  ProfiledetailsComponent},
           { path: 'viewstatus', component:  ViewstatusComponent},
@@ -40,22 +42,29 @@ const routes: Routes = [
             ]
           },
 
-        ] , canActivate: [AuthGuard]},
+        ] , //canActivate: [AuthGuard]
+      },
         { path: 'loginadmin', component: LoginadminComponent },
         { path: 'adminhome', component: AdminhomeComponent,
         children: [
           { path: 'reviewapplications', component: ReviewapplicationsComponent },
           { path: 'reviewapplications/:id', component: ReviewapplicationsComponent},
           { path: 'homepage', component: HomepageComponent },
-        ], canActivate: [AuthGuard]
+        ], //canActivate: [AuthGuard]
         },
 
-        { path: 'previewdetails/:id', component: PreviewdetailsComponent, canActivate: [AuthGuard] },
-        { path: 'personalpreview/:id', component: PersonalpreviewComponent , canActivate: [AuthGuard]},
-        { path: 'educationpreview', component: EducationpreviewComponent , canActivate: [AuthGuard]},
-        { path: 'addresspreview', component: AddresspreviewComponent , canActivate: [AuthGuard]},
-        { path: 'paymentpreview', component: PaymentpreviewComponent , canActivate: [AuthGuard]},
-        { path: 'documentspreview', component: DocumentspreviewComponent , canActivate: [AuthGuard]},
+        { path: 'previewdetails/:id', component: PreviewdetailsComponent,// canActivate: [AuthGuard]
+      },
+        { path: 'personalpreview/:id', component: PersonalpreviewComponent , //canActivate: [AuthGuard]
+      },
+        { path: 'educationpreview', component: EducationpreviewComponent , //canActivate: [AuthGuard]
+      },
+        { path: 'addresspreview', component: AddresspreviewComponent , //canActivate: [AuthGuard]
+      },
+        { path: 'paymentpreview', component: PaymentpreviewComponent , //canActivate: [AuthGuard]
+      },
+        { path: 'documentspreview', component: DocumentspreviewComponent , //canActivate: [AuthGuard]
+      },
         { path: '**', component: PagenotfoundComponent }
   ];
 

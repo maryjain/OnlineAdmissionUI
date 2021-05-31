@@ -7,7 +7,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="icon" type="image" href="favicon.ico">
+  <script>
+    var child;
 
+    var stateValue= '3ce5c020-6086-4871-a855-e5e7fcebcf98';
+    var returnValue = "";
+    var codeChallengeValue = "";
+
+    function generateCodeVerifier()
+    {
+
+      var randomByteArray = new Uint8Array(32);
+      window.crypto.getRandomValues(randomByteArray);
+      returnValue = base64urlencode(randomByteArray);
+
+      console.log("*********************  generateCodeVerifier =" + returnValue);
+      generateCodeChallenge();
+    }
+
+    async function generateCodeChallenge()
+   {
+
+     let codeVerifier =  returnValue;
+     let textEncoder = new  TextEncoder();
+     let encodedValue = textEncoder.encode(codeVerifier);
+     let digest = await window.crypto.subtle.digest('SHA-256',encodedValue);
+      codeChallengeValue=  base64urlencode(Array.from(new Uint8Array(digest)));
+     console.log("**************************   generateCodeChallenge =" + codeChallengeValue);
+     getAuthCode();
+   }
+   function base64urlencode(sourceValue)
+    {
+    let stringValue = String.fromCharCode.apply(null, sourceValue);
+    let base64Encode = btoa(stringValue);
+    let base64urlencode = base64Encode.replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+    return base64urlencode;
+    }
+
+    function getAuthCode()
+  {
+    let authorizationURL="http://localhost:8180/auth/realms/Profile/protocol/openid-connect/auth";
+    authorizationURL+= "?client_id=profileclientapp&response_type=code&scope=openid profile&redirect_uri=http://localhost:4200/authcodereader";
+    authorizationURL+= "&state="+ stateValue;
+    authorizationURL+= "&code_challenge="+  codeChallengeValue;
+    authorizationURL+= "&code_challenge_method=S256";
+    //child=window.open(authorizationURL,'_self');
+    var popupWinWidth = 800;
+    var popupWinHeight = 600;
+    var left = (screen.width - popupWinWidth) / 2;
+    var top = 100;
+
+     child=window.open(authorizationURL,'authorizationRequestWindow','width='+popupWinWidth+',height='+popupWinHeight+',left='+left+',top='+top);
+    }
+
+
+  function postAuthorize(state,authcode){
+    //window.location.reload();
+  //alert("state ="+ state+" authcode="+ authcode);
+  if(stateValue ==state)
+  {
+   console.log("State Equal");
+  }
+
+  }
+
+
+    </script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>

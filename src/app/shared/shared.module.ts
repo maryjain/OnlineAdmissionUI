@@ -16,6 +16,7 @@ import { PercentageDirective } from './directive/Percentage/percentage.directive
 import { CGPADirective } from './directive/CGPA/cgpa.directive';
 
 import { LoadingComponent } from './loading/loading.component';
+import { AuthcodereaderComponent } from './authcodereader/authcodereader.component';
 
 
 
@@ -24,7 +25,8 @@ import { LoadingComponent } from './loading/loading.component';
     AngularFileUploaderComponent,
     PercentageDirective,
     CGPADirective,
-    LoadingComponent
+    LoadingComponent,
+    AuthcodereaderComponent
     ],
   providers: [CurrencyPipe,PdfViewerComponent
 
@@ -54,9 +56,8 @@ import { LoadingComponent } from './loading/loading.component';
     CGPADirective,
     AngularFileUploaderComponent,
     PdfViewerModule,
-    LoadingComponent
-
-
+    LoadingComponent,
+    AuthcodereaderComponent
   ]
 
 })

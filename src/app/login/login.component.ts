@@ -99,7 +99,8 @@ public hintEmailArr = [ hintEmailMessages.email1,
         this.notifyService.showError(" Error while Login", "Login");
         sessionStorage.setItem('loggedIn','false');
         sessionStorage.clear();
-        if (err.error['status'] == 400 && err.error['message'] != null && err.error['message'] != undefined ){
+        if(err.error != null){
+        if ((err.error['status'] == 400 || err.error['status'] == 401 || err.error['status'] == 404||err.error['status'] == 402) && err.error['message'] != null && err.error['message'] != undefined ){
         this.errorlist =  err.error['message'];
         let key: string;
         for (let index in this.errorlist){
@@ -116,6 +117,7 @@ public hintEmailArr = [ hintEmailMessages.email1,
         console.log("err.error['message'][0] = " + key);
         console.log("err.error['status'] = " + err.error['status']);
         }
+      }
      });
 
   }

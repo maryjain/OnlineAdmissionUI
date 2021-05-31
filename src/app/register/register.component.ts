@@ -312,6 +312,9 @@ export class RegisterComponent implements OnInit , OnDestroy{
  }
   }
 
+
+
+
   get fullname() { return this.registrationForm.get('fullname'); }
   get dob() { return this.registrationForm.get('dob'); }
   get emailid() { return this.registrationForm.get('emailid'); }
