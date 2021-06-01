@@ -15,46 +15,47 @@ export class RegistrationdetailsService {
   profileMasterapiUrl = `${environment.profileMasterapiUrl}`;
   apiUrl = `${environment.profileapiUrl}`;
   public headers = new HttpHeaders().set('Accept', 'application/json')
-  .set('content-type', 'application/json');
+  .set('content-type', 'application/json')
+  .set('Authorization', 'Bearer '+sessionStorage.getItem('accessToken'));
 
   constructor(private http: HttpClient) { }
 
   getGender(): Observable<any>{
     console.log(" this.profileapiUrl ="+this.profileMasterapiUrl);
-    return  this.http.get<any>(this.profileMasterapiUrl +  '/gender', {responseType: 'json'});
+    return  this.http.get<any>(this.profileMasterapiUrl +  '/gender', {responseType: 'json','headers': this.headers});
   }
   getNationality(): Observable<any>{
     console.log(" this.profileapiUrl ="+this.profileMasterapiUrl);
-    return  this.http.get<any>(this.profileMasterapiUrl +  '/nationality', {responseType: 'json'});
+    return  this.http.get<any>(this.profileMasterapiUrl +  '/nationality', {responseType: 'json','headers': this.headers});
   }
 
   getState(): Observable<any>{
     console.log(" this.profileapiUrl ="+this.profileMasterapiUrl);
-    return  this.http.get<any>(this.profileMasterapiUrl +  '/state', {responseType: 'json'});
+    return  this.http.get<any>(this.profileMasterapiUrl +  '/state', {responseType: 'json' ,'headers': this.headers});
   }
 
   getDistrictByState(code): Observable<any>{
     console.log(" this.profileapiUrl ="+this.profileMasterapiUrl);
-    return  this.http.get<any>(this.profileMasterapiUrl +  '/state/'+code+"/district", {responseType: 'json'});
+    return  this.http.get<any>(this.profileMasterapiUrl +  '/state/'+code+"/district", {responseType: 'json' ,'headers': this.headers});
   }
   getReligion(): Observable<any>{
     console.log(" this.profileapiUrl ="+this.profileMasterapiUrl);
-    return  this.http.get<any>(this.profileMasterapiUrl +  '/religion', {responseType: 'json'});
+    return  this.http.get<any>(this.profileMasterapiUrl +  '/religion', {responseType: 'json' ,'headers': this.headers});
   }
 
   getCommunityByReligion(code): Observable<any>{
     console.log(" this.profileapiUrl ="+this.profileMasterapiUrl);
-    return  this.http.get<any>(this.profileMasterapiUrl +  '/religion/'+code+"/community", {responseType: 'json'});
+    return  this.http.get<any>(this.profileMasterapiUrl +  '/religion/'+code+"/community", {responseType: 'json' ,'headers': this.headers});
   }
 
   getPersonDetails(id): Observable<any>{
     console.log(" this.apiUrl ="+this.apiUrl);
-    return  this.http.get<any>(this.apiUrl +  '/'+id, {responseType: 'json'});
+    return  this.http.get<any>(this.apiUrl +  '/'+id, {responseType: 'json' ,'headers': this.headers});
   }
 
   getAddressDetails(id): Observable<any>{
     console.log(" this.apiUrl ="+this.apiUrl);
-    return  this.http.get<any>(this.apiUrl +  '/'+id+'/addresses', {responseType: 'json'});
+    return  this.http.get<any>(this.apiUrl +  '/'+id+'/addresses', {responseType: 'json' ,'headers': this.headers});
   }
 
 
@@ -88,7 +89,7 @@ export class RegistrationdetailsService {
 
   getEducation(id): Observable<Education[]> {
     console.log("****  get Education qualifications  ");
-    return this.http.get<any>(this.apiUrl+'/'+id+'/educationqualifications', {responseType: 'json'});
+    return this.http.get<any>(this.apiUrl+'/'+id+'/educationqualifications', {responseType: 'json' ,'headers': this.headers});
   }
 
   addPayment(payment: Payment): Observable<Payment> {
@@ -101,18 +102,18 @@ export class RegistrationdetailsService {
 
   getPayment(id): Observable<Payment> {
     console.log("****  get payment  ");
-    return this.http.get<any>(this.apiUrl+'/'+id+'/payment', {responseType: 'json'});
+    return this.http.get<any>(this.apiUrl+'/'+id+'/payment', {responseType: 'json' ,'headers': this.headers});
   }
 
 
   getProfileByID(profileid: bigint):  Observable<any> {
-    return  this.http.get<any>(this.apiUrl + '/' + profileid, {responseType: 'json'});
+    return  this.http.get<any>(this.apiUrl + '/' + profileid, {responseType: 'json' ,'headers': this.headers});
 
    }
 
    getAllDocumentByprofileId(profileid:any): Observable<Documentupload[]> {
     console.log(" *************** Get all Applications ***********");
-    return this.http.get<Documentupload[]>(this.apiUrl+'/upload/'+profileid, {responseType: 'json'});
+    return this.http.get<Documentupload[]>(this.apiUrl+'/upload/'+profileid, {responseType: 'json' ,'headers': this.headers});
   }
 
 

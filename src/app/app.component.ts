@@ -16,12 +16,4 @@ export class AppComponent   {
   constructor(private fb: FormBuilder){}
 
 
-
-public appForm =this.fb.group({
-  state: [''],
-  authcode : [''],
-},
-);
-
-
 }
