@@ -87,13 +87,15 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
 
   public registrationForm =this.fb.group({
-    fullname: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
+   // fullname: ['', [Validators.required,Validators.pattern(customregExps.fullName)]],
+    fullname: [''],
     dob : ['', Validators.required],
-    emailid : ['', [Validators.required, Validators.pattern(customregExps.email)], this.validatesrv.duplicateEmailidValidator()],
+    emailid : [''],
+    //emailid : ['', [Validators.required, Validators.pattern(customregExps.email)], this.validatesrv.duplicateEmailidValidator()],
     mobileno: ['', [Validators.required, Validators.pattern(customregExps.mobile)], this.validatesrv.duplicateMobileNoValidator()],
-    passwordplain: ['', Validators.compose([Validators.required, Validators.pattern(customregExps.password)])],
+   // passwordplain: ['', Validators.compose([Validators.required, Validators.pattern(customregExps.password)])],
     otp : ['', Validators.required],
-    enteredCaptcha: ['', Validators.required]
+   // enteredCaptcha: ['', Validators.required]
      },
     );
 
@@ -108,8 +110,14 @@ export class RegisterComponent implements OnInit , OnDestroy{
   }
 
   ngOnInit(): void {
+    this.registrationForm.reset();
+    console.log("%%%%%%%%%%%%%%%    Name : "+sessionStorage.getItem('name'));
+    console.log("%%%%%%%%%%%%%%%%  Email : "+sessionStorage.getItem('email'));
+    this.registrationForm.controls['fullname'].setValue(sessionStorage.getItem('name'));
+    this.registrationForm.controls['emailid'].setValue(sessionStorage.getItem('email'));
+    this.onBlurEmail();
     this.isvalidOTPEntered = false;
-    this.isvalidCaptchaEntered= false;
+    this.isvalidCaptchaEntered = false;
     this.isGenerateOTP = true;
     this.isConfirmOTP = false;
     this.isResendOTP = false;
@@ -119,7 +127,6 @@ export class RegisterComponent implements OnInit , OnDestroy{
     this.validatesrv.showTasks();
     this.otpStatus = "";
     this.registrationForm.controls['otp'].setValue(0);
-    this.registrationForm.reset();
     this.captchaStatus = "";
 
   }
@@ -149,6 +156,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
 
   addPerson() {
+    /*
     this.captcha_validation();
     this.person = new Person(
     this.registrationForm.get('fullname').value,
@@ -156,13 +164,22 @@ export class RegisterComponent implements OnInit , OnDestroy{
     this.registrationForm.get('emailid').value,
     this.registrationForm.get('mobileno').value,
     this.registrationForm.get('passwordplain').value);
+   */
+  this.person = new Person(
+    this.registrationForm.get('fullname').value,
+    this.registrationForm.get('dob').value,
+    this.registrationForm.get('emailid').value,
+    this.registrationForm.get('mobileno').value,
+    null);
 
     this.registersrv.addPerson(this.person).subscribe((data) => {
       this.notifyService.showSuccess(" Added Succesfully", "Registration");
       console.log('POST profileid= ' + data.profileid);
       this.person.profileid = data.profileid;
+      sessionStorage.setItem('profileid', data.profileid.toString());
+      console.log('session profileid= ' + sessionStorage.getItem('profileid'));
      // this.validatesrv.getlatestProfile(this.person);
-     this.router.navigate(['/login']);
+   //  this.router.navigate(['/login']);
     },
       (err) => {
         this.notifyService.showError(" Error in  Registration", "Registration");
@@ -311,8 +328,6 @@ export class RegisterComponent implements OnInit , OnDestroy{
   }
  }
   }
-
-
 
 
   get fullname() { return this.registrationForm.get('fullname'); }

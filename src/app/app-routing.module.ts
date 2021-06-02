@@ -25,14 +25,18 @@ import { HomepageComponent } from './adminhome/homepage/homepage.component';
 import { DocumentspreviewComponent } from './previewdetails/documentspreview/documentspreview.component';
 import { AuthcodereaderComponent } from './shared/authcodereader/authcodereader.component';
 import { AuthGuard } from './AuthGuard';
+import { RegisterComponent } from './register/register.component';
+import { ContentComponent } from './register/content.component';
 
 //import { AuthGuard } from './AuthGuard';
 const routes: Routes = [
-          { path: '', redirectTo: 'register', pathMatch:'full' },
-          { path: 'register', component: RegisterhomeComponent },
+          { path: '', redirectTo: 'content', pathMatch:'full' },
+          { path: 'content', component: ContentComponent },
           { path: 'login', component: LoginComponent },
+          { path: 'registerhome', component: RegisterhomeComponent },
           { path: 'authcodereader', component: AuthcodereaderComponent },
           { path: 'registrationdetails', component: RegistrationdetailsComponent, children: [
+          { path: 'register', component: RegisterComponent },
           { path: 'profiledetails', component:  ProfiledetailsComponent},
           { path: 'viewstatus', component:  ViewstatusComponent},
           { path: 'profilesummary', component: ProfilesummaryComponent,

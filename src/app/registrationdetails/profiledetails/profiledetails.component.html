@@ -180,7 +180,7 @@
           </mat-form-field>
          </div>
          <div class="form-group example-form" *ngIf ="isEWSvisible">
-          <label >Upload EWS Certificate</label><br>
+          <label >Upload Income Certificate</label><br>
           <app-angular-file-uploader [resetUpload]=resetUpload1 [rowid]="0" [config]="fileuploadConfig" [documentType]="doctypeEWS" (ApiResponse)="docUpload($event)">
           </app-angular-file-uploader>
         </div>
@@ -559,7 +559,7 @@
                   <mat-cell *matCellDef="let element">
                   <mat-form-field floatLabel="never" appearance="none" >
                     <mat-select placeholder="Select"  [formControl]="element.get('documenttype')" >
-                      <mat-option *ngFor="let item of this.jsonQualification;let i = index" [value]="item.value">
+                      <mat-option *ngFor="let item of this.jsonDocType;let i = index" [value]="item.value">
                         {{item.value}}
                       </mat-option>
                     </mat-select>

@@ -35,12 +35,14 @@
         </button>
       </mat-menu>
       </div>
-      <div>
+    <!--  <div>
         <a mat-button  routerLink="/register">
         <span class="material-icons" > person_add</span>Register</a>
       </div>
+      -->
       <div>
-        <a mat-button  onClick="generateCodeVerifier()" routerLink="/login">
+      <!--  <a mat-button  onClick="generateCodeVerifier()" routerLink="/login"> -->
+          <a mat-button  onClick="generateCodeVerifier()" >
         <span class="material-icons" >login</span>Login User</a>
       </div>
       <div>
@@ -50,7 +52,7 @@
 
   </div>
 <div>
-<router-outlet></router-outlet>
+   <router-outlet></router-outlet>
 </div>
 
 

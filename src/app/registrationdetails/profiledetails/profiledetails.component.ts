@@ -132,7 +132,9 @@ export class ProfiledetailsComponent  {
   jsonState = [];
   jsonPresentDistrict= [];
   jsonPermanentDistrict= [];
-  jsonQualification = [{key:1,value:'10th'},{key:2,value:'12th'},{key:3,value:'Degree'},{key:4,value:'PG'},{key:5,value:'PHD'},{key:6,value:'Certification'},{key:7,value:'Others'},{key:8,value:'Photo'},{key:9,value:'Sign'}];
+  jsonQualification = [{key:1,value:'10th'},{key:2,value:'12th'},{key:3,value:'Degree'},{key:4,value:'PG'},{key:5,value:'PHD'},{key:6,value:'Certification'},{key:7,value:'Others'}];
+  jsonDocType = [{key:1,value:'10th'},{key:2,value:'12th'},{key:3,value:'Degree'},{key:4,value:'PG'},{key:5,value:'PHD'},{key:6,value:'Certification'},{key:7,value:'Others'},{key:8,value:'Photo'},{key:9,value:'Sign'},{key:10,value:'ID Proof'}];
+
   stateTextSelected:any;
   religionText: string;
   presentstateText: string;

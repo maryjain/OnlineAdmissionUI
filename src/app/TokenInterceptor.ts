@@ -3,14 +3,18 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import * as Keycloak from 'keycloak-js';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-
+  private keycloakAuth: Keycloak.KeycloakInstance;
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token=sessionStorage.getItem('accessToken');
     const isLoggedIn = sessionStorage.getItem('loggedIn');
@@ -21,6 +25,14 @@ export class TokenInterceptor implements HttpInterceptor {
       }
     });
   }
-    return next.handle(request);
-  }
+    return next.handle(request).pipe(
+      catchError((response: HttpErrorResponse) => {
+        if (response.status === 401) {
+         sessionStorage.clear();
+        }
+        return throwError(response);
+      }
+    ));
+
+}
 }

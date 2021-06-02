@@ -18,33 +18,48 @@ export class RegistrationdetailsComponent implements OnInit {
   person: Person;
   constructor(private router: Router,public loginsrv: LoginService, public notifyService: NotificationService ){}
   ngOnInit(): void {
-
+    console.log("++++++ &&&&&&&& expires_in"+sessionStorage.getItem('expires_in'));
+    console.log("++++++ &&&&&& accessToken"+sessionStorage.getItem('accessToken'));
+    sessionStorage.setItem('status','New');
     this.person = new Person('', null,
     sessionStorage.getItem('email'), null,null);
     this.loginsrv.login(this.person).subscribe((res) => {
-      console.log('POST login res = ' + res);
+      console.log('POST login res data= ' + res.data);
       console.log('POST login status= ' + res.status);
-      if(res.data === "true"){
+      if(res != null && res.data === "true"){
         sessionStorage.setItem('status',res.status);
       }
       else{
-        sessionStorage.setItem('status','Registered');
+        sessionStorage.setItem('status','New');
       }
     },
       (err) => {
         this.notifyService.showError(" Error while Getting Details", "Registration");
+        console.log("err = " + err.error);
         console.log("err.error = " + err.error);
         }
 
      );
 
-    if(sessionStorage.getItem('status')==='Registered')
+     if(sessionStorage.getItem('status') == null || sessionStorage.getItem('status')  == undefined)
+     {
+      sessionStorage.setItem('status','New');
+     }
+
+    if(sessionStorage.getItem('status')==='New')
     {
+    this.map.set('Basic Profile Information ', 'register');
+    this.map.set('Personal Details', 'profiledetails');
     this.map.set('Profile Summary', 'profilesummary');
-    this.map.set('Register Profile Details', 'profiledetails');
     this.map.set('View Status', 'viewstatus');
     }
-    else{
+    if(sessionStorage.getItem('status') !=='Registered')
+    {
+    this.map.set('Personal Details', 'profiledetails');
+    this.map.set('Profile Summary', 'profilesummary');
+    this.map.set('View Status', 'viewstatus');
+    }
+    else if(sessionStorage.getItem('status')==='Completed'){
     this.map.set('Profile Summary', 'profilesummary');
     this.map.set('View Status', 'viewstatus');
     }
