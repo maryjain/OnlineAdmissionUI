@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Location} from "@angular/common";
 
+
 @Injectable()
 export class AuthGuard implements CanActivate {
     constructor(
@@ -16,7 +17,6 @@ export class AuthGuard implements CanActivate {
        // this.router.navigate(['/loginadmin'], { queryParams: { returnUrl: state.url }});
        this.location.replaceState('/');
        this.router.navigate(['/content']);
-
         return false;
     }
   }

@@ -9,7 +9,8 @@ import { RegistrationdetailsService } from '../service/registrationdetails.servi
   styleUrls: ['./viewstatus.component.scss']
 })
 export class ViewstatusComponent implements OnInit {
-  profileid = sessionStorage.getItem('profileid');
+  profileid:any;
+
   displayedColumnsViewStatusDetails = ['profileid', 'status', 'reason'];
   @ViewChild('tableViewStatusDetails', { static: false }) tableViewStatusDetails: MatTable<any>;
 
@@ -17,6 +18,7 @@ export class ViewstatusComponent implements OnInit {
   constructor(public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
+    this.profileid = sessionStorage.getItem('profileid');
     this.registrationdetailsSrv.getPersonDetails(this.profileid).subscribe((res ) => {
       let json=[];
 

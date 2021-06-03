@@ -12,12 +12,13 @@ import * as moment from 'moment';
   styleUrls: ['./personal.component.scss']
 })
 export class PersonalComponent implements OnInit {
-profileid = sessionStorage.getItem('profileid');
+profileid :any;
 
   constructor(private fb: FormBuilder, public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
-
+    this.profileid = sessionStorage.getItem('profileid');
+    console.log('************ ##########  '+ sessionStorage.getItem('profileid'));
     this.registrationdetailsSrv.getPersonDetails(this.profileid).subscribe((res ) => {
       let json = res;
       for (var type in json) {

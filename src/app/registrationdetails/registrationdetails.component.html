@@ -1,18 +1,10 @@
-
-<div class="d-flex customHeader">
-<div class="flex-grow-1">
-<h3>&nbsp;&nbsp;&nbsp;Welcome {{fullname}}</h3>
+<div class="d-flex customHeader ">   <div class="flex-grow-1">
+  <h3>&nbsp;&nbsp;&nbsp;Welcome {{fullname}}</h3>
+  </div>
+  <div >
+    <h4><i>{{profileid}}</i> &nbsp;&nbsp;&nbsp;&nbsp;</h4>
+  </div>
 </div>
-
-<div >
-<h4><i>Registration No: {{profileid}}</i> &nbsp;&nbsp;&nbsp;&nbsp;</h4>
-</div>
-<div>
-  <a mat-button *ngIf="loggedIn" (click)="logoutUser()" routerLink="">
-  <span class="material-icons" *ngIf="loggedIn">logout</span>Log Out</a>
-</div>
-</div>
-
 <mat-sidenav-container class="example-container" >
 	<mat-sidenav #sidenav  class="example-sidenav navlist" mode="side" opened="true" >
     <mat-nav-list >
@@ -28,5 +20,3 @@
     </div>
   </mat-sidenav-content>
   </mat-sidenav-container>
-
-

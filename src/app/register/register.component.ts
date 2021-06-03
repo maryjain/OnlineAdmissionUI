@@ -110,6 +110,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
   }
 
   ngOnInit(): void {
+
     this.registrationForm.reset();
     console.log("%%%%%%%%%%%%%%%    Name : "+sessionStorage.getItem('name'));
     console.log("%%%%%%%%%%%%%%%%  Email : "+sessionStorage.getItem('email'));

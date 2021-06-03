@@ -6,16 +6,24 @@ import { LoginService } from '../login/service/login.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  loggedIn=false;
   constructor(public loginsrv: LoginService) { }
 
   ngOnInit() {
+    this.loggedIn =JSON.parse(sessionStorage.getItem('loggedIn'))===true;
+
     console.log("______*****_____++++++_______ sessionStorage.getItem('loggedIn') ="+sessionStorage.getItem('loggedIn'));
   }
 
   onResize(event) {
 
+  }
 
+
+  public logoutUser():void
+  {
+    this.loggedIn=false;
+    sessionStorage.clear();
   }
 
 }

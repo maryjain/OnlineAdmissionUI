@@ -27,7 +27,7 @@ export class TokenInterceptor implements HttpInterceptor {
   }
     return next.handle(request).pipe(
       catchError((response: HttpErrorResponse) => {
-        if (response.status === 401) {
+        if (response.status === 401 || response.status === 400 || response.status === 403 ) {
          sessionStorage.clear();
         }
         return throwError(response);

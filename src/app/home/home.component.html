@@ -42,12 +42,17 @@
       -->
       <div>
       <!--  <a mat-button  onClick="generateCodeVerifier()" routerLink="/login"> -->
-          <a mat-button  onClick="generateCodeVerifier()" >
+          <a mat-button  *ngIf="!loggedIn" onClick="generateCodeVerifier()" >
         <span class="material-icons" >login</span>Login User</a>
       </div>
       <div>
-        <a mat-button   routerLink="/loginadmin">
+        <a mat-button   *ngIf="!loggedIn" routerLink="/loginadmin">
         <span class="material-icons" >login</span>Login Admin</a>
+      </div>
+
+      <div>
+        <a mat-button *ngIf="loggedIn" (click)="logoutUser()" routerLink="">
+        <span class="material-icons" *ngIf="loggedIn">logout</span>Log Out</a>
       </div>
 
   </div>

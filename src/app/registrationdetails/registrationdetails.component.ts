@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { browser } from 'protractor';
 import { LoginService } from '../login/service/login.service';
 import { Person } from '../model/Person';
 import { NotificationService } from '../shared/notification/notification.service';
+
 
 @Component({
   selector: 'app-registrationdetails',
@@ -16,10 +18,12 @@ export class RegistrationdetailsComponent implements OnInit {
   loggedIn:boolean;
   emailid:string;
   person: Person;
-  constructor(private router: Router,public loginsrv: LoginService, public notifyService: NotificationService ){}
+  constructor(private router: Router,public loginsrv: LoginService, public notifyService: NotificationService  ){}
   ngOnInit(): void {
-    console.log("++++++ &&&&&&&& expires_in"+sessionStorage.getItem('expires_in'));
-    console.log("++++++ &&&&&& accessToken"+sessionStorage.getItem('accessToken'));
+    this.profileid = sessionStorage.getItem('profileid');
+    this.fullname = sessionStorage.getItem('name');
+    console.log("++++++ &&&&&&&& expires_in  "+sessionStorage.getItem('expires_in'));
+    console.log("++++++ &&&&&& accessToken  "+sessionStorage.getItem('accessToken'));
     sessionStorage.setItem('status','New');
     this.person = new Person('', null,
     sessionStorage.getItem('email'), null,null);
@@ -28,9 +32,29 @@ export class RegistrationdetailsComponent implements OnInit {
       console.log('POST login status= ' + res.status);
       if(res != null && res.data === "true"){
         sessionStorage.setItem('status',res.status);
+        sessionStorage.setItem('profileid',res.id);
+        console.log("&&&&  session profileid = " + sessionStorage.getItem('profileid'));
+        console.log('&&&&  session status= ' + sessionStorage.getItem('status'));
       }
       else{
         sessionStorage.setItem('status','New');
+      }
+      if(sessionStorage.getItem('status')==='New')
+      {
+      this.map.set('Basic Profile Information ', 'register');
+      this.map.set('Personal Details', 'profiledetails');
+      this.map.set('Profile Summary', 'profilesummary');
+      this.map.set('View Status', 'viewstatus');
+      }
+      else if(sessionStorage.getItem('status') ==='Registered' || sessionStorage.getItem('status') ==='Paid')
+      {
+      this.map.set('Personal Details', 'profiledetails');
+      this.map.set('Profile Summary', 'profilesummary');
+      this.map.set('View Status', 'viewstatus');
+      }
+      else if(sessionStorage.getItem('status')==='Completed'|| sessionStorage.getItem('status')==='Reject' || sessionStorage.getItem('status')==='Approve'){
+      this.map.set('Profile Summary', 'profilesummary');
+      this.map.set('View Status', 'viewstatus');
       }
     },
       (err) => {
@@ -41,31 +65,9 @@ export class RegistrationdetailsComponent implements OnInit {
 
      );
 
-     if(sessionStorage.getItem('status') == null || sessionStorage.getItem('status')  == undefined)
-     {
-      sessionStorage.setItem('status','New');
-     }
-
-    if(sessionStorage.getItem('status')==='New')
-    {
-    this.map.set('Basic Profile Information ', 'register');
-    this.map.set('Personal Details', 'profiledetails');
-    this.map.set('Profile Summary', 'profilesummary');
-    this.map.set('View Status', 'viewstatus');
-    }
-    if(sessionStorage.getItem('status') !=='Registered')
-    {
-    this.map.set('Personal Details', 'profiledetails');
-    this.map.set('Profile Summary', 'profilesummary');
-    this.map.set('View Status', 'viewstatus');
-    }
-    else if(sessionStorage.getItem('status')==='Completed'){
-    this.map.set('Profile Summary', 'profilesummary');
-    this.map.set('View Status', 'viewstatus');
-    }
-    this.profileid = sessionStorage.getItem('profileid');
-    this.fullname = sessionStorage.getItem('name');
-    console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));
+     console.log("  ***********************   session status ="+sessionStorage.getItem('status'));
+     console.log("  ***********************   session profileid ="+sessionStorage.getItem('profileid'));
+      console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));
 
     console.log('***********%%% final submit '+ sessionStorage.getItem('finalsubmit'));
     if(sessionStorage.getItem('loggedIn')=== 'true')
@@ -96,11 +98,7 @@ export class RegistrationdetailsComponent implements OnInit {
 
   }
 
-  public logoutUser():void
-  {
-    sessionStorage.clear();
 
-  }
 
 }
 

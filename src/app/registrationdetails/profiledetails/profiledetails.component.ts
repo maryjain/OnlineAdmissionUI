@@ -82,6 +82,8 @@ const ELEMENT_DATA: EDUCATION[] = [
   ],
 })
 export class ProfiledetailsComponent  {
+  profileid:any;
+
   stepperIndex:any;
   stepper: MatStepper;
   isFinalsubmit:boolean;
@@ -198,9 +200,7 @@ export class ProfiledetailsComponent  {
 
    //******   ngOnInit declaration start ******
   ngOnInit(): void {
-
-
-    this.enableBackBtn = true;
+   this.enableBackBtn = true;
     this.isFinalsubmit=false;
    // sessionStorage.setItem('finalsubmit', 'false');
     this.doctypeEWS = "EWS";

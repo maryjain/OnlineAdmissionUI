@@ -4,6 +4,9 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <meta charset="utf-8">
+
+
+
   <title>Profile management</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,6 +19,17 @@
     var stateValue= '3ce5c020-6086-4871-a855-e5e7fcebcf98';
     var codeVerifierValue = "";
     var codeChallengeValue = "";
+
+    function generateState()
+    {
+      stateValue="";
+      var alphaNumericCharacters='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var alphaNumericLength =alphaNumericCharacters.length;
+      for(let i=0;i<alphaNumericLength;i++)
+      {
+        stateValue += alphaNumericCharacters.charAt(Math.floor(Math.random() * alphaNumericLength))
+      }
+    }
 
     function generateCodeVerifier()
     {
@@ -36,6 +50,7 @@
      let digest = await window.crypto.subtle.digest('SHA-256',encodedValue);
       codeChallengeValue=  base64urlencode(Array.from(new Uint8Array(digest)));
      console.log("**************************   generateCodeChallenge =" + codeChallengeValue);
+     generateState();
      getAuthCode();
    }
    function base64urlencode(sourceValue)
@@ -109,7 +124,7 @@
 
   function postRequestAccessToken(data,status,jqXHR)
   {
-
+    sessionStorage.clear();
     if(data != null  && data["access_token"] != null ){
     var JSONIDtoken=parseJwt(data["id_token"]);
     console.log("********** JSONIDtoken ="+ JSONIDtoken["email"]);
@@ -145,8 +160,24 @@
     }).join(''));
 
     return JSON.parse(jsonPayload);
-}
+    }
   }
+
+ /* window.onbeforeunload = function (e) {
+  deleteAllCookies();
+}
+
+function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+*/
+
     </script>
 </head>
 <body class="mat-typography">
