@@ -12,11 +12,11 @@ import { RegistrationdetailsService } from '../registrationdetails/service/regis
 })
 export class PreviewdetailsComponent implements OnInit {
 
-showtabs:boolean;
-profileid:number;
+showtabs: boolean;
+profileid: bigint;
   constructor(public router: Router, public dialogRef: MatDialogRef<PreviewdetailsComponent>, @Inject(MAT_DIALOG_DATA) data, public regsrv: RegistrationdetailsService) {
 
-  this.profileid=data.id;
+  this.profileid=JSON.parse(data.id);
   console.log("__________________Dialog ____________= "+this.profileid);
   }
 

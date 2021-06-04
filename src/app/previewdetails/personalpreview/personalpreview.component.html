@@ -1,6 +1,7 @@
 
     <div class="container centercss">
       <br>
+      <mat-spinner style="margin:0 auto;" *ngIf="loading"></mat-spinner>
       <br>
       <loading *ngIf="isLoading">{{ isLoading }}</loading>
       <br>

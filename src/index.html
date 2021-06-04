@@ -127,19 +127,40 @@
     sessionStorage.clear();
     if(data != null  && data["access_token"] != null ){
     var JSONIDtoken=parseJwt(data["id_token"]);
-    console.log("********** JSONIDtoken ="+ JSONIDtoken["email"]);
-    console.log("********** JSONIDtoken ="+ JSONIDtoken["name"]);
+    var JSONAccesstoken=parseJwt(data["access_token"]);
+
+    console.log("********** JSONIDtoken Email ="+ JSON.parse(JSONIDtoken)["email"]);
+    console.log("********** JSONIDtoken Name ="+ JSON.parse(JSONIDtoken)["name"]);
+
     sessionStorage.setItem('accessToken', data["access_token"]);
     sessionStorage.setItem('refreshToken', data["refresh_token"]);
     sessionStorage.setItem('idToken', data["id_token"]);
     sessionStorage.setItem('email', JSONIDtoken["email"]);
     sessionStorage.setItem('name', JSONIDtoken["name"]);
+    sessionStorage.setItem('jsonAccessToken', JSONAccesstoken);
     sessionStorage.setItem('expires_in',  data["expires_in"]);
+
     console.log("**********  ++++++++  Access Token ="+ data["access_token"]);
     console.log("**********  ++++++++  expires_in ="+  data["expires_in"]);
+    console.log("**********  ++++++++  ID Token ="+  data["id_token"]);
+    console.log("**********  ++++++++ refresh token ="+  data["refresh_token"]);
+
     sessionStorage.setItem('loggedIn','true');
+
+    var arrRoles=JSON.parse(JSONAccesstoken)["realm_access"]["roles"];
+  alert("Hello");
+  if(arrRoles.indexOf('admin') > -1)   // ADMIN LOGIN
+    {
+      sessionStorage.setItem('user','admin');
+      window.location.assign("/adminhome");
+    }
+    else   // USER LOGIN
+    {
+    sessionStorage.setItem('user','user');
     window.location.assign("/registrationdetails");
-    //window.location.reload();
+    }
+
+
     //location.href = 'http://localhost:4200/registrationdetails';
     }
     else{
@@ -158,8 +179,9 @@
     var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-
-    return JSON.parse(jsonPayload);
+    console.log("%%%%%%%%%%%%%%%   ********** jsonPayload " +jsonPayload);
+    console.log("%%%%%%%%%%%%%%%   ********** jsonPayload " +JSON.parse(jsonPayload));
+    return jsonPayload;
     }
   }
 
@@ -177,6 +199,37 @@ function deleteAllCookies() {
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 */
+
+function logout()
+{
+console.log("--------- refresh token "+sessionStorage.getItem('refreshToken'));
+  var data={
+
+     "client_id": "profileclientapp",
+     //"client_secret": "3ce5c020-6086-4871-a855-e5e7fcebcf98",
+     "refresh_token":  sessionStorage.getItem('refreshToken'),
+     "redirect_uri": "http://localhost:4200/authcodereader"
+
+   };
+
+ $.ajax({
+     beforeSend: function (request)
+     {
+      request.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+     },
+     type:"post",
+     url: "http://localhost:8180/auth/realms/Profile/protocol/openid-connect/logout",
+     data: data,
+     contentType: "application/json;",
+     success: postLogout
+   });
+
+}
+ function postLogout()
+ {
+  console.log("--------- Keycloak user logout success ");
+  sessionStorage.clear();
+ }
 
     </script>
 </head>

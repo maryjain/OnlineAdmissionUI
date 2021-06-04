@@ -18,7 +18,7 @@ export class ViewstatusComponent implements OnInit {
   constructor(public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
-    this.profileid = sessionStorage.getItem('profileid');
+    this.profileid = JSON.parse(sessionStorage.getItem('profileid'));
     this.registrationdetailsSrv.getPersonDetails(this.profileid).subscribe((res ) => {
       let json=[];
 

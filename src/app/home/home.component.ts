@@ -22,8 +22,8 @@ export class HomeComponent implements OnInit {
 
   public logoutUser():void
   {
-    this.loggedIn=false;
-    sessionStorage.clear();
+     this.loggedIn=false;
+    //sessionStorage.clear();
   }
 
 }

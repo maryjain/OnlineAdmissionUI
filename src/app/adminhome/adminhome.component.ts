@@ -23,8 +23,8 @@ export class AdminhomeComponent implements OnInit {
     this.map.set('Review Applications', 'reviewapplications');
 
     this.deptuserid = sessionStorage.getItem('deptuserid');
-    this.deptusername = sessionStorage.getItem('deptusername');
-    this.deptname = sessionStorage.getItem('deptname');
+    this.deptusername = sessionStorage.getItem('email');
+    this.deptname = sessionStorage.getItem('name');
     console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));
 
     if(sessionStorage.getItem('loggedIn')=== 'true')

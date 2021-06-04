@@ -27,13 +27,14 @@ export class Person {
   reason:string;
 
 
-  constructor(fullname: string, dob: Date, emailid: string, mobileno: bigint, passwordplain: string ) {
+  constructor(profileid: bigint, status: string, fullname: string, dob: Date, emailid: string, mobileno: bigint, passwordplain: string ) {
     this.fullname = fullname;
     this.dob = dob;
     this.emailid = emailid;
     this.mobileno = mobileno;
     this.passwordplain = passwordplain;
-
+    this.profileid = profileid;
+    this.status = status;
   }
 
 

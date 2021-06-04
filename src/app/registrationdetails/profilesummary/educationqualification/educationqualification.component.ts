@@ -10,7 +10,7 @@ import { RegistrationdetailsService } from '../../service/registrationdetails.se
   styleUrls: ['./educationqualification.component.scss']
 })
 export class EducationqualificationComponent implements OnInit {
-  profileid = sessionStorage.getItem('profileid');
+  profileid :any;
   displayedColumns = ['qualificationtype', 'institution', 'university', 'yearofpass', 'registrationno','cgpa','percentage'];
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
   //EducationArray = new FormArray([]);
@@ -18,6 +18,7 @@ export class EducationqualificationComponent implements OnInit {
   constructor(public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
+    this.profileid = JSON.parse(sessionStorage.getItem('profileid'));
     this.registrationdetailsSrv.getEducation(this.profileid).subscribe((res ) => {
       console.log(" json Education ="+res[0]);
       this.dataSourceEducation = new MatTableDataSource(res);

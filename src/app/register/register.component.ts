@@ -125,7 +125,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
     this.isshowEmailOTP = true; // not used
     this.isshowErrorEmailOTP = false;
     this.errorEmailOTP = "";
-    this.validatesrv.showTasks();
+
     this.otpStatus = "";
     this.registrationForm.controls['otp'].setValue(0);
     this.captchaStatus = "";
@@ -166,7 +166,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
     this.registrationForm.get('mobileno').value,
     this.registrationForm.get('passwordplain').value);
    */
-  this.person = new Person(
+  this.person = new Person(null,null,
     this.registrationForm.get('fullname').value,
     this.registrationForm.get('dob').value,
     this.registrationForm.get('emailid').value,
@@ -179,6 +179,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
       this.person.profileid = data.profileid;
       sessionStorage.setItem('profileid', data.profileid.toString());
       console.log('session profileid= ' + sessionStorage.getItem('profileid'));
+      this.router.navigate(['/registrationdetails/profiledetails']);
      // this.validatesrv.getlatestProfile(this.person);
    //  this.router.navigate(['/login']);
     },

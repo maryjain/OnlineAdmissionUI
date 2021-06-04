@@ -46,12 +46,12 @@
         <span class="material-icons" >login</span>Login User</a>
       </div>
       <div>
-        <a mat-button   *ngIf="!loggedIn" routerLink="/loginadmin">
+        <a mat-button   *ngIf="!loggedIn" onClick="generateCodeVerifier()"  >
         <span class="material-icons" >login</span>Login Admin</a>
       </div>
 
       <div>
-        <a mat-button *ngIf="loggedIn" (click)="logoutUser()" routerLink="">
+        <a mat-button *ngIf="loggedIn" onClick="logout()" (click)="logoutUser()" routerLink="">
         <span class="material-icons" *ngIf="loggedIn">logout</span>Log Out</a>
       </div>
 

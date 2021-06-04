@@ -19,7 +19,7 @@ export class PaymentpreviewComponent implements OnInit {
   constructor(public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
-    this.profileid =history.state.data;
+    this.profileid=history.state.data;
     this.registrationdetailsSrv.getPayment(this.profileid).subscribe((res ) => {
       let json = [];
       let dobValue = '';

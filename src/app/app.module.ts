@@ -19,7 +19,7 @@ import { LoginService } from './login/service/login.service';
 import { RegistrationdetailsModule } from './registrationdetails/registrationdetails.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ToastrModule } from 'ngx-toastr';
-import { SessionstorageService } from './shared/session/sessionstorage.service';
+
 import { PreviewdetailsComponent } from './previewdetails/previewdetails.component';
 import { AddresspreviewComponent } from './previewdetails/addresspreview/addresspreview.component';
 import { PersonalpreviewComponent } from './previewdetails/personalpreview/personalpreview.component';
@@ -59,7 +59,7 @@ import { TokenInterceptor } from './TokenInterceptor';
     ToastrModule.forRoot(),
 
   ],
-  providers: [ ValidationService, UtilityService, RegisterService, LoginService, SessionstorageService, SpinnerService,AuthGuard,
+  providers: [ ValidationService, UtilityService, RegisterService, LoginService, SpinnerService,AuthGuard,
      {
     provide: HTTP_INTERCEPTORS,
     useFactory: (service: SpinnerService) => new InterceptorService(service),

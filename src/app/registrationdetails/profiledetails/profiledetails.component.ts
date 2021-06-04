@@ -33,7 +33,7 @@ import {MatDialog } from '@angular/material/dialog';
 import {MatDialogConfig} from '@angular/material/dialog';
 import { ProfilesummaryComponent } from 'src/app/registrationdetails/profilesummary/profilesummary.component';
 import { PreviewdetailsComponent } from '../../previewdetails/previewdetails.component';
-import { SessionstorageService } from 'src/app/shared/session/sessionstorage.service';
+
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { tap } from 'rxjs/internal/operators/tap';
@@ -71,7 +71,7 @@ const ELEMENT_DATA: EDUCATION[] = [
   selector: 'app-profiledetails',
   templateUrl: './profiledetails.component.html',
   styleUrls: ['./profiledetails.component.scss'],
-  providers: [UtilityService, RegistrationdetailsService, SessionstorageService,
+  providers: [UtilityService, RegistrationdetailsService,
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
@@ -194,7 +194,7 @@ export class ProfiledetailsComponent  {
 
   constructor(private fb: FormBuilder, public utilitysrv: UtilityService,
     public registrationdetailsSrv: RegistrationdetailsService,public notifyService : NotificationService,private route: ActivatedRoute,
-    private dialog: MatDialog,public router: Router,public sessionStorage: SessionstorageService,private http: HttpClient) {
+    private dialog: MatDialog,public router: Router,private http: HttpClient) {
 
    }
 
@@ -203,7 +203,7 @@ export class ProfiledetailsComponent  {
    this.enableBackBtn = true;
     this.isFinalsubmit=false;
    // sessionStorage.setItem('finalsubmit', 'false');
-    this.doctypeEWS = "EWS";
+    this.doctypeEWS = "Income";
     this.enableDeclarationChkBox=false;
     this.enableDeclarationSubmitBtn =false;
     this.enablePreviewButton=true;
@@ -253,7 +253,7 @@ export class ProfiledetailsComponent  {
     this.isSelectOptionEducationInvalid= false;
     // create object to be pass as json in rest api PUT,POST call
 
-    this.person = new Person('', null, '', null, '');
+    this.person = new Person(null,'','', null, '', null, '');
     this.present_address = new Address('', '', '', '','',null,false,null);
     this.permanent_address = new Address('', '', '', '','',null,false,null);
 
@@ -261,7 +261,7 @@ export class ProfiledetailsComponent  {
     this.presentstateText= "";
     this.permanentstateText= "";
     this.presentstateCode =0;
-    this.logintUserProfileId = sessionStorage.getItem('profileid');
+    this.logintUserProfileId = JSON.parse(sessionStorage.getItem('profileid'));
     console.log("______*****_____ logintUserProfileId="+ this.logintUserProfileId);
 
     this.fileuploadConfig.uploadAPI.url+= this.logintUserProfileId;
@@ -679,7 +679,7 @@ addAddress()
 
 updatePerson() {
 
-  this.person = new Person('', null, '', null, '');
+  this.person = new Person(null,'','', null, '', null, '');
   this.person.fathername= this.personalDetailsForm.get('fathername').value;
   this.person.mothername= this.personalDetailsForm.get('mothername').value;
   this.person.guardianname= this.personalDetailsForm.get('guardianname').value;

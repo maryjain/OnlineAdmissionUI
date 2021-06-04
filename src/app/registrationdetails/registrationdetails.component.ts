@@ -13,24 +13,41 @@ import { NotificationService } from '../shared/notification/notification.service
   styleUrls: ['./registrationdetails.component.scss']
 })
 export class RegistrationdetailsComponent implements OnInit {
-  profileid:any;
+  public loading: boolean = false;
+  profileid="";
   fullname:any;
   loggedIn:boolean;
   emailid:string;
   person: Person;
+  personPost: Person;
+  public map: Map<string, string> = new Map<string, string>();
   constructor(private router: Router,public loginsrv: LoginService, public notifyService: NotificationService  ){}
+
   ngOnInit(): void {
+    this.personPost= new Person(null,null,null, null,
+    sessionStorage.getItem('email'), null,null);
+
+
+    if(sessionStorage.getItem('profileid') != null){
     this.profileid = sessionStorage.getItem('profileid');
+    }
     this.fullname = sessionStorage.getItem('name');
     console.log("++++++ &&&&&&&& expires_in  "+sessionStorage.getItem('expires_in'));
     console.log("++++++ &&&&&& accessToken  "+sessionStorage.getItem('accessToken'));
-    sessionStorage.setItem('status','New');
-    this.person = new Person('', null,
+    console.log("++++++ &&&&&& IDToken  "+sessionStorage.getItem('idToken'));
+    console.log("++++++ &&&&&& Json access token  "+sessionStorage.getItem('jsonAccessToken'));
+    let jsonaccessToken= sessionStorage.getItem('jsonAccessToken');
+    console.log("++++++ &&&&&& Roles  "+JSON.parse(jsonaccessToken)["realm_access"]["roles"]);
+
+    this.person = new Person(null,null,'',null,
     sessionStorage.getItem('email'), null,null);
-    this.loginsrv.login(this.person).subscribe((res) => {
+
+
+    /////////////////////////////////////////////////////////
+  /*  this.loginsrv.login(this.person).subscribe((res) => {
       console.log('POST login res data= ' + res.data);
       console.log('POST login status= ' + res.status);
-      if(res != null && res.data === "true"){
+      if(res != null && res.data === "true" && res.status != null){
         sessionStorage.setItem('status',res.status);
         sessionStorage.setItem('profileid',res.id);
         console.log("&&&&  session profileid = " + sessionStorage.getItem('profileid'));
@@ -38,24 +55,9 @@ export class RegistrationdetailsComponent implements OnInit {
       }
       else{
         sessionStorage.setItem('status','New');
+        console.log('+++++++++++++++++++++++@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
       }
-      if(sessionStorage.getItem('status')==='New')
-      {
-      this.map.set('Basic Profile Information ', 'register');
-      this.map.set('Personal Details', 'profiledetails');
-      this.map.set('Profile Summary', 'profilesummary');
-      this.map.set('View Status', 'viewstatus');
-      }
-      else if(sessionStorage.getItem('status') ==='Registered' || sessionStorage.getItem('status') ==='Paid')
-      {
-      this.map.set('Personal Details', 'profiledetails');
-      this.map.set('Profile Summary', 'profilesummary');
-      this.map.set('View Status', 'viewstatus');
-      }
-      else if(sessionStorage.getItem('status')==='Completed'|| sessionStorage.getItem('status')==='Reject' || sessionStorage.getItem('status')==='Approve'){
-      this.map.set('Profile Summary', 'profilesummary');
-      this.map.set('View Status', 'viewstatus');
-      }
+
     },
       (err) => {
         this.notifyService.showError(" Error while Getting Details", "Registration");
@@ -64,13 +66,73 @@ export class RegistrationdetailsComponent implements OnInit {
         }
 
      );
+     */
+//////////////////////////////////////////////////
 
+
+  const promise = new Promise<void>((resolve, reject) => {
+    this.loading = true;
+    this.loginsrv.login(this.person)
+      .toPromise()
+      .then((res: any) => {
+        // Success
+        this.personPost =  new Person(JSON.parse(res.id),res.status,'', null,
+          sessionStorage.getItem('email'), null,null);
+
+        resolve();
+      },
+        err => {
+          // Error
+          reject(err);
+        }
+      );
+  });
+
+  promise.then( () => {
+    console.log('+++++++++++++++++++++++@@@@@@@@@@@@@@@@@@@@@@@@@@@@ '+this.personPost.status);
+    this.loading = false;
+    if(this.personPost.status === null)
+    {
+      sessionStorage.setItem('status','New');
+      console.log('+++++++++++++++++++++++%%%%%%%%%%%%%%%%%%%%%%%% '+sessionStorage.getItem('status'));
+    }
+    else {
+      sessionStorage.setItem('status', this.personPost.status);
+      sessionStorage.setItem('profileid', this.personPost.profileid.toString());
+      console.log('+++++++++++++++++++++++#################################### '+sessionStorage.getItem('status'));
+
+    }
+
+    if(sessionStorage.getItem('status')==='New')
+    {
+    this.map.set('Basic Profile Information ', 'register');
+    this.map.set('Personal Details', 'profiledetails');
+    this.map.set('Profile Summary', 'profilesummary');
+    this.map.set('View Status', 'viewstatus');
+    }
+    else if(sessionStorage.getItem('status') ==='Registered' || sessionStorage.getItem('status') ==='Paid')
+    {
+    this.map.set('Personal Details', 'profiledetails');
+    this.map.set('Profile Summary', 'profilesummary');
+    this.map.set('View Status', 'viewstatus');
+    }
+    else if(sessionStorage.getItem('status')==='Completed'|| sessionStorage.getItem('status')==='Reject' || sessionStorage.getItem('status')==='Approve'){
+    this.map.set('Profile Summary', 'profilesummary');
+    this.map.set('View Status', 'viewstatus');
+    }
+  });
+
+
+
+
+
+/********************************************************************** */
      console.log("  ***********************   session status ="+sessionStorage.getItem('status'));
      console.log("  ***********************   session profileid ="+sessionStorage.getItem('profileid'));
       console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));
 
     console.log('***********%%% final submit '+ sessionStorage.getItem('finalsubmit'));
-    if(sessionStorage.getItem('loggedIn')=== 'true')
+    if(sessionStorage.getItem('loggedIn') === 'true')
     {
       console.log('***********++++ ');
       this.loggedIn = true;
@@ -83,7 +145,7 @@ export class RegistrationdetailsComponent implements OnInit {
   }
 
 
-  public map: Map<string, string> = new Map<string, string>();
+
 
   getKeys(map){
     return Array.from(map.keys());

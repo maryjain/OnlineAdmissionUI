@@ -12,9 +12,11 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./personalpreview.component.scss']
 })
 export class PersonalpreviewComponent implements OnInit , OnDestroy {
+  public loading: boolean = false;
    profileid:any;
    isLoading = false;
    sub:any;
+   json:any;
   //profileid = sessionStorage.getItem('profileid');
 
 
@@ -29,7 +31,7 @@ export class PersonalpreviewComponent implements OnInit , OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = false;
-     this.profileid =history.state.data;
+     this.profileid = history.state.data;
    // this.profileid=this.router.snapshot.params;
 
     this.sub = this.router.params.subscribe(params => {
@@ -38,90 +40,100 @@ export class PersonalpreviewComponent implements OnInit , OnDestroy {
       // In a real app: dispatch action to load the details here.
    });
     console.log(" %%%%%%%%%  parent state "+this.profileid);
-    this.registrationdetailsSrv.getPersonDetails(this.profileid).subscribe((res ) => {
-      let json = res;
-      for (var type in json) {
-        console.log(type + ' : ' +json[type])
-        if(type ==='fullname')
-       {
-         this.personalDetailsForm.controls['fullname'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('fullname').value);
-       }
-      if(type ==='dob')
-       {
-         let dobValue = moment(json[type]).format('DD-MM-yyyy');
-         this.personalDetailsForm.controls['dob'].setValue(dobValue);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('dob').value);
-       }
-       if(type ==='emailid')
-       {
-         this.personalDetailsForm.controls['emailid'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('emailid').value);
-       }
-       if(type ==='mobileno')
-       {
-         this.personalDetailsForm.controls['mobileno'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('mobileno').value);
-       }
-       if(type ==='gender')
-       {
-         this.personalDetailsForm.controls['gender'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('gender').value);
-       }
-       if(type ==='nationality')
-       {
-         this.personalDetailsForm.controls['nationality'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('nationality').value);
-       }
-       if(type ==='state')
-       {
-         this.personalDetailsForm.controls['state'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('state').value);
-       }
-       if(type ==='fathername')
-       {
-         this.personalDetailsForm.controls['fathername'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('fathername').value);
-       }
-       if(type ==='mothername')
-       {
-         this.personalDetailsForm.controls['mothername'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('mothername').value);
-       }
-       if(type ==='fullname')
-       {
-         this.personalDetailsForm.controls['fullname'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('fullname').value);
-       }
-       if(type ==='guardianname')
-       {
-         this.personalDetailsForm.controls['guardianname'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('guardianname').value);
-       }
-       if(type ==='guardianmobileno')
-       {
-         this.personalDetailsForm.controls['guardianmobileno'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('guardianmobileno').value);
-       }
-       if(type ==='annualincome')
-       {
-         this.personalDetailsForm.controls['annualincome'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('annualincome').value);
-       }
-       if(type ==='creamylayer')
-       {
-         this.personalDetailsForm.controls['creamylayer'].setValue(json[type]);
-         console.log('************ '+type+'  = ' + this.personalDetailsForm.get('creamylayer').value);
-       }
+    const promise = new Promise<void>((resolve, reject) => {
+      this.loading = true;
+    this.registrationdetailsSrv.getPersonDetails(this.profileid)
+    .toPromise()
+    .then((res: any) => {
+     this.json = res;
+     resolve();
+    },
+      err => {
+        // Error
+        reject(err);
       }
-     },
-    (err: HttpErrorResponse) => {
-      console.log("Error status = "+ err.statusText);
-     console.log("Error occured Religion = "+ err.message);
+    );
+});
 
-    });
+  promise.then( () => {
+    this.loading = false;
+    for (var type in this.json) {
+      console.log(type + ' : ' +this.json[type])
+      if(type ==='fullname')
+     {
+       this.personalDetailsForm.controls['fullname'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('fullname').value);
+     }
+    if(type ==='dob')
+     {
+       let dobValue = moment(this.json[type]).format('DD-MM-yyyy');
+       this.personalDetailsForm.controls['dob'].setValue(dobValue);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('dob').value);
+     }
+     if(type ==='emailid')
+     {
+       this.personalDetailsForm.controls['emailid'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('emailid').value);
+     }
+     if(type ==='mobileno')
+     {
+       this.personalDetailsForm.controls['mobileno'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('mobileno').value);
+     }
+     if(type ==='gender')
+     {
+       this.personalDetailsForm.controls['gender'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('gender').value);
+     }
+     if(type ==='nationality')
+     {
+       this.personalDetailsForm.controls['nationality'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('nationality').value);
+     }
+     if(type ==='state')
+     {
+       this.personalDetailsForm.controls['state'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('state').value);
+     }
+     if(type ==='fathername')
+     {
+       this.personalDetailsForm.controls['fathername'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('fathername').value);
+     }
+     if(type ==='mothername')
+     {
+       this.personalDetailsForm.controls['mothername'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('mothername').value);
+     }
+     if(type ==='fullname')
+     {
+       this.personalDetailsForm.controls['fullname'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('fullname').value);
+     }
+     if(type ==='guardianname')
+     {
+       this.personalDetailsForm.controls['guardianname'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('guardianname').value);
+     }
+     if(type ==='guardianmobileno')
+     {
+       this.personalDetailsForm.controls['guardianmobileno'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('guardianmobileno').value);
+     }
+     if(type ==='annualincome')
+     {
+       this.personalDetailsForm.controls['annualincome'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('annualincome').value);
+     }
+     if(type ==='creamylayer')
+     {
+       this.personalDetailsForm.controls['creamylayer'].setValue(this.json[type]);
+       console.log('************ '+type+'  = ' + this.personalDetailsForm.get('creamylayer').value);
+     }
+    }
   }
-
+  );
+  }
 
   public personalDetailsForm  = this.fb.group({
     fullname: [''],

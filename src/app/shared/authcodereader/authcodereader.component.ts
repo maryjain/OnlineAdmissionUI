@@ -37,6 +37,7 @@ else{
   //let txtAuthCode = window.opener.document.getElementById("txtauthcode");
   //txtAuthCode.value =this.authCode;
  // alert("txtAuthCode.value ="+txtAuthCode.value);
+
  window.opener.postAuthorize(this.state,this.authCode);
 
 }

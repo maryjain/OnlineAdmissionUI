@@ -17,7 +17,7 @@ profileid :any;
   constructor(private fb: FormBuilder, public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
-    this.profileid = sessionStorage.getItem('profileid');
+    this.profileid = JSON.parse(sessionStorage.getItem('profileid'));
     console.log('************ ##########  '+ sessionStorage.getItem('profileid'));
     this.registrationdetailsSrv.getPersonDetails(this.profileid).subscribe((res ) => {
       let json = res;

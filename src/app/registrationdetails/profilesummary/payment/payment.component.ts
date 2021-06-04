@@ -10,7 +10,7 @@ import * as moment from 'moment';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-  profileid = sessionStorage.getItem('profileid');
+  profileid : any;
   //**Payment Details   **/
   displayedColumnsPaymentDetails = ['transactionid', 'bank','applfees','updateddate'];
   @ViewChild('tablePaymentDetails', { static: false }) tablePaymentDetails: MatTable<any>;
@@ -19,6 +19,7 @@ export class PaymentComponent implements OnInit {
   constructor(public registrationdetailsSrv: RegistrationdetailsService) { }
 
   ngOnInit(): void {
+    this.profileid = JSON.parse(sessionStorage.getItem('profileid'));
     this.registrationdetailsSrv.getPayment(this.profileid).subscribe((res ) => {
       let json = [];
       let dobValue = '';

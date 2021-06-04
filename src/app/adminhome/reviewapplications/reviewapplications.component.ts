@@ -86,7 +86,7 @@ export class ReviewapplicationsComponent implements OnInit , OnDestroy{
   postPersonReview(currentprofileid:any)
 {
     const previewProfileid=  currentprofileid.value;
-    this.person = new Person('', null, '', null,'');
+    this.person = new Person(null,'','', null, '', null,'');
     let c: AbstractControl;
     for (let index in this.personArray.controls) {
       console.log('@@@@@@@@@ ###### inside for loop row = ' + index);
