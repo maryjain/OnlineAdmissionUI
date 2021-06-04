@@ -26,8 +26,6 @@ import { PersonalpreviewComponent } from './previewdetails/personalpreview/perso
 import { EducationpreviewComponent } from './previewdetails/educationpreview/educationpreview.component';
 import { PaymentpreviewComponent } from './previewdetails/paymentpreview/paymentpreview.component';
 import { DocumentspreviewComponent } from './previewdetails/documentspreview/documentspreview.component';
-import { SpinnerService } from './spinner.service';
-import { InterceptorService } from './interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './AuthGuard';
 import { TokenInterceptor } from './TokenInterceptor';
@@ -59,13 +57,7 @@ import { TokenInterceptor } from './TokenInterceptor';
     ToastrModule.forRoot(),
 
   ],
-  providers: [ ValidationService, UtilityService, RegisterService, LoginService, SpinnerService,AuthGuard,
-     {
-    provide: HTTP_INTERCEPTORS,
-    useFactory: (service: SpinnerService) => new InterceptorService(service),
-    multi: true,
-    deps: [SpinnerService]
-  },
+  providers: [ ValidationService, UtilityService, RegisterService, LoginService,AuthGuard,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
 ],

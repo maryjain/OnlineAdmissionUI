@@ -26,7 +26,8 @@ export class AdminhomeComponent implements OnInit {
     this.deptusername = sessionStorage.getItem('email');
     this.deptname = sessionStorage.getItem('name');
     console.log('************  sessionStorage.getItem(loggedIn) = ' + sessionStorage.getItem('loggedIn'));
-
+    console.log('************  sessionStorage.getItem(email) = ' + sessionStorage.getItem('email'));
+    console.log('************  sessionStorage.getItem(name) = ' + sessionStorage.getItem('name'));
     if(sessionStorage.getItem('loggedIn')=== 'true')
     {
       console.log('***********++++admin home true ');
@@ -50,13 +51,7 @@ export class AdminhomeComponent implements OnInit {
     this.router.navigate(['/adminhome/'+item]);
   }
 
-  public logoutUser():void
-  {
-    sessionStorage.clear();
 
-    //this.router.navigate(['./loginadmin']);
-
-  }
 
   // spinner load function
   load() : void {

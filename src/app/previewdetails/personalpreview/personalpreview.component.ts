@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RegistrationdetailsService } from 'src/app/registrationdetails/service/registrationdetails.service';
 import * as moment from 'moment';
-import { SpinnerService } from 'src/app/spinner.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -20,12 +19,8 @@ export class PersonalpreviewComponent implements OnInit , OnDestroy {
   //profileid = sessionStorage.getItem('profileid');
 
 
-  constructor(private fb: FormBuilder, public registrationdetailsSrv: RegistrationdetailsService, public spinnerService: SpinnerService, private router :ActivatedRoute )
+  constructor(private fb: FormBuilder, public registrationdetailsSrv: RegistrationdetailsService, private router :ActivatedRoute )
    {
-     this.spinnerService
-    .onLoadingChanged
-    .subscribe(l => this.isLoading = l);
-    console.log(" ++++++++++%%%%%%%+++++ ******* this.isLoading ="+  this.isLoading);
 
    }
 

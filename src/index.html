@@ -135,8 +135,8 @@
     sessionStorage.setItem('accessToken', data["access_token"]);
     sessionStorage.setItem('refreshToken', data["refresh_token"]);
     sessionStorage.setItem('idToken', data["id_token"]);
-    sessionStorage.setItem('email', JSONIDtoken["email"]);
-    sessionStorage.setItem('name', JSONIDtoken["name"]);
+    sessionStorage.setItem('email', JSON.parse(JSONIDtoken)["email"]);
+    sessionStorage.setItem('name', JSON.parse(JSONIDtoken)["name"]);
     sessionStorage.setItem('jsonAccessToken', JSONAccesstoken);
     sessionStorage.setItem('expires_in',  data["expires_in"]);
 
@@ -148,7 +148,7 @@
     sessionStorage.setItem('loggedIn','true');
 
     var arrRoles=JSON.parse(JSONAccesstoken)["realm_access"]["roles"];
-  alert("Hello");
+
   if(arrRoles.indexOf('admin') > -1)   // ADMIN LOGIN
     {
       sessionStorage.setItem('user','admin');
