@@ -35,6 +35,7 @@ export class PersonalpreviewComponent implements OnInit , OnDestroy {
       // In a real app: dispatch action to load the details here.
    });
     console.log(" %%%%%%%%%  parent state "+this.profileid);
+
     const promise = new Promise<void>((resolve, reject) => {
       this.loading = true;
     this.registrationdetailsSrv.getPersonDetails(this.profileid)
