@@ -99,6 +99,7 @@ export class RegistrationdetailsComponent implements OnInit {
     else {
       sessionStorage.setItem('status', this.personPost.status);
       sessionStorage.setItem('profileid', this.personPost.profileid.toString());
+      this.profileid = sessionStorage.getItem('profileid');
       console.log('+++++++++++++++++++++++#################################### '+sessionStorage.getItem('status'));
 
     }
