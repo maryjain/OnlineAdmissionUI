@@ -45,7 +45,7 @@ export class TokenInterceptor implements HttpInterceptor {
             },
             (err: HttpErrorResponse) => {
               console.log("Error status = "+ err.statusText);
-              console.log("Error occured Education insert = "+ err.message);
+              console.log("Error occured = "+ err.message);
             });
 
         }

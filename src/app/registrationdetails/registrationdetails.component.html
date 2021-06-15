@@ -1,13 +1,14 @@
 <div class="d-flex customHeader ">   <div class="flex-grow-1">
   <h3>&nbsp;&nbsp;&nbsp;Welcome {{fullname}}</h3>
   </div>
-  <div >
-    <h4><i>{{profileid}}</i> &nbsp;&nbsp;&nbsp;&nbsp;</h4>
-  </div>
+
 </div>
 
 <mat-sidenav-container class="example-container" >
 	<mat-sidenav #sidenav  class="example-sidenav navlist" mode="side" opened="true" >
+    <div class="d-flex customHeader " >
+      <h3><i>&nbsp;&nbsp;&nbsp;{{profileid}}</i> &nbsp;&nbsp;&nbsp;&nbsp;</h3>
+    </div>
     <mat-nav-list >
       <ng-container *ngFor="let item of getKeys(map) | keyvalue">
        <a mat-list-item [routerLink]=map.get(item.value) (click) ="onsidenavClick(map.get(item.value))" class="router-link-active"> {{item.value}} </a>
@@ -18,7 +19,6 @@
   <mat-sidenav-content>
     <div >
       <router-outlet>
-
           <mat-spinner style="margin:0 auto;" *ngIf="loading"></mat-spinner>
 
     </router-outlet>
