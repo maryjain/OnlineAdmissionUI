@@ -91,17 +91,20 @@ export class RegistrationdetailsComponent implements OnInit {
   promise.then( () => {
     console.log('+++++++++++++++++++++++@@@@@@@@@@@@@@@@@@@@@@@@@@@@ '+this.personPost.status);
     this.loading = false;
-    if(this.personPost.status === null)
+    if(this.personPost.status !== null && this.personPost.status !=='null' )
     {
-      sessionStorage.setItem('status','New');
-      console.log('+++++++++++++++++++++++%%%%%%%%%%%%%%%%%%%%%%%% '+sessionStorage.getItem('status'));
-    }
-    else {
+
+      console.log('+++++++++++++++++++++++####################################    profileid='+this.personPost.profileid);
       sessionStorage.setItem('status', this.personPost.status);
       sessionStorage.setItem('profileid', this.personPost.profileid.toString());
       this.profileid = sessionStorage.getItem('profileid');
-      console.log('+++++++++++++++++++++++#################################### '+sessionStorage.getItem('status'));
 
+
+    }
+    else {
+
+      sessionStorage.setItem('status','New');
+      console.log('+++++++++++++++++++++++%%%%%%%%%%%%%%%%%%%%%%%% '+sessionStorage.getItem('status'));
     }
 
     if(sessionStorage.getItem('status')==='New')
