@@ -2,7 +2,8 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 // 10.162.14.145
-
+//192.168.7.108  Mobile Alliswell
+///192.168.29.5  JMR 1 F
 export const environment = {
   production: false,
   profileapiUrl: 'http://192.168.29.5:8082/api/persons',
